@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#006D77">
+    android:background="#FFFFFF">
 
     <RelativeLayout
-        android:id="@+id/logo"
+        android:id="@+id/black_background"
         android:layout_width="match_parent"
         android:layout_height="410dp"
+        android:background="#006D77"
         android:gravity="center">
 
         <androidx.cardview.widget.CardView
@@ -34,59 +33,70 @@
 
     </RelativeLayout>
 
+    <!-- White Background with Rounded Corners -->
     <RelativeLayout
-        android:id="@+id/proceed"
+        android:id="@+id/white_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/black_background"
+        android:background="@drawable/rounded_corners_background"
         android:paddingTop="0dp"
         android:clipToPadding="false"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        android:layout_marginTop="-50dp">
 
+        <!-- Inner Container for Login Form -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
-            <Button
-                android:id="@+id/proceed_button"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center"
+                android:text="Login"
+                android:layout_marginTop="10dp"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="#E7F6F2"
+                android:hint="Username"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="#E7F6F2"
+                android:hint="Password"
                 android:layout_marginTop="15dp"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#000000"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="120dp"
-                android:text="Proceed"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
-                android:gravity="center"
-                android:text="Powered By"
-                android:textColor="#EDF6F9"
-                android:textSize="15sp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="/.123"
-                android:textColor="#EDF6F9"
-                android:textSize="15sp"
-                tools:ignore="HardcodedText" />
+                android:padding="12dp"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                android:text="Login"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
-
     </RelativeLayout>
-
 </RelativeLayout>
