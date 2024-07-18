@@ -6,16 +6,17 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.splash)
+        setContentView(R.layout.login)
 
-        val button = findViewById<Button>(R.id.proceed_button)
-        button?.setOnClickListener(){
-            startActivity(Intent(this, LoginActivity::class.java))
+        val loginButton = findViewById<Button>(R.id.login_button)
+
+        loginButton?.setOnClickListener(){
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
-
     }
 }

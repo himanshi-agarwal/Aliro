@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile"/>
+
+    <item
+        android:id="@+id/nav_timings"
+        android:icon="@drawable/baseline_access_time_24"
+        android:title="My Timings"/>
+
+    <item
+        android:id="@+id/nav_register"
+        android:icon="@drawable/baseline_event_available_24"
+        android:title="Pre-Register Visit"/>
+
+    <item
+        android:id="@+id/nav_parking"
+        android:icon="@drawable/baseline_directions_car_24"
+        android:title="My Parking"/>
+
+    <item
+        android:id="@+id/nav_dairy"
+        android:icon="@drawable/baseline_book_24"
+        android:title="Visitor's Diary"/>
+
+</menu>
