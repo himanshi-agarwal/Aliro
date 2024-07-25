@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Aliro</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open">Open Navigation Drawer</string>
+    <string name="close">Close Navigation Drawer</string>
 </resources>
