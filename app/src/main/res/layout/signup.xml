@@ -12,7 +12,6 @@
         android:background="#006D77"
         android:gravity="center">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,17 +25,16 @@
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
-
-        <Button
-            android:id="@+id/signup_button"
+        <ImageButton
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:backgroundTint="#006D77"
-            android:textColor="@color/white"
-            android:drawableStart="@drawable/back"
-            app:srcCompat="@drawable/back"
-            />
+            android:src="@drawable/back"
+            android:padding="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"/>
 
     </RelativeLayout>
 
@@ -44,7 +42,7 @@
     <RelativeLayout
         android:id="@+id/white_background"
         android:layout_width="match_parent"
-        android:layout_height="596dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/black_background"
         android:layout_marginTop="0dp"
         android:background="@drawable/rounded_corners_background"
@@ -55,7 +53,7 @@
         <!-- Inner Container for Sign Up Form -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"
             android:orientation="vertical"
@@ -128,6 +126,19 @@
                 android:text="Sign Up"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/loginLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="Already have any account? Sign In"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
         </LinearLayout>
     </RelativeLayout>
