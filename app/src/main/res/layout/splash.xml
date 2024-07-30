@@ -9,15 +9,15 @@
     <RelativeLayout
         android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="410dp"
+        android:layout_height="510dp"
         android:gravity="center">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             app:cardCornerRadius="150dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:layout_marginBottom="60dp">
 
             <ImageView
@@ -49,25 +49,10 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <Button
-                android:id="@+id/proceed_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#000000"
-                android:drawableEnd="@drawable/arrow_right"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="100dp"
-                android:text="Proceed"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                tools:ignore="HardcodedText" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="100dp"
                 android:gravity="center"
                 android:text="Powered By"
                 android:textColor="@color/text"
@@ -80,7 +65,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="/.123"
+                android:text="CHRIST"
                 android:textColor="@color/text"
                 android:textSize="15sp"
                 tools:ignore="HardcodedText" />

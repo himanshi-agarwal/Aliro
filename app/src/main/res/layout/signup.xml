@@ -136,7 +136,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="Already have any account? Sign In"
+                android:text="Already have any account? Log In"
                 android:textColor="#000000"
                 android:textSize="20sp"/>
 
