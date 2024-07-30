@@ -32,7 +32,12 @@
             android:label="SignUp">
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".VisitorHomeActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".EmpHomeActivity"
             android:exported="true"
             android:label="@string/app_name">
         </activity>
@@ -41,4 +46,5 @@
             android:resource="@array/preloaded_fonts" />
     </application>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

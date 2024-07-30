@@ -12,7 +12,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class HomeActivity : AppCompatActivity() {
+class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
