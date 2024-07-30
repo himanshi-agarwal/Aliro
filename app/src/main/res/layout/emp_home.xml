@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    
+
         <include
             layout="@layout/appbar"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/logo"
+                            android:src="@drawable/account"
                             android:scaleType="centerCrop"
                             android:background="@drawable/circular_background"
                             android:padding="0dp" />
@@ -60,7 +60,7 @@
                         android:layout_marginBottom="16dp"
                         android:fontFamily="sans-serif-smallcaps"
                         android:gravity="center"
-                        android:text="Gaurav Jain"
+                        android:text="Himanshi Agarwal"
                         android:layout_marginTop="220dp"
                         android:textColor="#000000"
                         android:textSize="30sp"
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-smallcaps"
                         android:gravity="center"
-                        android:text="Visitor"
+                        android:text="Employee"
                         android:layout_marginTop="260dp"
                         android:textColor="#000000"
                         android:textSize="20sp" />
@@ -101,7 +101,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
-        app:menu="@menu/visitor_menu">
+        app:menu="@menu/emp_menu">
 
     </com.google.android.material.navigation.NavigationView>
 

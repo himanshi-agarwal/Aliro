@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/account" />
+
+        <item android:id="@+id/profile"
+            android:title="My Profile"
+            android:icon="@drawable/logs" />
+
+        <item android:id="@+id/timings"
+            android:title="My Logs"
+            android:icon="@drawable/logs" />
+
+        <item android:id="@+id/notification"
+            android:title="Notifications"
+            android:icon="@drawable/logs" />
+
+        <item android:id="@+id/pre_register"
+            android:title="Register Guest"
+            android:icon="@drawable/register" />
+
+    </group>
+</menu>
