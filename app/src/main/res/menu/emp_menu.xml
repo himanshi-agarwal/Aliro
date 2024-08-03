@@ -4,24 +4,24 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/home"
-            android:title="Home"
+            android:title="Profile"
             android:icon="@drawable/account" />
 
-        <item android:id="@+id/profile"
-            android:title="My Profile"
-            android:icon="@drawable/logs" />
+        <item android:id="@+id/pre_register"
+            android:title="Register Guest"
+            android:icon="@drawable/add_guest" />
+
+        <item android:id="@+id/notification"
+            android:title="Notifications"
+            android:icon="@drawable/notifications" />
 
         <item android:id="@+id/timings"
             android:title="My Logs"
             android:icon="@drawable/logs" />
 
-        <item android:id="@+id/notification"
-            android:title="Notifications"
-            android:icon="@drawable/logs" />
-
-        <item android:id="@+id/pre_register"
-            android:title="Register Guest"
-            android:icon="@drawable/register" />
+        <item android:id="@+id/profile"
+            android:title="Edit Profile"
+            android:icon="@drawable/user_edit" />
 
     </group>
 </menu>

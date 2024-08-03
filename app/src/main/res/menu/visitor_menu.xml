@@ -4,20 +4,20 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/home"
-            android:title="Home"
+            android:title="Profile"
             android:icon="@drawable/account" />
-
-        <item android:id="@+id/timings"
-            android:title="My Logs"
-            android:icon="@drawable/logs" />
 
         <item android:id="@+id/pre_register"
             android:title="Pre Register"
-            android:icon="@drawable/register" />
+            android:icon="@drawable/add_guest" />
 
         <item android:id="@+id/parking"
             android:title="Parking"
             android:icon="@drawable/parking" />
+
+        <item android:id="@+id/timings"
+            android:title="My Logs"
+            android:icon="@drawable/logs" />
 
         <item android:id="@+id/dairy"
             android:title="Visitors Dairy"
