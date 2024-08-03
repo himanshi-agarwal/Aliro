@@ -4,42 +4,54 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
     override fun onCreate(db: SQLiteDatabase) {
-        val query = ("CREATE TABLE " + TABLE_NAME + " ( " +
-                ID_COL + "INTEGER PRIMARY KEY AUTO_INCREMENT, " +
-                NAME_COL + "TEXT, " +
-                PASSWORD_COL + "TEXT" + " ) ")
+        val createUserTable = ("CREATE TABLE IF NOT EXISTS " + USER_TABLE_NAME + " ( " +
+                                USER_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                USER_NAME_COL + " TEXT, " +
+                                USER_EMAIL_COL + " TEXT, " +
+                                USER_PHONE_NO_COL + " TEXT, " +
+                                USER_DP_COL + " BLOB, " +
+                                USER_USER_TYPE_COL + " TEXT " + " ) ")
 
-        db.execSQL(query)
+        db.execSQL(createUserTable)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS  $USER_TABLE_NAME");
+
         onCreate(db)
     }
 
-    fun addName(username : String, password : String ){
+    fun addUser(name : String, email : String, phoneNo: String, userType: String){
+        Log.d("DBHelper", "Adding user: $name, $email, $phoneNo, $userType")
         val values = ContentValues()
 
-        values.put(NAME_COL, username)
-        values.put(PASSWORD_COL, password)
+        values.put(USER_NAME_COL, name)
+        values.put(USER_EMAIL_COL, email)
+        values.put(USER_PHONE_NO_COL, phoneNo)
+        values.put(USER_USER_TYPE_COL, userType)
 
         val db = this.writableDatabase
-        db.insert(TABLE_NAME, null, values)
+        db.insert(USER_TABLE_NAME, null, values)
 
-        db.close()
+        Log.d("DBHelper", "Data added successfully")
+//        db.close()
     }
 
     companion object{
-        private val DATABASE_NAME = "ALIRO"
-        private val DATABASE_VERSION = 1
-        val TABLE_NAME = "login"
-        val ID_COL = "id"
-        val NAME_COL = "name"
-        val PASSWORD_COL = "password"
+        private const val DATABASE_NAME = "ALIRO"
+        private const val DATABASE_VERSION = 3
+        const val USER_TABLE_NAME = "users"
+        const val USER_ID_COL = "id"
+        const val USER_NAME_COL = "name"
+        const val USER_EMAIL_COL = "email"
+        const val USER_PHONE_NO_COL = "phone_no"
+        const val USER_DP_COL = "dp"
+        const val USER_USER_TYPE_COL = "user_type"
     }
 }
