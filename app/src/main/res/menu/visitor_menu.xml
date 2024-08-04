@@ -3,26 +3,93 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:id="@+id/home"
-            android:title="Profile"
-            android:icon="@drawable/account" />
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/account"
+            android:title="Profile" />
+    </group>
 
-        <item android:id="@+id/pre_register"
-            android:title="Pre Register"
-            android:icon="@drawable/add_guest" />
+    <group android:checkableBehavior="single">
 
-        <item android:id="@+id/parking"
-            android:title="Parking"
-            android:icon="@drawable/parking" />
+        <item android:title="Manage Visits">
 
-        <item android:id="@+id/timings"
-            android:title="My Logs"
-            android:icon="@drawable/logs" />
+            <menu>
 
-        <item android:id="@+id/dairy"
-            android:title="Visitors Dairy"
-            android:icon="@drawable/dairy" />
+                <item
+                    android:id="@+id/pre_register"
+                    android:icon="@drawable/add_guest"
+                    android:title="Pre Register" />
+
+                <item
+                    android:id="@+id/dairy"
+                    android:icon="@drawable/dairy"
+                    android:title="Visitors Dairy" />
+            </menu>
+
+        </item>
 
     </group>
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Parking Management">
+
+            <menu>
+
+                <item
+                    android:id="@+id/parking"
+                    android:icon="@drawable/parking"
+                    android:title="Parking" />
+
+            </menu>
+
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Activity Logs">
+
+            <menu>
+
+                <item
+                    android:id="@+id/timings"
+                    android:icon="@drawable/logs"
+                    android:title="My Logs" />
+
+            </menu>
+
+        </item>
+
+    </group>
+
+    <group>
+
+        <item android:title="App Information">
+
+            <menu>
+                <item
+                    android:id="@+id/help"
+                    android:icon="@drawable/help"
+                    android:title="Help Desk" />
+
+                <item
+                    android:id="@+id/about"
+                    android:icon="@drawable/info"
+                    android:title="About" />
+            </menu>
+
+        </item>
+
+    </group>
+
+    <item android:title="Account Management">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
 
 </menu>

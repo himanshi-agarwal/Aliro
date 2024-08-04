@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton?.setOnClickListener(){
-            startActivity(Intent(this, VisitorHomeActivity::class.java))
+            startActivity(Intent(this, EmpHomeActivity::class.java))
             finish()
 
 //            val db = DBHelper(this, null)
