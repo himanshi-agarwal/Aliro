@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:fitsSystemWindows="true"
-    android:background="@color/secondary"
+    android:background="@color/other"
     android:id="@+id/toolbar">
 
 </androidx.appcompat.widget.Toolbar>

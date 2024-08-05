@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#006d77">
+    android:background="@color/primary">
 
     <RelativeLayout
         android:id="@+id/black_background"
         android:layout_width="match_parent"
         android:layout_height="134dp"
-        android:background="#006D77"
         android:gravity="center">
 
         <TextView
@@ -30,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:backgroundTint="#006D77"
+            android:backgroundTint="@color/primary"
             android:src="@drawable/back"
             android:padding="8dp"
             android:layout_marginStart="20dp"
