@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
             val email = email.text.toString()
             val password = password.text.toString()
             val confirmPassword = confirmPassword.text.toString()
-            val userType = "Visitor"
+            val userType = "Employee"
 
             if (name.isBlank() || phoneStr.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
@@ -57,6 +57,9 @@ class SignUpActivity : AppCompatActivity() {
 
             if(checkPassword(password, confirmPassword)){
                 db.addUser(name, password, email, phoneStr, userType)
+                Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
             else{
                 Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
