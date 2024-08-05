@@ -56,8 +56,7 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             if(checkPassword(password, confirmPassword)){
-                Toast.makeText(applicationContext, "Calling Database Object", Toast.LENGTH_LONG).show()
-                db.addUser(name, email, phoneStr, userType)
+                db.addUser(name, password, email, phoneStr, userType)
             }
             else{
                 Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
