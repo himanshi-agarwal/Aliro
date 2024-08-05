@@ -9,7 +9,7 @@
         android:id="@+id/black_background"
         android:layout_width="match_parent"
         android:layout_height="410dp"
-        android:background="#006D77"
+        android:background="@color/primary"
         android:gravity="center">
 
         <androidx.cardview.widget.CardView

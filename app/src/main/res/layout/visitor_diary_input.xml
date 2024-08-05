@@ -15,12 +15,14 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="Add your comment" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingEnd="10dp"
+        android:textColor="@color/white"
         android:drawableEnd="@drawable/send">
 
     </EditText>

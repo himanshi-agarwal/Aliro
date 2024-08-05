@@ -12,16 +12,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:orientation="vertical">
 
         <include
             layout="@layout/appbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -30,27 +27,26 @@
                 <RelativeLayout
                     android:id="@+id/profile"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
+                    android:layout_height="250dp"
                     android:background="@drawable/bottom_corners">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="180dp"
-                        android:layout_height="180dp"
-                        app:cardCornerRadius="150dp"
+                        android:layout_width="120dp"
+                        android:layout_height="127dp"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="110dp"
-                        android:layout_marginTop="30dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="145dp"
+                        app:cardCornerRadius="150dp">
 
                         <ImageView
-                            android:id="@+id/logo_image"
+                            android:id="@+id/account"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/account"
-                            android:scaleType="centerCrop"
                             android:background="@drawable/circular_background"
-                            android:padding="0dp" />
+                            android:padding="0dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/account" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -62,7 +58,7 @@
                         android:fontFamily="sans-serif-smallcaps"
                         android:gravity="center"
                         android:text="Himanshi Agarwal"
-                        android:layout_marginTop="220dp"
+                        android:layout_marginTop="160dp"
                         android:textColor="#000000"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -74,24 +70,105 @@
                         android:fontFamily="sans-serif-smallcaps"
                         android:gravity="center"
                         android:text="Employee"
-                        android:layout_marginTop="260dp"
+                        android:layout_marginTop="200dp"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/details"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="280dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_marginTop="250dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/emp_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="himanshi@gmail.com"
+                            android:textColor="#000000"
+                            android:layout_marginTop="20dp"
+                            android:textSize="25sp"
+                            android:layout_marginBottom="10dp"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/email"/>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#808080"/>
+
+                        <TextView
+                            android:id="@+id/emp_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="9125555228"
+                            android:textColor="#000000"
+                            android:textSize="25sp"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/phone"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#808080"/>
+
+                        <TextView
+                            android:id="@+id/emp_role"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Manager"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="#000000"
+                            android:textSize="25sp"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/role" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#808080"/>
+
+                        <TextView
+                            android:id="@+id/emp_company"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Google"
+                            android:textColor="#000000"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="25sp"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/company"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#808080"/>
+
+                        <TextView
+                            android:id="@+id/emp_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Bengaluru"
+                            android:textColor="#000000"
+                            android:textSize="25sp"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/location" />
+
+                    </LinearLayout>
             </RelativeLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
