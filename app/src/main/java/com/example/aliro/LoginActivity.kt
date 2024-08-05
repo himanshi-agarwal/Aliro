@@ -10,7 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var email : EditText
+    private lateinit var username : EditText
     private lateinit var password : EditText
     private lateinit var loginButton : Button
     private lateinit var signUpTextView : TextView
@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton = findViewById(R.id.login_button)
         signUpTextView = findViewById(R.id.signupLink)
-        email = findViewById(R.id.email)
+        username = findViewById(R.id.username)
         password = findViewById(R.id.password)
 
         signUpTextView.setOnClickListener(){
@@ -30,17 +30,38 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton?.setOnClickListener(){
-            startActivity(Intent(this, EmpHomeActivity::class.java))
-            finish()
+            login()
+        }
+    }
 
-//            val db = DBHelper(this, null)
-//
-//            val name = email.text.toString()
-//            val pass = password.text.toString()
-//
-//            db.addName(name, pass)
-//
-//            Toast.makeText(this, name + " User Logged In", Toast.LENGTH_LONG).show()
+    fun login(){
+        val db = DBHelper(this, null)
+
+        val name = username.text.toString()
+        val pass = password.text.toString()
+
+        if(name == null || pass == null){
+            Toast.makeText(this,"Fill all Fields!", Toast.LENGTH_LONG).show()
+        }
+
+        val user: ArrayList<String> = db.loginUser(name, pass)
+        if(user.size == 0){
+            Toast.makeText(this,"Invalid Credentials", Toast.LENGTH_LONG).show()
+        }
+        else{
+            val usertype = user[3]
+            if(usertype == "Visitor"){
+                val intent = Intent(this, VisitorHomeActivity::class.java)
+                intent.putStringArrayListExtra("user", user)
+                startActivity(intent)
+                finish()
+            }
+            else{
+                val intent = Intent(this, EmpHomeActivity::class.java)
+                intent.putStringArrayListExtra("user", user)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 }
