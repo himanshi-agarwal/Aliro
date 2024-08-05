@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
+            android:id="@+id/profile"
             android:icon="@drawable/account"
             android:title="Profile" />
     </group>

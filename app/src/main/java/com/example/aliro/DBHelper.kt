@@ -38,12 +38,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS  $USER_TABLE_NAME");
-
         onCreate(db)
     }
 
     fun addUser(name : String, password : String, email : String, phoneNo: String, userType: String){
-        Log.d("DBHelper", "Adding user: $name, $email, $phoneNo, $userType")
         val values = ContentValues()
 
         values.put(USER_NAME_COL, name)
@@ -56,26 +54,29 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.insert(USER_TABLE_NAME, null, values)
 
         Log.d("DBHelper", "Data added successfully")
-//        db.close()
+        //db.close()
     }
 
     fun loginUser(name : String, password : String): ArrayList<String>{
         val userList = ArrayList<String>()
         val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $USER_TABLE_NAME WHERE $USER_NAME_COL = $name and $USER_PASSWORD_COL = $password", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $USER_TABLE_NAME WHERE $USER_NAME_COL = ? AND $USER_PASSWORD_COL = ?",
+            arrayOf(name, password), null)
 
         if(cursor.moveToFirst()){
-            val name = cursor.getString(1)
-            val email = cursor.getString(3)
-            val contact = cursor.getString(4)
-            val user_type = cursor.getString(6)
-            userList.add(name)
-            userList.add(email)
-            userList.add(contact)
-            userList.add(user_type)
+            val userName = cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_COL))
+            val email = cursor.getString(cursor.getColumnIndexOrThrow(USER_EMAIL_COL))
+            val contact = cursor.getString(cursor.getColumnIndexOrThrow(USER_PHONE_NO_COL))
+            val userType = cursor.getString(cursor.getColumnIndexOrThrow(USER_USER_TYPE_COL))
+            userList.apply {
+                add(userName)
+                add(email)
+                add(contact)
+                add(userType)
+            }
         }
         cursor.close()
-        db.close()
+        //db.close()
 
         return userList
     }

@@ -34,18 +34,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun login(){
+    private fun login(){
         val db = DBHelper(this, null)
 
         val name = username.text.toString()
         val pass = password.text.toString()
 
-        if(name == null || pass == null){
+        if(name.isNullOrEmpty() || pass.isNullOrEmpty()){
             Toast.makeText(this,"Fill all Fields!", Toast.LENGTH_LONG).show()
+            return
         }
 
         val user: ArrayList<String> = db.loginUser(name, pass)
-        if(user.size == 0){
+        if(user.isEmpty()){
             Toast.makeText(this,"Invalid Credentials", Toast.LENGTH_LONG).show()
         }
         else{
@@ -58,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
             }
             else{
                 val intent = Intent(this, EmpHomeActivity::class.java)
-                intent.putStringArrayListExtra("user", user)
+                intent.putStringArrayListExtra("employee", user)
                 startActivity(intent)
                 finish()
             }
