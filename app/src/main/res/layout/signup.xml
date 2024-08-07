@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary">
+    android:background="@drawable/gradient">
 
     <RelativeLayout
         android:id="@+id/black_background"
         android:layout_width="match_parent"
         android:layout_height="134dp"
+        android:layout_marginTop="40dp"
         android:gravity="center">
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:backgroundTint="@color/primary"
+            android:background="#016467"
             android:src="@drawable/back"
             android:padding="8dp"
             android:layout_marginStart="20dp"
@@ -63,8 +64,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="#E7F6F2"
+                android:background="@color/background"
+                android:textColor="@color/black"
                 android:hint="UserName"
+                android:textColorHint="@color/black"
                 android:inputType="text"
                 android:padding="12dp" />
 
@@ -74,9 +77,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="#E7F6F2"
+                android:background="@color/background"
+                android:textColor="@color/black"
                 android:ems="10"
                 android:hint="Phone Number"
+                android:textColorHint="@color/black"
                 android:inputType="phone"
                 android:padding="12dp" />
 
@@ -86,8 +91,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="#E7F6F2"
+                android:background="@color/background"
+                android:textColor="@color/black"
                 android:hint="Email Address"
+                android:textColorHint="@color/black"
                 android:inputType="textEmailAddress"
                 android:padding="12dp" />
 
@@ -97,8 +104,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="#E7F6F2"
+                android:background="@color/background"
+                android:textColor="@color/black"
                 android:hint="Password"
+                android:textColorHint="@color/black"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
@@ -108,8 +117,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="#E7F6F2"
+                android:background="@color/background"
+                android:textColor="@color/black"
                 android:hint="Confirm Password"
+                android:textColorHint="@color/black"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
@@ -137,7 +148,7 @@
                 android:gravity="center"
                 android:text="Already have any account? Log In"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
 
         </LinearLayout>
     </RelativeLayout>

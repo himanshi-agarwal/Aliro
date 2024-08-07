@@ -33,7 +33,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="120dp"
                         android:layout_height="127dp"
-                        android:layout_gravity="center"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="145dp"
                         app:cardCornerRadius="150dp">
@@ -91,7 +91,7 @@
                             android:text="himanshi@gmail.com"
                             android:textColor="#000000"
                             android:layout_marginTop="20dp"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:layout_marginBottom="10dp"
                             android:drawablePadding="20dp"
                             android:drawableStart="@drawable/email"/>
@@ -110,7 +110,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="9125555228"
                             android:textColor="#000000"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:drawablePadding="20dp"
                             android:drawableStart="@drawable/phone"/>
 
@@ -128,7 +128,7 @@
                             android:text="Manager"
                             android:layout_marginBottom="10dp"
                             android:textColor="#000000"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:drawablePadding="20dp"
                             android:drawableStart="@drawable/role" />
 
@@ -146,7 +146,7 @@
                             android:text="Google"
                             android:textColor="#000000"
                             android:layout_marginBottom="10dp"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:drawablePadding="20dp"
                             android:drawableStart="@drawable/company"/>
 
@@ -163,7 +163,7 @@
                             android:layout_marginTop="20dp"
                             android:text="Bengaluru"
                             android:textColor="#000000"
-                            android:textSize="25sp"
+                            android:textSize="20sp"
                             android:drawablePadding="20dp"
                             android:drawableStart="@drawable/location" />
 

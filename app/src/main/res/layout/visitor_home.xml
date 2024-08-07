@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".VisitorHomeActivity">
@@ -32,7 +33,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="120dp"
                         android:layout_height="127dp"
-                        android:layout_gravity="center"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="145dp"
                         app:cardCornerRadius="150dp">
@@ -89,7 +90,7 @@
                         android:text="gaurav@gmail.com"
                         android:textColor="#000000"
                         android:layout_marginTop="20dp"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:layout_marginBottom="20dp"
                         android:drawablePadding="20dp"
                         android:drawableStart="@drawable/email"/>
@@ -107,7 +108,7 @@
                         android:layout_marginTop="20dp"
                         android:text="9125555228"
                         android:textColor="#000000"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:drawablePadding="20dp"
                         android:drawableStart="@drawable/phone"/>
 
