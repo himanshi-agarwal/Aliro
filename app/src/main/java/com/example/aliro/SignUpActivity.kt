@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
             val email = email.text.toString()
             val password = password.text.toString()
             val confirmPassword = confirmPassword.text.toString()
-            val userType = "Employee"
+            val userType = "Visitor"
 
             if (name.isBlank() || phoneStr.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
