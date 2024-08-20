@@ -69,11 +69,6 @@
 
             <menu>
                 <item
-                    android:id="@+id/help"
-                    android:icon="@drawable/help"
-                    android:title="Help Desk" />
-
-                <item
                     android:id="@+id/about"
                     android:icon="@drawable/info"
                     android:title="About" />

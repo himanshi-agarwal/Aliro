@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
-
         <item android:title="Personal Info">
-
             <menu>
                 <item android:id="@+id/home"
                     android:title="Home"
@@ -18,14 +15,11 @@
                     android:title="Edit Profile"
                     android:icon="@drawable/user_edit" />
             </menu>
-
         </item>
-
     </group>
 
     <group>
         <item android:title="Visitor Management">
-
             <menu>
                 <item android:id="@+id/pre_register"
                     android:title="Register Guest"
@@ -35,30 +29,19 @@
                     android:title="Notifications"
                     android:icon="@drawable/notifications" />
             </menu>
-
         </item>
-
     </group>
 
     <group>
-
         <item android:title="App Information">
-
             <menu>
-                <item
-                    android:id="@+id/help"
-                    android:icon="@drawable/help"
-                    android:title="Help Desk" />
-
                 <item
                     android:id="@+id/about"
                     android:icon="@drawable/info"
                     android:title="About" />
 
             </menu>
-
         </item>
-
     </group>
 
     <item android:title="Account Management">

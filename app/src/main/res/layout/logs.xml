@@ -11,9 +11,13 @@
         android:layout_width="match_parent" />
 
     <LinearLayout
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="15sp"
+        android:layout_margin="16dp"
         android:padding="16dp"
         android:gravity="start">
 
@@ -111,7 +115,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TechCorp"
+                    android:text="Google"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
@@ -122,7 +126,10 @@
         android:layout_height="wrap_content"
         android:stretchColumns="1"
         android:shrinkColumns="1"
-        android:background="@color/background">
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/rounded_corner"
+        android:padding="10dp">
 
         <TableRow
             android:background="@color/white"
@@ -174,7 +181,6 @@
                 android:gravity="center" />
         </TableRow>
 
-        <!-- Sample Data Row 1 -->
         <TableRow
             android:background="@android:color/white"
             android:padding="4dp">
