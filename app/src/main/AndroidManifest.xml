@@ -46,6 +46,11 @@
             android:exported="true"
             android:label="Notifications">
         </activity>
+        <activity
+            android:name=".LogsActivity"
+            android:exported="true"
+            android:label="Logs">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

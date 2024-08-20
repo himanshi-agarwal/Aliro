@@ -83,8 +83,6 @@ class VisitorHomeActivity : AppCompatActivity() {
 
                 R.id.timings -> Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
 
-                R.id.help -> Toast.makeText(applicationContext, "Help", Toast.LENGTH_SHORT).show()
-
                 R.id.about -> Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
 
                 R.id.logout -> {

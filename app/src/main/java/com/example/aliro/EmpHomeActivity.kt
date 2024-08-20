@@ -98,8 +98,6 @@ class EmpHomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.help -> Toast.makeText(applicationContext, "Help", Toast.LENGTH_SHORT).show()
-
                 R.id.about -> Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
 
                 R.id.logout -> {
