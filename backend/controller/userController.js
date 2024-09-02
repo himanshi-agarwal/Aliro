@@ -8,4 +8,12 @@ const getUsers = (async(req, res) => {
     ])
 })
 
-export { getUsers }
+const authLogin = (async(req, res) => {
+    const name = req.body.name
+    const email = req.body.email
+    const password = req.body.password
+    const contactNo = req.body.contactNo
+    const userType = req.body.userType
+})
+
+export { getUsers, authLogin}
