@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this,"Fill all Fields!", Toast.LENGTH_LONG).show()
             return
         } else {
-            fetchData(name, pass)
+            sendData(name, pass)
         }
     }
 
