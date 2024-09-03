@@ -2,14 +2,14 @@ package com.example.aliro
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var loginLink : TextView
@@ -19,6 +19,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var password : EditText
     private lateinit var confirmPassword : EditText
     private lateinit var email : EditText
+
+    private var db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +41,11 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         signupButton.setOnClickListener(){
-            val db = DBHelper(this, null)
-
-            val name = userName.text.toString()
-            val phoneStr = phoneNo.text.toString()
-            val email = email.text.toString()
-            val password = password.text.toString()
-            val confirmPassword = confirmPassword.text.toString()
+            val name = userName.text.toString().trim()
+            val phoneStr = phoneNo.text.toString().trim()
+            val email = email.text.toString().trim()
+            val password = password.text.toString().trim()
+            val confirmPassword = confirmPassword.text.toString().trim()
             val userType = "Visitor"
 
             if (name.isBlank() || phoneStr.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
@@ -54,15 +54,31 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             if(checkPassword(password, confirmPassword)){
-                db.addUser(name, password, email, phoneStr, userType)
+                insertData(name, phoneStr, email, password, userType)
+            } else {
+                Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun insertData(name: String, phone_no: String, email: String, password: String, usertype: String){
+        val userMap = hashMapOf(
+            "name" to name,
+            "phone_no" to phone_no,
+            "email" to email,
+            "password" to password,
+            "user_type" to usertype
+        )
+
+        db.collection("user").document().set(userMap)
+            .addOnSuccessListener {
                 Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
-            else{
-                Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Registration Failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
-        }
     }
 
     private fun checkPassword(p: String, cp: String) : Boolean{
