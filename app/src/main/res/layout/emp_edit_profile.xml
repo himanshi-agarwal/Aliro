@@ -61,7 +61,6 @@
                             android:layout_marginBottom="11dp"
                             android:background="@null"
                             android:clickable="true"
-                            android:contentDescription="@string/camera_desc"
                             android:focusable="true"
                             android:src="@drawable/camera" />
                     </RelativeLayout>
@@ -78,7 +77,7 @@
                 android:background="@drawable/rounded_corners_background"
                 android:clipToPadding="false"
                 android:elevation="8dp"
-                android:paddingTop="16dp"> <!-- Adjusted padding for a better appearance -->
+                android:paddingTop="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,7 +85,6 @@
                     android:orientation="vertical"
                     android:padding="18dp">
 
-                    <!-- Name Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -95,7 +93,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Name EditText -->
                     <EditText
                         android:id="@+id/emp_name"
                         android:layout_width="match_parent"
@@ -104,7 +101,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Email Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,7 +110,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Email EditText -->
                     <EditText
                         android:id="@+id/emp_email"
                         android:layout_width="match_parent"
@@ -125,7 +120,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Phone Number Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,7 +129,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Phone Number EditText -->
                     <EditText
                         android:id="@+id/emp_phone"
                         android:layout_width="match_parent"
@@ -146,7 +139,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Role Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -156,7 +148,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Role EditText -->
                     <EditText
                         android:id="@+id/emp_role"
                         android:layout_width="match_parent"
@@ -167,7 +158,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Company Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -177,7 +167,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Company EditText -->
                     <EditText
                         android:id="@+id/emp_company"
                         android:layout_width="match_parent"
@@ -188,7 +177,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Location Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -198,7 +186,6 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
-                    <!-- Location EditText -->
                     <EditText
                         android:id="@+id/emp_location"
                         android:layout_width="match_parent"
@@ -209,7 +196,6 @@
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <!-- Save and Cancel Buttons Side by Side -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
