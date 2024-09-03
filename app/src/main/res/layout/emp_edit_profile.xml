@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmpEdit">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/profile"
+                android:layout_width="match_parent"
+                android:layout_height="210dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="75dp"> <!-- Adjusted radius for larger size -->
+
+                    <ImageView
+                        android:id="@+id/account"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circular_background"
+                        android:padding="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/account" />
+
+                    <!-- Camera Icon at the corner -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/camera_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="11dp"
+                            android:background="@null"
+                            android:clickable="true"
+                            android:contentDescription="@string/camera_desc"
+                            android:focusable="true"
+                            android:src="@drawable/camera" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <!-- New white background layout -->
+            <RelativeLayout
+                android:id="@+id/white_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_corners_background"
+                android:clipToPadding="false"
+                android:elevation="8dp"
+                android:paddingTop="16dp"> <!-- Adjusted padding for a better appearance -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <!-- Name Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Name"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Name EditText -->
+                    <EditText
+                        android:id="@+id/emp_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Himanshi Agarwal"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Email Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Email ID"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Email EditText -->
+                    <EditText
+                        android:id="@+id/emp_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/email"
+                        android:drawablePadding="20dp"
+                        android:text="himanshi@gmail.com"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Phone Number Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Mobile Number"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Phone Number EditText -->
+                    <EditText
+                        android:id="@+id/emp_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/phone"
+                        android:drawablePadding="20dp"
+                        android:text="9125555228"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Role Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Designation"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Role EditText -->
+                    <EditText
+                        android:id="@+id/emp_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/role"
+                        android:drawablePadding="20dp"
+                        android:text="Manager"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Company Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Company"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Company EditText -->
+                    <EditText
+                        android:id="@+id/emp_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/company"
+                        android:drawablePadding="20dp"
+                        android:text="Google"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Location Hint -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Location"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <!-- Location EditText -->
+                    <EditText
+                        android:id="@+id/emp_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/location"
+                        android:drawablePadding="20dp"
+                        android:text="Bengaluru"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <!-- Save and Cancel Buttons Side by Side -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/save_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:backgroundTint="#009688"
+                            android:text="Save"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:padding="16dp"
+                            android:layout_marginEnd="8dp" /> <!-- Added margin -->
+
+                        <Button
+                            android:id="@+id/cancel_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/black"
+                            android:text="Cancel"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:padding="16dp"
+                            android:layout_marginStart="8dp" /> <!-- Added margin -->
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="25dp"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/emp_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
