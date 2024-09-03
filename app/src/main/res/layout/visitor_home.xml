@@ -55,24 +55,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:fontFamily="sans-serif-smallcaps"
                         android:gravity="center"
                         android:text="Gaurav Jain"
+                        android:fontFamily="@font/exo_2_semibold"
                         android:layout_marginTop="160dp"
                         android:textColor="#000000"
-                        android:textSize="30sp"
+                        android:textSize="33sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/visitor_usertype"
+                        android:id="@+id/user_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/lato_italic"
+                        android:textStyle="bold"
                         android:gravity="center"
                         android:text="Visitor"
-                        android:layout_marginTop="200dp"
+                        android:layout_marginTop="210dp"
                         android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:textSize="22sp"/>
 
                 </RelativeLayout>
                 <LinearLayout
@@ -90,7 +91,8 @@
                         android:text="gaurav@gmail.com"
                         android:textColor="#000000"
                         android:layout_marginTop="20dp"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/lato_italic"
                         android:layout_marginBottom="20dp"
                         android:drawablePadding="20dp"
                         android:drawableStart="@drawable/email"/>
@@ -107,8 +109,9 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
                         android:text="9125555228"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:drawablePadding="20dp"
                         android:drawableStart="@drawable/phone"/>
 

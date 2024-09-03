@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/lato_italic"
             android:text="Version 1.0"
             android:layout_gravity="center"/>
 
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:padding="20dp"
+            android:fontFamily="@font/lato_italic"
             android:text="ALIRO enhances security and streamlines access management. Employees gain entry through secure facial recognition, while visitors register via the app, linking their visit to an employee. The app notifies the employee for approval and tracks movement history for both employees and visitors. It also manages vehicle entry by scanning number plates and allocating parking spaces, improving the overall user experience and ensuring a safer, more efficient tech park environment."
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceBody1" />
@@ -69,6 +71,7 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:textAlignment="center"
+            android:fontFamily="@font/lato_italic"
             android:text="Our vision is to become the leading provider of access control solutions, recognized for our innovation, reliability, and commitment to customer satisfaction."
             android:textAppearance="?attr/textAppearanceBody1" />
 
@@ -88,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
+            android:fontFamily="@font/lato_italic"
             android:textAlignment="center"
             android:text="Our mission is to provide secure, efficient, and user-friendly access control solutions for tech parks, enhancing safety and convenience for all users."
             android:textAppearance="?attr/textAppearanceBody1" />
@@ -210,7 +214,7 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/account"/>
+                    android:src="@drawable/sumit"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -262,6 +266,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="20dp"
+            android:fontFamily="@font/lato_italic"
             android:text="Address: 123 Tech Park, Bengaluru, India\nPhone: +91 9125555228"
             android:textAppearance="?attr/textAppearanceBody1" />
 
