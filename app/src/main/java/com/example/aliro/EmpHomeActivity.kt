@@ -98,7 +98,11 @@ class EmpHomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.about -> Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                R.id.about -> {
+                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, About::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()

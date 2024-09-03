@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var loginLink : TextView
-    private lateinit var backButton : ImageButton
     private lateinit var signupButton : Button
     private lateinit var userName : EditText
     private lateinit var phoneNo : EditText
@@ -27,7 +26,6 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.signup)
 
         loginLink = findViewById(R.id.loginLink)
-        backButton = findViewById(R.id.backButton)
         signupButton = findViewById(R.id.signup_button)
         userName = findViewById(R.id.username)
         phoneNo = findViewById(R.id.phone_no)
@@ -64,10 +62,6 @@ class SignUpActivity : AppCompatActivity() {
             else{
                 Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
             }
-        }
-
-        backButton.setOnClickListener(){
-            finish()
         }
     }
 
