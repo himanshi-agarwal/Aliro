@@ -85,7 +85,7 @@ class VisitorHomeActivity : AppCompatActivity() {
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, About::class.java)
+                    val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
                 }
 
