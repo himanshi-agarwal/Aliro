@@ -52,27 +52,25 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun fetchData(name: String, password: String) {
-        db.collection("users")
+        db.collection("user")
             .whereEqualTo("name", name)
             .whereEqualTo("password", password)
             .get()
-            .addOnSuccessListener { document ->
-                Log.d("data", document)
+            .addOnSuccessListener {  document ->
                 if(document.isEmpty){
                     Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                 }
                 else {
-                    for (d in document) {
+                    for (d in document.documents) {
                         val userName = d.getString("name")
                         val userType = d.getString("user_type")
-                        val intent:Intent
+
                         Toast.makeText(this, "Welcome, $userName", Toast.LENGTH_SHORT).show()
 
-                        if (userType == "Employee"){
-                            intent = Intent (this, EmpHomeActivity::class.java)
-                        }
-                        else{
-                            intent = Intent (this, VisitorHomeActivity::class.java)
+                        val intent = if (userType == "Employee") {
+                            Intent(this, EmpHomeActivity::class.java)
+                        } else {
+                            Intent(this, VisitorHomeActivity::class.java)
                         }
                         startActivity(intent)
                         finish()

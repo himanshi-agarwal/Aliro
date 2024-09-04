@@ -60,7 +60,6 @@
                             android:layout_marginBottom="11dp"
                             android:background="@null"
                             android:clickable="true"
-                            android:contentDescription="@string/camera_desc"
                             android:focusable="true"
                             android:src="@drawable/camera" />
                     </RelativeLayout>
