@@ -12,7 +12,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 
-class EmpEdit : AppCompatActivity() {
+class EmpEditActivity : AppCompatActivity() {
 
     private lateinit var cameraIcon: ImageView
     private lateinit var profileImageView: ImageView
