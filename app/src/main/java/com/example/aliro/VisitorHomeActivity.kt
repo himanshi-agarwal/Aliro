@@ -2,6 +2,7 @@ package com.example.aliro
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -13,16 +14,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
-    private lateinit var user: ArrayList<String>
-    private lateinit var username: TextView
-    private lateinit var useremail: TextView
-    private lateinit var userphone: TextView
+    private lateinit var visitorName: TextView
+    private lateinit var visitorEmail: TextView
+    private lateinit var visitorPhone: TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(drawerToggle.onOptionsItemSelected(item)){
@@ -49,17 +51,21 @@ class VisitorHomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.visitor_home)
 
-        user = intent.getStringArrayListExtra("user") ?: arrayListOf()
+        visitorName = findViewById(R.id.visitor_username)
+        visitorEmail = findViewById(R.id.visitor_email)
+        visitorPhone = findViewById(R.id.visitor_phone)
 
-        username = findViewById(R.id.visitor_username)
-        useremail = findViewById(R.id.visitor_email)
-        userphone = findViewById(R.id.visitor_phone)
+        getUserData { visitor ->
+            if(checkSession() && visitor != null){
+                visitorName.text = visitor[1]
+                visitorEmail.text = visitor[1]
+                visitorPhone.text = visitor[1]
+            } else {
+                Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        username.text = user[0]
-        useremail.text = user[1]
-        userphone.text = user[2]
-
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -97,6 +103,54 @@ class VisitorHomeActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun getUserData(callback: (Array<String?>?) -> Unit) {
+        if(checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+            val userName = sharedPreference.getString("userName", null)
+            val userType = sharedPreference.getString("userType", null)
+
+            val db = Firebase.firestore
+            val userRef = db.collection("user").document(userId!!)
+
+            db.collection("visitor")
+                .whereEqualTo("user_id", userRef)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.isEmpty) {
+                        Log.d("Id", userId.toString())
+                        Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                    } else {
+                        var userCompany : String? = null
+                        var userRole : String? = null
+                        var userLocation : String? = null
+
+                        for (d in document.documents) {
+                            userCompany = d.getString("Company").toString()
+                            userRole = d.getString("Role").toString()
+                            userLocation = d.getString("location").toString()
+                        }
+
+                        val visitorArray = arrayOf(userId, userName, userType, userRole, userCompany, userLocation)
+                        callback(visitorArray)
+                    }
+                }
+                .addOnFailureListener {e ->
+                    Log.e("Error", e.message.toString())
+                    Toast.makeText(this, "Error Fetching Data", Toast.LENGTH_SHORT).show()
+                    Log.e("Firestore Error", "Error fetching employee document", e)
+                    callback(null)
+                }
+        } else {
+            callback(null)
+        }
+    }
+
+    private fun checkSession() : Boolean{
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        return sharedPreference.getBoolean("loggedIn", false)
     }
 
     private fun logout() {

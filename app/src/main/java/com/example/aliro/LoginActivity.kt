@@ -62,8 +62,13 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else {
                     for (d in document.documents) {
+                        val userId = d.id
                         val userName = d.getString("name")
                         val userType = d.getString("user_type")
+
+                        if (userName != null && userType != null) {
+                            saveSession(userName, userType, userId)
+                        }
 
                         Toast.makeText(this, "Welcome, $userName", Toast.LENGTH_SHORT).show()
 
@@ -77,8 +82,18 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 Toast.makeText(this, "Login Failed! Try Again..", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun saveSession(userName : String, userType : String, userId : String){
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putString("userId", userId)
+        editor.putString("userName", userName)
+        editor.putString("userType", userType)
+        editor.putBoolean("loggedIn", true)
+        editor.apply()
     }
 }
