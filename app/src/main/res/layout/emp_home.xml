@@ -54,11 +54,11 @@
                         android:id="@+id/emp_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="160dp"
+                        android:layout_marginTop="145dp"
                         android:layout_marginBottom="16dp"
                         android:fontFamily="@font/exo_2_semibold"
                         android:gravity="center"
-                        android:text="Himanshi Agarwal"
+                        android:text="User"
                         android:textColor="#000000"
                         android:textSize="33sp"
                         android:textStyle="bold" />
@@ -89,14 +89,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="himanshi@gmail.com"
+                            android:text="user_email@gmail.com"
                             android:textColor="#000000"
                             android:layout_marginTop="20dp"
                             android:textSize="22sp"
                             android:fontFamily="@font/lato_italic"
                             android:layout_marginBottom="10dp"
                             android:drawablePadding="20dp"
-                            android:drawableStart="@drawable/email"/>
+                            app:drawableStartCompat="@drawable/email" />
 
                         <View
                             android:layout_width="match_parent"
@@ -110,12 +110,12 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="10dp"
-                            android:text="9125555228"
+                            android:text="user_contact"
                             android:fontFamily="@font/lato_italic"
                             android:textColor="#000000"
                             android:textSize="22sp"
                             android:drawablePadding="20dp"
-                            android:drawableStart="@drawable/phone"/>
+                            app:drawableStartCompat="@drawable/phone" />
 
                         <View
                             android:layout_width="match_parent"
@@ -128,13 +128,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
-                            android:text="Manager"
+                            android:text="user_role"
                             android:fontFamily="@font/lato_italic"
                             android:layout_marginBottom="10dp"
                             android:textColor="#000000"
                             android:textSize="22sp"
                             android:drawablePadding="20dp"
-                            android:drawableStart="@drawable/role" />
+                            app:drawableStartCompat="@drawable/role" />
 
                         <View
                             android:layout_width="match_parent"
@@ -148,12 +148,12 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/lato_italic"
-                            android:text="Google"
+                            android:text="user_company"
                             android:textColor="#000000"
                             android:layout_marginBottom="10dp"
                             android:textSize="22sp"
                             android:drawablePadding="20dp"
-                            android:drawableStart="@drawable/company"/>
+                            app:drawableStartCompat="@drawable/company" />
 
                         <View
                             android:layout_width="match_parent"
@@ -166,12 +166,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
-                            android:text="Bengaluru"
+                            android:text="user_location"
                             android:fontFamily="@font/lato_italic"
                             android:textColor="#000000"
                             android:textSize="22sp"
                             android:drawablePadding="20dp"
-                            android:drawableStart="@drawable/location" />
+                            app:drawableStartCompat="@drawable/location" />
 
                     </LinearLayout>
             </RelativeLayout>

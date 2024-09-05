@@ -61,10 +61,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertData(name: String, phone_no: String, email: String, password: String, usertype: String){
+    private fun insertData(name: String, phoneNo: String, email: String, password: String, usertype: String){
         val userMap = hashMapOf(
             "name" to name,
-            "phone_no" to phone_no,
+            "phone_no" to phoneNo,
             "email" to email,
             "password" to password,
             "user_type" to usertype
