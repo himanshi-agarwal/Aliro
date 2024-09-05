@@ -18,7 +18,7 @@
         <include
             layout="@layout/appbar"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    app:cardCornerRadius="75dp"> <!-- Adjusted radius for larger size -->
+                    app:cardCornerRadius="75dp">
 
                     <ImageView
                         android:id="@+id/account"
@@ -90,8 +90,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="Name"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="19sp" />
 
                     <EditText
                         android:id="@+id/emp_name"
@@ -106,15 +107,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="4dp"
-                        android:text="Email ID"
+                        android:text="Email"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="19sp" />
 
                     <EditText
                         android:id="@+id/emp_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/email"
                         android:drawablePadding="20dp"
                         android:text="himanshi@gmail.com"
                         android:textColor="#000000"
@@ -125,74 +126,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="4dp"
-                        android:text="Mobile Number"
+                        android:text="Phone Number"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="19sp" />
 
                     <EditText
                         android:id="@+id/emp_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/phone"
                         android:drawablePadding="20dp"
                         android:text="9125555228"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Designation"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-
-                    <EditText
-                        android:id="@+id/emp_role"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/role"
-                        android:drawablePadding="20dp"
-                        android:text="Manager"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Company"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-
-                    <EditText
-                        android:id="@+id/emp_company"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/company"
-                        android:drawablePadding="20dp"
-                        android:text="Google"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Location"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-
-                    <EditText
-                        android:id="@+id/emp_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/location"
-                        android:drawablePadding="20dp"
-                        android:text="Bengaluru"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
@@ -200,7 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="22dp"
                         android:orientation="horizontal">
 
                         <Button
@@ -213,14 +157,14 @@
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:padding="16dp"
-                            android:layout_marginEnd="8dp" /> <!-- Added margin -->
+                            android:layout_marginEnd="8dp" />
 
                         <Button
                             android:id="@+id/cancel_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="#EC5858"
                             android:text="Cancel"
                             android:textColor="@color/white"
                             android:textSize="18sp"
