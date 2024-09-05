@@ -34,7 +34,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    app:cardCornerRadius="75dp"> <!-- Adjusted radius for larger size -->
+                    app:cardCornerRadius="75dp">
 
                     <ImageView
                         android:id="@+id/account"
@@ -46,7 +46,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/account" />
 
-                    <!-- Camera Icon at the corner -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -59,7 +58,6 @@
                             android:layout_alignParentBottom="true"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="11dp"
-                            android:background="@null"
                             android:clickable="true"
                             android:focusable="true"
                             android:src="@drawable/camera" />
@@ -67,7 +65,6 @@
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
 
-            <!-- New white background layout -->
             <RelativeLayout
                 android:id="@+id/white_background"
                 android:layout_width="match_parent"

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:padding="20dp"
     android:background="@color/other"
     android:orientation="horizontal">
 
@@ -14,7 +13,8 @@
         android:id="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start">
+        android:gravity="start"
+        android:paddingStart="20dp">
 
         <ImageView
             android:id="@+id/logo_image"
@@ -30,32 +30,31 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/header_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:gravity="center"
-            android:text="Gaurav Jain"
+            android:text="user_name"
             android:fontFamily="@font/exo_2_semibold"
             android:textColor="#000000"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/user_type"
+            app:layout_constraintBottom_toTopOf="@+id/header_user_type"
             app:layout_constraintStart_toEndOf="@+id/logo_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/user_type"
-            android:layout_width="88dp"
+            android:id="@+id/header_user_type"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="start"
-            android:layout_marginTop="15dp"
-            android:text="Visitor"
+            android:layout_marginBottom="12dp"
             android:fontFamily="@font/lato_italic"
+            android:gravity="start"
+            android:text="user_type"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/logo_image" />
 

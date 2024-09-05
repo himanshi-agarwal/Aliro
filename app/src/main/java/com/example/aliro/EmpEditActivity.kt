@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
-
 class EmpEditActivity : AppCompatActivity() {
 
     private lateinit var cameraIcon: ImageView
