@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.firestore
 
 class EmpHomeActivity : AppCompatActivity() {
@@ -64,11 +65,13 @@ class EmpHomeActivity : AppCompatActivity() {
         getUserData { employee ->
             if(checkSession() && employee != null){
                 empName.text = employee[1]
-                empEmail.text = employee[1]
-                empPhone.text = employee[1]
-                empRole.text = employee[3]
-                empCompany.text = employee[4]
-                empLocation.text = employee[5]
+                empEmail.text = employee[3]
+                empPhone.text = employee[4]
+                empRole.text = employee[5]
+                empCompany.text = employee[6]
+                empLocation.text = employee[7]
+
+                updateSidebarHeader()
             } else {
                 Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
             }
@@ -138,6 +141,30 @@ class EmpHomeActivity : AppCompatActivity() {
             val db = Firebase.firestore
             val userRef = db.collection("user").document(userId!!)
 
+            val employeeArray : Array<String?> = arrayOf(userId, userName, userType, null, null, null, null, null)
+
+            db.collection("user")
+                .whereEqualTo(FieldPath.documentId(), userRef)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.isEmpty) {
+                        Log.d("Id", userId.toString())
+                        Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                    } else {
+                        for (d in document.documents) {
+                            employeeArray[3] = d.getString("email")
+                            val phoneNo = d.get("phone_no")
+                            employeeArray[4] = phoneNo?.toString()
+                        }
+                    }
+                }
+                .addOnFailureListener {e ->
+                    Log.e("Error", e.message.toString())
+                    Toast.makeText(this, "Error Fetching Data", Toast.LENGTH_SHORT).show()
+                    Log.e("Firestore Error", "Error fetching employee document", e)
+                    callback(null)
+                }
+
             db.collection("employee")
                 .whereEqualTo("user_id", userRef)
                 .get()
@@ -146,17 +173,11 @@ class EmpHomeActivity : AppCompatActivity() {
                         Log.d("Id", userId.toString())
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
-                        var userCompany : String? = null
-                        var userRole : String? = null
-                        var userLocation : String? = null
-
                         for (d in document.documents) {
-                            userCompany = d.getString("Company").toString()
-                            userRole = d.getString("Role").toString()
-                            userLocation = d.getString("location").toString()
+                            employeeArray[5] =  d.getString("Company")
+                            employeeArray[6] = d.getString("Role")
+                            employeeArray[7] = d.getString("location")
                         }
-
-                        val employeeArray = arrayOf(userId, userName, userType, userRole, userCompany, userLocation)
                         callback(employeeArray)
                     }
                 }
@@ -174,5 +195,16 @@ class EmpHomeActivity : AppCompatActivity() {
     private fun checkSession() : Boolean{
         val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
         return sharedPreference.getBoolean("loggedIn", false)
+    }
+
+    private fun updateSidebarHeader() {
+        val header = navView.getHeaderView(0)
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+
+        val headerUserName : TextView = header.findViewById(R.id.header_user_name)
+        val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+
+        headerUserName.text = sharedPreference.getString("userName", null)
+        headerUserType.text = sharedPreference.getString("userType", null)
     }
 }
