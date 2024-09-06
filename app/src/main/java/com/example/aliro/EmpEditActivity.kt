@@ -6,10 +6,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class EmpEditActivity : AppCompatActivity() {
 
@@ -42,19 +46,16 @@ class EmpEditActivity : AppCompatActivity() {
         empCompanyEditText = findViewById(R.id.emp_company)
         empLocationEditText = findViewById(R.id.emp_location)
 
-        // Camera icon click listener
         cameraIcon.setOnClickListener {
             openCameraOrGallery()
         }
 
-        // Save button click listener
         saveButton.setOnClickListener {
             saveEmployeeProfile()
         }
 
-        // Cancel button click listener
         cancelButton.setOnClickListener {
-            finish() // Close the activity
+            finish()
         }
     }
 
@@ -101,16 +102,37 @@ class EmpEditActivity : AppCompatActivity() {
     }
 
     private fun saveEmployeeProfile() {
-        // Get the data from the EditTexts
-        val name = empNameEditText.text.toString()
-        val email = empEmailEditText.text.toString()
-        val phone = empPhoneEditText.text.toString()
-        val role = empRoleEditText.text.toString()
-        val company = empCompanyEditText.text.toString()
-        val location = empLocationEditText.text.toString()
+        val updatedName = empNameEditText.text.toString()
+        val updatedEmail = empEmailEditText.text.toString()
+        val updatedPhone = empPhoneEditText.text.toString()
 
-        // Save the data (you can store it in a database, SharedPreferences, or send to a server)
-        // For now, just show a confirmation message
+        if(checkSession()) {
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+            val editor = sharedPreference.edit()
+
+            val db = Firebase.firestore
+            val userDocRef = db.collection("user").document(userId!!)
+
+            userDocRef.update(
+                mapOf(
+                    "name" to updatedName,
+                    "email" to updatedEmail,
+                    "phone_no" to updatedPhone
+                )
+            )
+                .addOnSuccessListener {
+                    editor.putString("userName", updatedName)
+                    editor.apply()
+                    Toast.makeText(this, "Profile Updated Successfully", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener {e ->
+                    Toast.makeText(this, "Error in Saving Profile", Toast.LENGTH_LONG).show()
+                    Log.e("Firestore Error", e.message.toString())
+                }
+        }
+
+
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle("Profile Saved")
             .setMessage("Employee profile has been saved successfully!")
@@ -118,5 +140,10 @@ class EmpEditActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun checkSession() : Boolean{
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        return sharedPreference.getBoolean("loggedIn", false)
     }
 }

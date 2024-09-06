@@ -126,6 +126,11 @@ class EmpHomeActivity : AppCompatActivity() {
     }
 
     private fun logout() {
+        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun fetchData(name: String, password: String) {
         db.collection("user")
-            .whereEqualTo("name", name)
+            .whereEqualTo("user_name", name)
             .whereEqualTo("password", password)
             .get()
             .addOnSuccessListener {  document ->
@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 else {
                     for (d in document.documents) {
                         val userId = d.id
-                        val userName = d.getString("name")
+                        val userName = d.getString("user_name")
                         val userType = d.getString("user_type")
 
                         if (userName != null && userType != null) {
