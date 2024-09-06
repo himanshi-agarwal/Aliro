@@ -73,6 +73,7 @@
                 android:background="@color/background"
                 android:textColor="@color/black"
                 android:hint="Username"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/lato_italic"
                 android:textColorHint="@color/black"
                 android:inputType="textEmailAddress"

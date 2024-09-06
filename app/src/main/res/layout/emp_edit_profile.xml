@@ -33,7 +33,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="10dp"
                     app:cardCornerRadius="75dp">
 
@@ -61,7 +61,7 @@
                             android:layout_marginBottom="10dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:src="@drawable/camera" />
+                            android:src="@drawable/edit" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
@@ -73,6 +73,7 @@
                 android:background="@drawable/rounded_corners_background"
                 android:clipToPadding="false"
                 android:elevation="8dp"
+                android:layout_marginTop="25dp"
                 android:paddingTop="16dp">
 
                 <LinearLayout
@@ -85,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="Name"
+                        android:text="What to Change Password?"
                         android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
                         android:textSize="19sp" />
@@ -94,45 +95,28 @@
                         android:id="@+id/emp_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Himanshi Agarwal"
+                        android:layout_marginTop="10dp"
+                        android:hint="Current Password"
                         android:textColor="#000000"
                         android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Email"
-                        android:fontFamily="@font/lato_italic"
-                        android:textColor="#000000"
-                        android:textSize="19sp" />
 
                     <EditText
                         android:id="@+id/emp_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
                         android:drawablePadding="20dp"
-                        android:text="himanshi@gmail.com"
+                        android:hint="New Password"
                         android:textColor="#000000"
                         android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Phone Number"
-                        android:fontFamily="@font/lato_italic"
-                        android:textColor="#000000"
-                        android:textSize="19sp" />
 
                     <EditText
                         android:id="@+id/emp_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="20dp"
-                        android:text="9125555228"
+                        android:layout_marginTop="27dp"
+                        android:hint="Confirm Password"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
