@@ -27,7 +27,8 @@
             <RelativeLayout
                 android:id="@+id/profile"
                 android:layout_width="match_parent"
-                android:layout_height="210dp">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
@@ -61,7 +62,7 @@
                             android:background="@null"
                             android:clickable="true"
                             android:focusable="true"
-                            android:src="@drawable/camera" />
+                            android:src="@drawable/edit" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
@@ -71,11 +72,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corners_background"
                 android:clipToPadding="false"
                 android:elevation="8dp"
-                android:paddingTop="16dp">
+                android:paddingTop="16dp"
+                android:paddingStart="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,67 +84,61 @@
                     android:orientation="vertical"
                     android:padding="18dp">
 
-                    <!-- Name Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="Name"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
 
-                    <!-- Name EditText -->
                     <EditText
                         android:id="@+id/visitor_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Gaurav Jain"
+                        android:text="vis_name"
                         android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
-                    <!-- Email Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="4dp"
-                        android:text="Email ID"
+                        android:text="Email (Optional)"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
 
-                    <!-- Email EditText -->
                     <EditText
                         android:id="@+id/visitor_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/email"
                         android:drawablePadding="20dp"
-                        android:text="gauravjain@gmail.com"
+                        android:text="vis_email"
                         android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
-                    <!-- Phone Number Hint -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="4dp"
-                        android:text="Mobile Number"
+                        android:text="Phone Number"
+                        android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
 
-                    <!-- Phone Number EditText -->
                     <EditText
                         android:id="@+id/visitor_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/phone"
                         android:drawablePadding="20dp"
                         android:textColor="#000000"
                         android:text="7809778898"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
-                    <!-- Save and Cancel Buttons Side by Side -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,7 +163,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="#EC5858"
                             android:text="Cancel"
                             android:textColor="@color/white"
                             android:textSize="18sp"
