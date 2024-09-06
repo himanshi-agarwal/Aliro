@@ -60,6 +60,8 @@ class VisitorHomeActivity : AppCompatActivity() {
                 visitorName.text = visitor[1]
                 visitorEmail.text = visitor[1]
                 visitorPhone.text = visitor[1]
+
+                updateSidebarHeader()
             } else {
                 Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
             }
@@ -120,7 +122,6 @@ class VisitorHomeActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { document ->
                     if (document.isEmpty) {
-                        Log.d("Id", userId.toString())
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
                         var userCompany : String? = null
@@ -153,7 +154,23 @@ class VisitorHomeActivity : AppCompatActivity() {
         return sharedPreference.getBoolean("loggedIn", false)
     }
 
+    private fun updateSidebarHeader() {
+        val header = navView.getHeaderView(0)
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+
+        val headerUserName : TextView = header.findViewById(R.id.header_user_name)
+        val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+
+        headerUserName.text = sharedPreference.getString("userName", null)
+        headerUserType.text = sharedPreference.getString("userType", null)
+    }
+
     private fun logout() {
+        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
