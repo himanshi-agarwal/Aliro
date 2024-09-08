@@ -149,7 +149,7 @@ class EmpHomeActivity : AppCompatActivity() {
             val employeeArray : Array<String?> = arrayOf(userId, userName, userType, null, null, null, null, null)
 
             db.collection("employee")
-                .whereEqualTo("user_id", userRef)
+                .whereEqualTo("user_ref", userRef)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document.isEmpty) {
