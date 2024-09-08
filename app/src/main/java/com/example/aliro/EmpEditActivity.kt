@@ -54,7 +54,6 @@ class EmpEditActivity : AppCompatActivity() {
         empPhoneEditText = findViewById(R.id.emp_phone)
         empRoleEditText = findViewById(R.id.emp_role)
         empCompanyEditText = findViewById(R.id.emp_company)
-        empLocationEditText = findViewById(R.id.emp_location)
 
         cameraIcon.setOnClickListener {
             openCameraOrGallery()
