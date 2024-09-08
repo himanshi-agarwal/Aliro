@@ -51,6 +51,16 @@
             android:exported="true"
             android:label="Logs">
         </activity>
+        <activity
+            android:name=".EmpEditActivity"
+            android:exported="true"
+            android:label="Edit Profile">
+        </activity>
+        <activity
+            android:name=".AdminEditActivity"
+            android:exported="true"
+            android:label="Edit Employee Details">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

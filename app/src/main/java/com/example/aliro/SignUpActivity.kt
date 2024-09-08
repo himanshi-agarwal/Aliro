@@ -68,7 +68,8 @@ class SignUpActivity : AppCompatActivity() {
             "usertype" to usertype
         )
 
-        db.collection("user").document().set(userMap)
+        db.collection("user").document()
+            .set(userMap)
             .addOnSuccessListener {
                 Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, LoginActivity::class.java))

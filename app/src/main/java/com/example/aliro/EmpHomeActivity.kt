@@ -92,16 +92,31 @@ class EmpHomeActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
                 R.id.home -> {
-                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    if (this !is EmpHomeActivity) {
+                        val intent = Intent(this, EmpHomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Home", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
                     startActivity(intent)
                 }
 
-                R.id.timings -> Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
+                }
 
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
-
-                R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
@@ -118,6 +133,7 @@ class EmpHomeActivity : AppCompatActivity() {
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -133,7 +149,6 @@ class EmpHomeActivity : AppCompatActivity() {
 
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun getUserData(callback: (Array<String?>?) -> Unit) {
@@ -148,7 +163,7 @@ class EmpHomeActivity : AppCompatActivity() {
 
             val employeeArray : Array<String?> = arrayOf(userId, userName, userType, null, null, null, null, null)
 
-            db.collection("employee")
+            db.collection("employees")
                 .whereEqualTo("user_ref", userRef)
                 .get()
                 .addOnSuccessListener { document ->
@@ -158,7 +173,7 @@ class EmpHomeActivity : AppCompatActivity() {
                         for (d in document.documents) {
                             employeeArray[3] = d.getString("EmpID")
                             employeeArray[4] = d.getString("Email")
-                            employeeArray[5] = d.getString("Phone Number")
+                            employeeArray[5] = d.getString("Phone_Number")
                             employeeArray[6] =  d.getString("Company")
                             employeeArray[7] = d.getString("Role")
                         }
