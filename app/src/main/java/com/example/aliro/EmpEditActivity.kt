@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -60,9 +61,28 @@ class EmpEditActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.save)
         cancelButton = findViewById(R.id.cancel)
 
-
         saveButton.setOnClickListener(){
-            edit_pass(pass, newpass, confirmpass)
+            val password = pass.text.toString()
+            val newpassword = newpass.text.toString()
+            val confirmpassword = confirmpass.text.toString()
+
+            if(password.isBlank()){
+                pass.error = "Filed is Empty"
+            }
+
+            if(newpassword.isBlank()){
+                newpass.error = "Filed is Empty"
+            }
+
+            if(confirmpassword.isBlank()){
+                confirmpass.error = "Filed is Empty"
+            }
+
+            editProfile(password, newpassword, confirmpassword)
+        }
+
+        cancelButton.setOnClickListener(){
+            cancelUpdate(pass, newpass, confirmpass)
         }
 
         toolbar = findViewById(R.id.toolbar)
@@ -77,6 +97,8 @@ class EmpEditActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        updateSidebarHeader()
+
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
@@ -85,15 +107,23 @@ class EmpEditActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.timings -> Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
+                    startActivity(intent)
+                }
 
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
+                }
 
-                R.id.pre_register -> Toast.makeText(
-                    applicationContext,
-                    "Pre-Register",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
@@ -108,8 +138,9 @@ class EmpEditActivity : AppCompatActivity() {
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Logged Out Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -125,7 +156,6 @@ class EmpEditActivity : AppCompatActivity() {
 
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun checkPassword(p: String, cp: String) : Boolean{
@@ -137,11 +167,7 @@ class EmpEditActivity : AppCompatActivity() {
         return sharedPreference.getBoolean("loggedIn", false)
     }
 
-    private fun edit_pass(pass : EditText, newpass : EditText, confirmpass : EditText){
-        val password = pass.text.toString()
-        val newpassword = newpass.text.toString()
-        val confirmpassword = confirmpass.text.toString()
-
+    private fun editProfile(password : String, newpassword : String, confirmpassword : String){
         if (checkPassword(newpassword, confirmpassword) && checkSession()){
             val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
             val userId = sharedPreference.getString("userId", null)
@@ -156,8 +182,7 @@ class EmpEditActivity : AppCompatActivity() {
                     for (d in document.documents) {
                         val dbPassword = d.getString("password")
                         if (dbPassword != password) {
-                            Toast.makeText(this, "Incorrect Current Password!", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(this, "Incorrect Current Password!", Toast.LENGTH_SHORT).show()
                             return@addOnSuccessListener
                         }
                     }
@@ -170,13 +195,36 @@ class EmpEditActivity : AppCompatActivity() {
                         )
                     ).addOnSuccessListener {
                         Toast.makeText(this, "Data updated successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, EmpHomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }.addOnFailureListener {
                         Toast.makeText(this, "Error Updating Password", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Incorrect Current Password!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "User Details Not found", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    private fun cancelUpdate(pass : EditText, newpass : EditText, confirmpass : EditText){
+        pass.text.clear()
+        newpass.text.clear()
+        confirmpass.text.clear()
+
+        Toast.makeText(this, "Changes Discarded", Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
+    private fun updateSidebarHeader() {
+        val header = navView.getHeaderView(0)
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+
+        val headerUserName : TextView = header.findViewById(R.id.header_user_name)
+        val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+
+        headerUserName.text = sharedPreference.getString("userName", null)
+        headerUserType.text = sharedPreference.getString("userType", null)
     }
 }

@@ -7,12 +7,12 @@
                     android:title="Home"
                     android:icon="@drawable/home" />
 
-                <item android:id="@+id/timings"
+                <item android:id="@+id/logs"
                     android:title="My Logs"
                     android:icon="@drawable/logs" />
 
                 <item android:id="@+id/profile"
-                    android:title="Edit Password"
+                    android:title="Edit Profile"
                     android:icon="@drawable/user_edit" />
             </menu>
         </item>

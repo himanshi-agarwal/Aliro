@@ -7,4 +7,6 @@
     <color name="text">#EDF6F9</color>
     <color name="other">#0C5C5E</color>
     <color name="background">#eaedf2</color>
+    <color name="cancel">#EC5858</color>
+    <color name="approve">#009688</color>
 </resources>

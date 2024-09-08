@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EmpEditActivity">
@@ -132,7 +131,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="#009688"
+                            android:backgroundTint="@color/approve"
                             android:text="Save"
                             android:textColor="@color/white"
                             android:textSize="18sp"
@@ -144,12 +143,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="#EC5858"
+                            android:backgroundTint="@color/cancel"
                             android:text="Cancel"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:padding="16dp"
-                            android:layout_marginStart="8dp" /> <!-- Added margin -->
+                            android:layout_marginStart="8dp" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -162,7 +161,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         app:headerLayout="@layout/header"
         app:menu="@menu/emp_menu" />
 
