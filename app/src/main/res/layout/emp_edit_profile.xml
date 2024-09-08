@@ -92,7 +92,7 @@
                         android:textSize="19sp" />
 
                     <EditText
-                        android:id="@+id/emp_name"
+                        android:id="@+id/curr_pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -101,7 +101,7 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/emp_email"
+                        android:id="@+id/new_pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27dp"
@@ -111,7 +111,7 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/emp_phone"
+                        android:id="@+id/confirm_pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="20dp"

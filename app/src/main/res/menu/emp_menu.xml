@@ -12,7 +12,7 @@
                     android:icon="@drawable/logs" />
 
                 <item android:id="@+id/profile"
-                    android:title="Edit Profile"
+                    android:title="Edit Password"
                     android:icon="@drawable/user_edit" />
             </menu>
         </item>
