@@ -23,12 +23,12 @@ class EmpHomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
+    private lateinit var empid : TextView
     private lateinit var empName: TextView
     private lateinit var empEmail: TextView
     private lateinit var empPhone: TextView
     private lateinit var empRole: TextView
     private lateinit var empCompany: TextView
-    private lateinit var empLocation: TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(drawerToggle.onOptionsItemSelected(item)){
@@ -55,21 +55,21 @@ class EmpHomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.emp_home)
 
+        empid = findViewById(R.id.emp_id)
         empName = findViewById(R.id.emp_name)
         empEmail = findViewById(R.id.emp_email)
         empPhone = findViewById(R.id.emp_phone)
         empRole = findViewById(R.id.emp_role)
         empCompany = findViewById(R.id.emp_company)
-        empLocation = findViewById(R.id.emp_location)
 
         getUserData { employee ->
             if(checkSession() && employee != null){
                 empName.text = employee[1]
-                empEmail.text = employee[3]
-                empPhone.text = employee[4]
-                empRole.text = employee[5]
-                empCompany.text = employee[6]
-                empLocation.text = employee[7]
+                empid.text = employee[3]
+                empEmail.text = employee[4]
+                empPhone.text = employee[5]
+                empRole.text = employee[6]
+                empCompany.text = employee[7]
 
                 updateSidebarHeader()
             } else {
@@ -148,48 +148,25 @@ class EmpHomeActivity : AppCompatActivity() {
 
             val employeeArray : Array<String?> = arrayOf(userId, userName, userType, null, null, null, null, null)
 
-            db.collection("user")
-                .whereEqualTo(FieldPath.documentId(), userRef)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document.isEmpty) {
-                        Log.d("Id", userId.toString())
-                        Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
-                    } else {
-                        for (d in document.documents) {
-                            employeeArray[3] = d.getString("email")
-                            val phoneNo = d.get("phone_no")
-                            employeeArray[4] = phoneNo?.toString()
-                        }
-                    }
-                }
-                .addOnFailureListener {e ->
-                    Log.e("Error", e.message.toString())
-                    Toast.makeText(this, "Error Fetching Data", Toast.LENGTH_SHORT).show()
-                    Log.e("Firestore Error", "Error fetching employee document", e)
-                    callback(null)
-                }
-
             db.collection("employee")
                 .whereEqualTo("user_id", userRef)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document.isEmpty) {
-                        Log.d("Id", userId.toString())
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
                         for (d in document.documents) {
-                            employeeArray[5] =  d.getString("Company")
-                            employeeArray[6] = d.getString("Role")
-                            employeeArray[7] = d.getString("location")
+                            employeeArray[3] = d.getString("EmpID")
+                            employeeArray[4] = d.getString("Email")
+                            employeeArray[5] = d.getString("Phone Number")
+                            employeeArray[6] =  d.getString("Company")
+                            employeeArray[7] = d.getString("Role")
                         }
                         callback(employeeArray)
                     }
                 }
                 .addOnFailureListener {e ->
-                    Log.e("Error", e.message.toString())
                     Toast.makeText(this, "Error Fetching Data", Toast.LENGTH_SHORT).show()
-                    Log.e("Firestore Error", "Error fetching employee document", e)
                     callback(null)
                 }
         } else {
