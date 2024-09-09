@@ -58,8 +58,8 @@ class VisitorHomeActivity : AppCompatActivity() {
         getUserData { visitor ->
             if(checkSession() && visitor != null){
                 visitorName.text = visitor[1]
-                visitorEmail.text = visitor[1]
-                visitorPhone.text = visitor[1]
+                visitorEmail.text = visitor[3]
+                visitorPhone.text = visitor[4]
 
                 updateSidebarHeader()
             } else {
@@ -117,24 +117,19 @@ class VisitorHomeActivity : AppCompatActivity() {
             val db = Firebase.firestore
             val userRef = db.collection("user").document(userId!!)
 
-            db.collection("visitor")
-                .whereEqualTo("user_id", userRef)
+            val visitorArray : Array<String?> = arrayOf(userId, userName, userType, null, null)
+
+            db.collection("visitors")
+                .whereEqualTo("user_ref", userRef)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document.isEmpty) {
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
-                        var userCompany : String? = null
-                        var userRole : String? = null
-                        var userLocation : String? = null
-
                         for (d in document.documents) {
-                            userCompany = d.getString("Company").toString()
-                            userRole = d.getString("Role").toString()
-                            userLocation = d.getString("location").toString()
+                            visitorArray[3] = d.getString("Email").toString()
+                            visitorArray[4] = d.getLong("Phone Number").toString()
                         }
-
-                        val visitorArray = arrayOf(userId, userName, userType, userRole, userCompany, userLocation)
                         callback(visitorArray)
                     }
                 }

@@ -53,11 +53,11 @@
                         android:id="@+id/visitor_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="155dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/exo_2_semibold"
                         android:gravity="center"
                         android:text="Vis_name"
-                        android:fontFamily="@font/exo_2_semibold"
-                        android:layout_marginTop="160dp"
                         android:textColor="#000000"
                         android:textSize="33sp"
                         android:textStyle="bold" />
@@ -72,7 +72,7 @@
                         android:text="Visitor"
                         android:layout_marginTop="210dp"
                         android:textColor="#000000"
-                        android:textSize="22sp"/>
+                        android:textSize="18sp"/>
 
                 </RelativeLayout>
                 <LinearLayout
@@ -125,7 +125,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         app:headerLayout="@layout/header"
         app:menu="@menu/visitor_menu">
 
