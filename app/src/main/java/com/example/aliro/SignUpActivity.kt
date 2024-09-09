@@ -68,12 +68,26 @@ class SignUpActivity : AppCompatActivity() {
             "usertype" to usertype
         )
 
+        val VisitorMap = hashMapOf(
+            "Email" to email,
+            "Phone Number" to phoneNo,
+            "Image" to "",
+            "Purpose" to "",
+            "VisitDate" to "",
+            "Otp" to "",
+            "user_ref" to ""
+        )
+
         db.collection("user").document()
             .set(userMap)
             .addOnSuccessListener {
-                Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                db.collection("visitors").document()
+                    .set(VisitorMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Registration Failed: ${e.message}", Toast.LENGTH_LONG).show()
