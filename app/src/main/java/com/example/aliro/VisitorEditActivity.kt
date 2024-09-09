@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-class VisitorEdit : AppCompatActivity() {
+class VisitorEditActivity : AppCompatActivity() {
 
     private lateinit var visitorName: EditText
     private lateinit var visitorEmail: EditText
