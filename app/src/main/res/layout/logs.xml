@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient">
+    android:background="@color/background">
 
     <include
         layout="@layout/appbar"
@@ -221,7 +221,6 @@
                 android:gravity="center" />
         </TableRow>
 
-        <!-- Sample Data Row 2 -->
         <TableRow
             android:background="@android:color/white"
             android:padding="4dp">

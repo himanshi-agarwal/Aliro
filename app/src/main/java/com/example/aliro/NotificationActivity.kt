@@ -60,19 +60,23 @@ class NotificationActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.home -> {
                     Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
 
-                R.id.timings -> Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.timings -> {
+                    Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
-                R.id.pre_register -> Toast.makeText(
-                    applicationContext,
-                    "Pre-Register",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
@@ -80,12 +84,15 @@ class NotificationActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.about -> Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                R.id.about -> {
+                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

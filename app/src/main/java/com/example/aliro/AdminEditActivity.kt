@@ -84,6 +84,7 @@ class AdminEditActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.timings -> Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
@@ -96,17 +97,20 @@ class AdminEditActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, NotificationActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
