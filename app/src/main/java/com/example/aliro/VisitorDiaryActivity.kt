@@ -13,7 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class VisitorDiary : AppCompatActivity(){
+class VisitorDiaryActivity : AppCompatActivity(){
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -58,21 +58,37 @@ class VisitorDiary : AppCompatActivity(){
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, VisitorHomeActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
 
-                R.id.dairy -> Toast.makeText(applicationContext, "Dairy", Toast.LENGTH_SHORT).show()
+                R.id.dairy -> {
+                    if (this !is VisitorDiaryActivity) {
+                        val intent = Intent(this, EmpHomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Diary", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
                 R.id.parking -> Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
 
                 R.id.timings -> Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
 
-                R.id.about -> Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                R.id.about -> {
+                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AboutActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -81,8 +97,12 @@ class VisitorDiary : AppCompatActivity(){
     }
 
     private fun logout() {
+        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish()
     }
 }

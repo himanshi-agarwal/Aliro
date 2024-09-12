@@ -72,20 +72,24 @@
                 android:background="@drawable/rounded_corners_background"
                 android:clipToPadding="false"
                 android:elevation="8dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="90dp"
                 android:paddingTop="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="18dp">
+                    android:padding="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="What to Change Password?"
+                        android:text="Want to Change Password?"
                         android:fontFamily="@font/lato_italic"
                         android:textColor="#000000"
                         android:textSize="19sp" />
@@ -147,12 +151,15 @@
                             android:text="Cancel"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:padding="16dp"
-                            android:layout_marginStart="8dp" />
+                            android:padding="16dp"/>
                     </LinearLayout>
+
                 </LinearLayout>
+
             </RelativeLayout>
+
         </RelativeLayout>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
