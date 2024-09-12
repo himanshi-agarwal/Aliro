@@ -50,7 +50,7 @@ class NotificationActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.navbar)
 
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
@@ -59,34 +59,42 @@ class NotificationActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
-                    finish()
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
+                    startActivity(intent)
                 }
 
-                R.id.timings -> {
-                    Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
-                    finish()
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.profile -> {
-                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
-                    finish()
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.pre_register -> {
-                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
-                    finish()
+                    Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.notification -> {
-                    Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
-                    startActivity(intent)
+                    if (this !is NotificationActivity) {
+                        val intent = Intent(this, EmpHomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Logs", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    finish()
+                    val intent = Intent(this, AboutActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.logout -> {
