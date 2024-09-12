@@ -105,12 +105,14 @@ class EmpEditActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LogsActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.profile -> {
@@ -126,18 +128,21 @@ class EmpEditActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, NotificationActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.logout -> {

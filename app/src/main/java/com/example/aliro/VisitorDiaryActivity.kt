@@ -13,7 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class VisitorDiaryActivity : AppCompatActivity(){
+class VisitorDiary : AppCompatActivity(){
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -60,29 +60,29 @@ class VisitorDiaryActivity : AppCompatActivity(){
             when(menuItem.itemId){
                 R.id.profile -> {
                     Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, VisitorHomeActivity::class.java)
-                    startActivity(intent)
+                    finish()
                 }
 
-                R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
-
-                R.id.dairy -> {
-                    if (this !is VisitorDiaryActivity) {
-                        val intent = Intent(this, EmpHomeActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(applicationContext, "Already in Diary", Toast.LENGTH_SHORT).show()
-                    }
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
 
-                R.id.parking -> Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
+                // R.id.dairy -> Toast.makeText(applicationContext, "Dairy", Toast.LENGTH_SHORT).show()
 
-                R.id.timings -> Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                R.id.parking -> {
+                    Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+
+                R.id.timings -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
-                    startActivity(intent)
+                    finish()
                 }
 
                 R.id.logout -> {
@@ -97,12 +97,8 @@ class VisitorDiaryActivity : AppCompatActivity(){
     }
 
     private fun logout() {
-        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }
