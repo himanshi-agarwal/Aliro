@@ -63,7 +63,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         app:headerLayout="@layout/header"
         app:menu="@menu/emp_menu">
 

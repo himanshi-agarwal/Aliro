@@ -114,9 +114,12 @@ class EmpEditActivity : AppCompatActivity() {
                 }
 
                 R.id.profile -> {
-                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, EmpEditActivity::class.java)
-                    startActivity(intent)
+                    if (this !is EmpEditActivity) {
+                        val intent = Intent(this, EmpEditActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Profile", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 R.id.pre_register -> {
