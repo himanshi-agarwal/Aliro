@@ -72,7 +72,7 @@ class AdminEditActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.navbar)
 
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
@@ -87,9 +87,19 @@ class AdminEditActivity : AppCompatActivity() {
                     finish()
                 }
 
-                R.id.timings -> Toast.makeText(applicationContext, "Timings", Toast.LENGTH_SHORT).show()
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
 
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
 
                 R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
 
