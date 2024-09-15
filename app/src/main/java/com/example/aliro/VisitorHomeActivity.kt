@@ -23,8 +23,6 @@ class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
     private lateinit var visitorName: TextView
-    private lateinit var visitorEmail: TextView
-    private lateinit var visitorPhone: TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(drawerToggle.onOptionsItemSelected(item)){
@@ -52,14 +50,10 @@ class VisitorHomeActivity : AppCompatActivity() {
         setContentView(R.layout.visitor_home)
 
         visitorName = findViewById(R.id.visitor_username)
-        visitorEmail = findViewById(R.id.visitor_email)
-        visitorPhone = findViewById(R.id.visitor_phone)
 
         getUserData { visitor ->
             if(checkSession() && visitor != null){
                 visitorName.text = visitor[1]
-                visitorEmail.text = visitor[3]
-                visitorPhone.text = visitor[4]
 
                 updateSidebarHeader()
             } else {

@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <include
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="15sp"
+                android:layout_marginBottom="10sp"
                 android:layout_margin="16dp"
                 android:padding="16dp"
                 android:gravity="start">
@@ -57,9 +57,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/emp_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="John Doe"
+                            android:text="Emp Name"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -78,9 +79,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/emp_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="123456"
+                            android:text="empID"
                             android:textColor="@color/black" />
                     </LinearLayout>
                 </LinearLayout>
@@ -107,9 +109,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/emp_role"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Software Engineer"
+                            android:text="emp_Role"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -127,9 +130,10 @@
                             android:paddingEnd="4dp" />
 
                         <TextView
+                            android:id="@+id/emp_company"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Google"
+                            android:text="Emp Company"
                             android:textColor="@color/black" />
                     </LinearLayout>
                 </LinearLayout>

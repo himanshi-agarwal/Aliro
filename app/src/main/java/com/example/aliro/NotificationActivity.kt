@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -55,6 +56,8 @@ class NotificationActivity : AppCompatActivity() {
         drawerToggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        updateSidebarHeader()
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -108,8 +111,20 @@ class NotificationActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateSidebarHeader() {
+        val header = navView.getHeaderView(0)
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+
+        val headerUserName : TextView = header.findViewById(R.id.header_user_name)
+        val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+
+        headerUserName.text = sharedPreference.getString("userName", null)
+        headerUserType.text = sharedPreference.getString("userType", null)
+    }
+
     private fun logout() {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         finish()
     }
