@@ -29,6 +29,7 @@ class EmpEditActivity : AppCompatActivity() {
     private lateinit var confirmpass : EditText
     private lateinit var saveButton : Button
     private lateinit var cancelButton : Button
+    private lateinit var cameraButton: Button
     private var db = Firebase.firestore
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,6 +61,7 @@ class EmpEditActivity : AppCompatActivity() {
         confirmpass = findViewById(R.id.confirm_pass)
         saveButton = findViewById(R.id.save)
         cancelButton = findViewById(R.id.cancel)
+        cameraButton = findViewById(R.id.camera_icon)
 
         saveButton.setOnClickListener(){
             val password = pass.text.toString()
@@ -83,6 +85,10 @@ class EmpEditActivity : AppCompatActivity() {
 
         cancelButton.setOnClickListener(){
             cancelUpdate(pass, newpass, confirmpass)
+        }
+
+        cameraButton.setOnClickListener() {
+
         }
 
         toolbar = findViewById(R.id.toolbar)
@@ -163,7 +169,9 @@ class EmpEditActivity : AppCompatActivity() {
         editor.apply()
 
         val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
+        finish()
     }
 
     private fun checkPassword(p: String, cp: String) : Boolean{
