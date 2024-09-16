@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="4dp"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:id="@+id/form_container"
+            android:layout_width="match_parent"
+            android:layout_height="485dp">
+
+            <!-- Form content remains the same -->
+
+            <RelativeLayout
+                android:id="@+id/parking_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/name_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/parking_group"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_heading"
+                android:layout_marginBottom="16dp"
+                android:hint="Enter your name"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/vehicle_number_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edit_name"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="4dp"
+                android:text="Vehicle Number"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_vehicle_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vehicle_number_heading"
+                android:layout_marginBottom="16dp"
+                android:hint="Enter vehicle number"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/vehicle_type_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edit_vehicle_number"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Vehicle Type"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/vehicle_type_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vehicle_type_heading"
+                android:layout_marginBottom="16dp">
+
+                <RadioButton
+                    android:id="@+id/radio_two_wheeler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Two-Wheeler" />
+
+                <RadioButton
+                    android:id="@+id/radio_four_wheeler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Four-Wheeler" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/vehicle_type_group"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/approve"
+                android:text="Show Parking Space"
+                android:textSize="18sp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/parking_space_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_submit"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Parking space allotted: "
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
