@@ -23,8 +23,6 @@ class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
     private lateinit var visitorName: TextView
-    private lateinit var visitorEmail: TextView
-    private lateinit var visitorPhone: TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(drawerToggle.onOptionsItemSelected(item)){
@@ -52,14 +50,10 @@ class VisitorHomeActivity : AppCompatActivity() {
         setContentView(R.layout.visitor_home)
 
         visitorName = findViewById(R.id.visitor_username)
-        visitorEmail = findViewById(R.id.visitor_email)
-        visitorPhone = findViewById(R.id.visitor_phone)
 
         getUserData { visitor ->
             if(checkSession() && visitor != null){
                 visitorName.text = visitor[1]
-                visitorEmail.text = visitor[1]
-                visitorPhone.text = visitor[1]
 
                 updateSidebarHeader()
             } else {
@@ -73,7 +67,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.navbar)
 
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
@@ -81,25 +75,39 @@ class VisitorHomeActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
-                R.id.profile -> Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
-                R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
-                R.id.dairy -> Toast.makeText(applicationContext, "Dairy", Toast.LENGTH_SHORT).show()
+                // R.id.dairy -> Toast.makeText(applicationContext, "Dairy", Toast.LENGTH_SHORT).show()
 
-                R.id.parking -> Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
+                R.id.parking -> {
+                    Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
-                R.id.timings -> Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                R.id.timings -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -117,24 +125,19 @@ class VisitorHomeActivity : AppCompatActivity() {
             val db = Firebase.firestore
             val userRef = db.collection("user").document(userId!!)
 
-            db.collection("visitor")
-                .whereEqualTo("user_id", userRef)
+            val visitorArray : Array<String?> = arrayOf(userId, userName, userType, null, null)
+
+            db.collection("visitors")
+                .whereEqualTo("user_ref", userRef)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document.isEmpty) {
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
-                        var userCompany : String? = null
-                        var userRole : String? = null
-                        var userLocation : String? = null
-
                         for (d in document.documents) {
-                            userCompany = d.getString("Company").toString()
-                            userRole = d.getString("Role").toString()
-                            userLocation = d.getString("location").toString()
+                            visitorArray[3] = d.getString("Email").toString()
+                            visitorArray[4] = d.getLong("Phone Number").toString()
                         }
-
-                        val visitorArray = arrayOf(userId, userName, userType, userRole, userCompany, userLocation)
                         callback(visitorArray)
                     }
                 }

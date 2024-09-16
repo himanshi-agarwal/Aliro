@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -83,7 +84,7 @@ class EmpHomeActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.navbar)
 
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
@@ -104,30 +105,35 @@ class EmpHomeActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LogsActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.profile -> {
                     Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpEditActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.pre_register -> {
                     Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, NotificationActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
                 R.id.logout -> {
@@ -142,13 +148,30 @@ class EmpHomeActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Do you want to logout?")
 
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        builder.setTitle("ALERT!")
+        builder.setCancelable(false)
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
+        }
+
+        builder.setNegativeButton("No") {
+                dialog, which -> dialog.cancel()
+        }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     private fun getUserData(callback: (Array<String?>?) -> Unit) {
