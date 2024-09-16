@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".VisitorDiary">
+    tools:context=".VisitorDiaryActivity">
 
     <include layout="@layout/appbar" />
 

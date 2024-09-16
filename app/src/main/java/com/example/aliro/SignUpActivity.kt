@@ -2,6 +2,7 @@ package com.example.aliro
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -46,7 +47,6 @@ class SignUpActivity : AppCompatActivity() {
             val email = email.text.toString().trim()
             val password = password.text.toString().trim()
             val confirmPassword = confirmPassword.text.toString().trim()
-            val userType = "Visitor"
 
             if (name.isBlank() || phoneStr.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
@@ -54,43 +54,55 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             if(checkPassword(password, confirmPassword)){
-                insertData(name, phoneStr, email, password, userType)
+                insertData(name, phoneStr, email, password)
             } else {
                 Toast.makeText(applicationContext, "Password Do not Match", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun insertData(name: String, phoneNo: String, email: String, password: String, usertype: String){
+    private fun insertData(name: String, phoneNo: String, email: String, password: String){
         val userMap = hashMapOf(
             "username" to name,
             "password" to password,
-            "usertype" to usertype
+            "usertype" to "Visitor"
         )
 
-        val VisitorMap = hashMapOf(
+        val userDocRef = db.collection("user").document()
+
+        userDocRef.set(userMap)
+            .addOnSuccessListener {
+                Log.d("Id", userDocRef.id)
+                insertVisitor(email, phoneNo, userDocRef.id)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Registration Failed: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    private fun insertVisitor(email: String, phoneNo: String, userId : String){
+        val phoneNumber = phoneNo.toLong()
+        val userDocRef = db.collection("user").document(userId)
+
+        val visitorMap = hashMapOf(
             "Email" to email,
-            "Phone Number" to phoneNo,
+            "Phone Number" to phoneNumber,
             "Image" to "",
             "Purpose" to "",
             "VisitDate" to "",
             "Otp" to "",
-            "user_ref" to ""
+            "user_ref" to userDocRef
         )
 
-        db.collection("user").document()
-            .set(userMap)
+        db.collection("visitors").document()
+            .set(visitorMap)
             .addOnSuccessListener {
-                db.collection("visitors").document()
-                    .set(VisitorMap)
-                    .addOnSuccessListener {
-                        Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    }
+                Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Registration Failed: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Failed to register visitor: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
 
