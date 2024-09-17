@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,8 +17,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.firestore
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.storage
 
 class EmpHomeActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -30,6 +32,7 @@ class EmpHomeActivity : AppCompatActivity() {
     private lateinit var empPhone: TextView
     private lateinit var empRole: TextView
     private lateinit var empCompany: TextView
+    private lateinit var userProfile: ImageView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(drawerToggle.onOptionsItemSelected(item)){
@@ -62,6 +65,7 @@ class EmpHomeActivity : AppCompatActivity() {
         empPhone = findViewById(R.id.emp_phone)
         empRole = findViewById(R.id.emp_role)
         empCompany = findViewById(R.id.emp_company)
+        userProfile = findViewById(R.id.user_profile)
 
         getUserData { employee ->
             if(checkSession() && employee != null){
@@ -73,6 +77,7 @@ class EmpHomeActivity : AppCompatActivity() {
                 empCompany.text = employee[7]
 
                 updateSidebarHeader()
+                updateUserProfile()
             } else {
                 Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
             }
@@ -220,12 +225,29 @@ class EmpHomeActivity : AppCompatActivity() {
     private fun updateSidebarHeader() {
         val header = navView.getHeaderView(0)
         val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        val userId = sharedPreference.getString("userId", null)
 
         val headerUserName : TextView = header.findViewById(R.id.header_user_name)
         val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+        val headerUserProfile : ImageView = header.findViewById(R.id.header_user_profile_picture)
 
         headerUserName.text = sharedPreference.getString("userName", null)
         headerUserType.text = sharedPreference.getString("userType", null)
+
+        if(checkSession() && userId != null){
+            val storageReference = Firebase.storage.reference
+            val imageReference = storageReference.child("images/${userId}.jpg")
+
+            imageReference.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this)
+                    .load(uri)
+                    .into(headerUserProfile)
+            }.addOnFailureListener {
+                Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+        }
     }
     
     private fun updateUserProfile() {

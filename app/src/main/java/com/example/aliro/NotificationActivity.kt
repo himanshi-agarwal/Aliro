@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -43,9 +47,9 @@ class NotificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.no_notifications)
+        setContentView(R.layout.notifications)
 
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -111,15 +115,37 @@ class NotificationActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkSession() : Boolean{
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        return sharedPreference.getBoolean("loggedIn", false)
+    }
+
     private fun updateSidebarHeader() {
         val header = navView.getHeaderView(0)
         val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        val userId = sharedPreference.getString("userId", null)
 
         val headerUserName : TextView = header.findViewById(R.id.header_user_name)
         val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+        val headerUserProfile : ImageView = header.findViewById(R.id.header_user_profile_picture)
 
         headerUserName.text = sharedPreference.getString("userName", null)
         headerUserType.text = sharedPreference.getString("userType", null)
+
+        if(checkSession() && userId != null){
+            val storageReference = Firebase.storage.reference
+            val imageReference = storageReference.child("images/${userId}.jpg")
+
+            imageReference.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this)
+                    .load(uri)
+                    .into(headerUserProfile)
+            }.addOnFailureListener {
+                Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun logout() {
