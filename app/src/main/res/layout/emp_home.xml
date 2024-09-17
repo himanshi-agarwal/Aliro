@@ -38,7 +38,7 @@
                         app:cardCornerRadius="150dp">
 
                         <ImageView
-                            android:id="@+id/account"
+                            android:id="@+id/user_profile"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerInParent="true"
