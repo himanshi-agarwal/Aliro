@@ -468,7 +468,8 @@
                 android:layout_marginHorizontal="20dp"
                 android:backgroundTint="@color/white"
                 android:background="@drawable/rounded_corner"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_marginBottom="50dp">
 
                 <TableRow
                     android:background="@color/white"
