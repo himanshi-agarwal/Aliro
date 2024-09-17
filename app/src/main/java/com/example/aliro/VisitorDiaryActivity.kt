@@ -63,23 +63,6 @@ class VisitorDiaryActivity : AppCompatActivity(){
                     finish()
                 }
 
-                R.id.pre_register -> {
-                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
-                // R.id.dairy -> Toast.makeText(applicationContext, "Dairy", Toast.LENGTH_SHORT).show()
-
-                R.id.parking -> {
-                    Toast.makeText(applicationContext, "Parking", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
-                R.id.timings -> {
-                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
                     finish()

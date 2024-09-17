@@ -227,4 +227,29 @@ class EmpHomeActivity : AppCompatActivity() {
         headerUserName.text = sharedPreference.getString("userName", null)
         headerUserType.text = sharedPreference.getString("userType", null)
     }
+    
+    private fun updateUserProfile() {
+        if(checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if(userId != null){
+                val storageReference = Firebase.storage.reference
+                val imageReference = storageReference.child("images/${userId}.jpg")
+
+                imageReference.downloadUrl.addOnSuccessListener { uri ->
+                    Glide.with(this)
+                        .load(uri)
+                        .into(userProfile)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
+
