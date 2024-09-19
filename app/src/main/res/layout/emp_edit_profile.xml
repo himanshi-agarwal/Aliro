@@ -161,13 +161,9 @@
                             android:textSize="18sp"
                             android:padding="16dp"/>
                     </LinearLayout>
-
                 </LinearLayout>
-
             </RelativeLayout>
-
         </RelativeLayout>
-
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -43,11 +43,6 @@
             android:theme="@style/Theme.Aliro.NoActionBar">
         </activity>
         <activity
-            android:name=".VisitorHomeActivity"
-            android:exported="false"
-            android:label="@string/app_name">
-        </activity>
-        <activity
             android:name=".EmpHomeActivity"
             android:exported="false"
             android:label="@string/app_name">
@@ -76,6 +71,31 @@
             android:name=".AboutActivity"
             android:exported="false"
             android:label="About">
+        </activity>
+        <activity
+            android:name=".VisitorHomeActivity"
+            android:exported="false"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".VisitorEditActivity"
+            android:exported="false"
+            android:label="Update Profile">
+        </activity>
+        <activity
+            android:name=".VisitorDiaryActivity"
+            android:exported="false"
+            android:label="Diary">
+        </activity>
+        <activity
+            android:name=".VisitorRegisterActivity"
+            android:exported="false"
+            android:label="Register Your Visit">
+        </activity>
+        <activity
+            android:name=".ParkingActivity"
+            android:exported="false"
+            android:label="Parking">
         </activity>
 
         <meta-data
