@@ -8,40 +8,43 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class VisitorHomeActivity : AppCompatActivity() {
-    private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
     private lateinit var visitorName: TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(drawerToggle.onOptionsItemSelected(item)){
-            return true
+        return when(item.itemId){
+            R.id.profile -> {
+                Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.about -> {
+                Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            R.id.logout -> {
+                Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return false
-    }
-
-    override fun onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-        else{
-            return super.onBackPressed()
-        }
+        menuInflater.inflate(R.menu.vis_menu, menu)
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +57,6 @@ class VisitorHomeActivity : AppCompatActivity() {
         getUserData { visitor ->
             if(checkSession() && visitor != null){
                 visitorName.text = visitor[1]
-
-                updateSidebarHeader()
             } else {
                 Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
             }
@@ -63,39 +64,6 @@ class VisitorHomeActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.navbar)
-
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(drawerToggle)
-        drawerToggle.syncState()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        navView.setNavigationItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.profile -> {
-                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
-                R.id.about -> {
-                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-
-                R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
-                    logout()
-                    finish()
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
-        }
     }
 
     private fun getUserData(callback: (Array<String?>?) -> Unit) {

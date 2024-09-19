@@ -197,11 +197,8 @@
                         android:text="NEW"
                         android:textColor="@color/cancel" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
