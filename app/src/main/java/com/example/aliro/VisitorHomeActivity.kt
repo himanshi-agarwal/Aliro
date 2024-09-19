@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,10 @@ class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
     private lateinit var visitorName: TextView
+    private lateinit var register : Button
+    private lateinit var parking : Button
+    private lateinit var logs : Button
+    private lateinit var diary : Button
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
@@ -53,6 +58,10 @@ class VisitorHomeActivity : AppCompatActivity() {
         setContentView(R.layout.visitor_home)
 
         visitorName = findViewById(R.id.visitor_username)
+        register = findViewById(R.id.pre_register)
+        logs = findViewById(R.id.logs)
+        parking = findViewById(R.id.parking)
+        diary = findViewById(R.id.diary)
 
         getUserData { visitor ->
             if(checkSession() && visitor != null){
@@ -64,6 +73,30 @@ class VisitorHomeActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        register.setOnClickListener(){
+            val intent = Intent(this, VisitorRegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        logs.setOnClickListener(){
+            val intent = Intent(this, LogsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        parking.setOnClickListener(){
+            val intent = Intent(this, ParkingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        diary.setOnClickListener(){
+            val intent = Intent(this, VisitorDiaryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun getUserData(callback: (Array<String?>?) -> Unit) {

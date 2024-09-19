@@ -8,7 +8,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
-class Parking_register : AppCompatActivity() {
+class ParkingActivity : AppCompatActivity() {
 
     private lateinit var editName: EditText
     private lateinit var editVehicleNumber: EditText
@@ -18,7 +18,7 @@ class Parking_register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.parking_register) // Ensure this matches your layout file name
+        setContentView(R.layout.parking_register)
 
 
         editName = findViewById(R.id.edit_name)
