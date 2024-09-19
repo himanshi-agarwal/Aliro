@@ -578,26 +578,3 @@
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
-
-
-
-<RadioGroup
-android:id="@+id/vehicle_type_group"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_below="@id/vehicle_type_heading"
-android:layout_marginBottom="16dp">
-
-<RadioButton
-    android:id="@+id/radio_two_wheeler"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Two-Wheeler" />
-
-<RadioButton
-    android:id="@+id/radio_four_wheeler"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Four-Wheeler" />
-</RadioGroup>
