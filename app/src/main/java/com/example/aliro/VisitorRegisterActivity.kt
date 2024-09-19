@@ -1,18 +1,22 @@
 package com.example.aliro
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.navigation.NavigationView
+import java.util.Calendar
 
 class VisitorRegisterActivity : AppCompatActivity() {
-    private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
+    private lateinit var visitDate : Button
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
@@ -49,6 +53,23 @@ class VisitorRegisterActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        visitDate = findViewById(R.id.visitDate)
+
+        visitDate.setOnClickListener {
+            val c = Calendar.getInstance()
+
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this, { view, year, monthOfYear, dayOfMonth ->
+                    Log.i("Date", dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                }, year, month, day
+            )
+            datePickerDialog.show()
+        }
     }
 
     private fun logout() {
