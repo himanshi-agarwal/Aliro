@@ -36,7 +36,6 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
-import java.util.UUID
 
 class EmpEditActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -390,12 +389,10 @@ class EmpEditActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GALLERY_REQUEST_CODE && data != null) {
                 val selectedImageUri = data.data
-                Log.i("Image", selectedImageUri.toString())
                 uploadImageToFirebase(selectedImageUri)
             } else if (requestCode == CAMERA_REQUEST_CODE && data != null) {
                 val imageBitmap = data.extras?.get("data") as Bitmap
                 val uri = getImageUriFromBitmap(imageBitmap)
-                Log.i("Image", uri.toString())
                 uploadImageToFirebase(uri)
             }
         }
