@@ -79,7 +79,6 @@
             android:orientation="vertical"
             android:padding="18dp">
 
-            <!-- First row of boxes -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,10 +89,10 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_margin="8dp"
-                        android:backgroundTint="@color/background"
-                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/primary"
                         android:layout_height="150dp"
                         android:elevation="10dp"
+                        android:textColor="@color/white"
                         android:text="Register a Visit" />
 
                     <Button
@@ -103,12 +102,11 @@
                         android:layout_height="150dp"
                         android:layout_margin="8dp"
                         android:elevation="10dp"
-                        android:backgroundTint="@color/background"
-                        android:background="@drawable/rounded_corner"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/primary"
                         android:text="Visitor Diary" />
             </LinearLayout>
 
-            <!-- Second row of boxes -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,8 +119,8 @@
                         android:layout_height="150dp"
                         android:layout_margin="8dp"
                         android:elevation="10dp"
-                        android:backgroundTint="@color/background"
-                        android:background="@drawable/rounded_corner"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/primary"
                         android:text="Parking" />
 
                     <Button
@@ -132,8 +130,8 @@
                         android:layout_height="150dp"
                         android:layout_margin="8dp"
                         android:elevation="10dp"
-                        android:backgroundTint="@color/background"
-                        android:background="@drawable/rounded_corner"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/primary"
                         android:text="My Logs"/>
             </LinearLayout>
         </LinearLayout>

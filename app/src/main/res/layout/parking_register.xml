@@ -1,198 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".ParkingActivity"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ParkingActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/other"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
+        android:background="@drawable/gradient">
 
-        <include
-            layout="@layout/appbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/black_background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="95dp"
+                android:layout_marginTop="40dp"
+                android:gravity="center">
 
-                <RelativeLayout
-                    android:id="@+id/black_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="95dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="45dp"
-                        android:fontFamily="@font/inter_medium"
-                        android:gravity="center"
-                        android:text="Parking"
-                        android:textColor="#000000"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        tools:ignore="HardcodedText" />
-
-                </RelativeLayout>
-
-                <!-- White Background with Rounded Corners -->
-                <RelativeLayout
-                    android:id="@+id/white_background"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/black_background"
-                    android:background="@drawable/rounded_corners_background"
-                    android:clipToPadding="false"
-                    android:elevation="8dp">
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="45dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center"
+                    android:text="Parking"
+                    android:textColor="#000000"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
 
-                    <!-- Inner Container for Sign Up Form -->
-                    <LinearLayout
+            </RelativeLayout>
+
+            <!-- White Background with Rounded Corners -->
+            <RelativeLayout
+                android:id="@+id/white_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/black_background"
+                android:background="@drawable/rounded_corners_background"
+                android:clipToPadding="false"
+                android:elevation="8dp">
+
+                <!-- Inner Container for Sign Up Form -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:orientation="vertical"
+                    android:padding="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vehicle Details:"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/fullname"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:orientation="vertical"
-                        android:padding="30dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Vehicle Number"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Vehicle Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="20sp" />
+                    <EditText
+                        android:id="@+id/phone_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:ems="10"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint=""
+                        android:inputType="phone"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <EditText
-                            android:id="@+id/fullname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Vehicle Number"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Email (Optional)"
+                        android:inputType="textEmailAddress"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <EditText
-                            android:id="@+id/phone_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:ems="10"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint=""
-                            android:inputType="phone"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Employee Details:"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="20sp"/>
 
-                        <EditText
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Email (Optional)"
-                            android:inputType="textEmailAddress"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <EditText
+                        android:id="@+id/empname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Employee Name"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Employee Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="20sp"/>
+                    <EditText
+                        android:id="@+id/empcompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Employee Company"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <EditText
-                            android:id="@+id/empname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Name"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Other Details:"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="20sp"/>
 
-                        <EditText
-                            android:id="@+id/empcompany"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Company"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <EditText
+                        android:id="@+id/purpose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Purpose of Visit"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Other Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="20sp"/>
+                    <Button
+                        android:id="@+id/register_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="#000000"
+                        android:fontFamily="@font/exo_2_semibold"
+                        android:padding="12dp"
+                        android:text="Register"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
 
-                        <EditText
-                            android:id="@+id/purpose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Purpose of Visit"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <Button
-                            android:id="@+id/register_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:backgroundTint="#000000"
-                            android:fontFamily="@font/exo_2_semibold"
-                            android:padding="12dp"
-                            android:text="Register"
-                            android:textColor="#FFFFFF"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
