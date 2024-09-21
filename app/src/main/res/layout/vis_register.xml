@@ -32,16 +32,14 @@
                 <RelativeLayout
                     android:id="@+id/black_background"
                     android:layout_width="match_parent"
-                    android:layout_height="95dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="45dp"
-                        android:fontFamily="@font/inter_medium"
+                        android:fontFamily="@font/lato_italic"
                         android:gravity="center"
                         android:text="Register Your Visit"
                         android:textColor="#000000"
@@ -133,6 +131,19 @@
                             android:textSize="20sp"/>
 
                         <EditText
+                            android:id="@+id/empid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/background"
+                            android:fontFamily="@font/lato_italic"
+                            android:hint="Employee ID"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+
+                        <EditText
                             android:id="@+id/empname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -191,7 +202,7 @@
                             android:gravity="start">
 
                             <TextView
-                                android:id="@+id/tvVisitDateLabel"
+                                android:id="@+id/VisitDateLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Visit Date: "
@@ -201,34 +212,47 @@
                                 android:textColor="@color/black"/>
 
                             <Button
-                                android:id="@+id/visitDate"
+                                android:id="@+id/visitDateButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
+                                android:backgroundTint="@color/primary"
+                                android:textColor="@color/white"
                                 android:text="Pick time" />
+
+                            <TextView
+                                android:id="@+id/visitDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/lato_italic"
+                                android:textSize="18sp"
+                                android:layout_marginStart="15dp"
+                                android:visibility="gone"
+                                android:textColor="@color/black"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="20dp"
+                            android:padding="10dp"
                             android:layout_gravity="center_horizontal"
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="150dp"
+                                android:layout_width="200dp"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_gravity="center_horizontal"
-                                android:padding="20dp">
+                                android:padding="10dp"
+                                android:layout_weight="1">
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
-                                    android:layout_marginTop="15dp"
                                     app:cardCornerRadius="150dp">
 
                                     <ImageView
@@ -258,12 +282,13 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="150dp"
+                                android:layout_width="180dp"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_gravity="center_horizontal"
-                                android:padding="20dp">
+                                android:padding="20dp"
+                                android:layout_weight="1">
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="70dp"
@@ -304,11 +329,13 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="25dp"
                             android:fontFamily="@font/exo_2_semibold"
-                            android:padding="12dp"
+                            android:paddingVertical="10dp"
+                            android:paddingHorizontal="30dp"
                             android:layout_gravity="center"
                             android:text="Register"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:backgroundTint="@color/primary"/>
 
                     </LinearLayout>
                 </RelativeLayout>

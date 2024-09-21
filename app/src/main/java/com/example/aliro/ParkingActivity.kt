@@ -21,16 +21,16 @@ class ParkingActivity : AppCompatActivity() {
         setContentView(R.layout.parking_register)
 
 
-        editName = findViewById(R.id.edit_name)
-        editVehicleNumber = findViewById(R.id.edit_vehicle_number)
-        vehicleTypeGroup = findViewById(R.id.vehicle_type_group)
-        buttonSubmit = findViewById(R.id.button_submit)
-        parkingSpaceInfo = findViewById(R.id.parking_space_info)
+//        editName = findViewById(R.id.edit_name)
+//        editVehicleNumber = findViewById(R.id.edit_vehicle_number)
+//        vehicleTypeGroup = findViewById(R.id.vehicle_type_group)
+//        buttonSubmit = findViewById(R.id.button_submit)
+//        parkingSpaceInfo = findViewById(R.id.parking_space_info)
 
 
-        buttonSubmit.setOnClickListener {
-            handleSubmitButtonClick()
-        }
+//        buttonSubmit.setOnClickListener {
+//            handleSubmitButtonClick()
+//        }
     }
 
     private fun handleSubmitButtonClick() {

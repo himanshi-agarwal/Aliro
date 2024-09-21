@@ -17,12 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background"
+            android:fitsSystemWindows="true"
             android:orientation="vertical">
 
-            <include
-                layout="@layout/appbar"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+                android:background="@color/other"
+                app:titleTextColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="200dp"
