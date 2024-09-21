@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,6 +32,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
+import java.io.ByteArrayOutputStream
 import java.util.Calendar
 
 class VisitorRegisterActivity : AppCompatActivity() {
@@ -220,8 +222,8 @@ class VisitorRegisterActivity : AppCompatActivity() {
                         val currentTime = Timestamp.now()
 
                         val visitMap = hashMapOf(
-                            "visitor_ref" to "/visitors/${visitorRef}",
-                            "employee_ref" to "/employees/${employeeRef}",
+                            "visitor_ref" to "visitors/${visitorRef}",
+                            "employee_ref" to "employees/${employeeRef}",
                             "checkInTime" to null,
                             "checkOutTime" to null,
                             "companyName" to empCompany,
@@ -310,6 +312,13 @@ class VisitorRegisterActivity : AppCompatActivity() {
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
     }
 
+    private fun getImageUriFromBitmap(bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "Title", null)
+        return Uri.parse(path)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -319,9 +328,10 @@ class VisitorRegisterActivity : AppCompatActivity() {
                 displayUploadedImage(selectedImageUri, "Selected Image from Gallery")
             }
             if(requestCode == CAMERA_REQUEST_CODE && data != null){
-                val selectedImageUri = data.data
+                val imageBitmap = data.extras?.get("data") as Bitmap
+                val selectedImageUri = getImageUriFromBitmap(imageBitmap)
                 uploadImageToFirebase(selectedImageUri)
-                displayUploadedImage(selectedImageUri, "Selected Image from Camera")
+                displayUploadedImage(selectedImageUri, "Clicked Image from Camera")
             }
         }
     }
