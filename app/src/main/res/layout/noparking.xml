@@ -11,13 +11,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".NotificationActivity"
+        android:fitsSystemWindows="true"
         android:background="@color/background">
 
-        <include
-            layout="@layout/appbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:background="@color/other"
+            app:title="Parking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
 
         <TextView
             android:id="@+id/noparking"
@@ -30,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bangers"
-            android:text="No Vehicle Parked!!"
+            android:text="No Vehicles Parked!!"
             android:textAlignment="center"
             android:textSize="60sp"/>
 
@@ -40,10 +46,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_italic"
             android:text="Get a Spot"
+            android:textColor="@color/white"
             android:layout_marginTop="30dp"
             android:textAlignment="center"
-            android:background="@color/primary"
-            android:textSize="20sp"
+            android:backgroundTint="@color/primary"
+            android:textSize="26sp"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noparking" />
@@ -58,7 +67,7 @@
         android:fitsSystemWindows="true"
         android:layout_marginTop="35dp"
         app:headerLayout="@layout/header"
-        app:menu="@menu/emp_menu">
+        app:menu="@menu/vis_menu">
 
     </com.google.android.material.navigation.NavigationView>
 

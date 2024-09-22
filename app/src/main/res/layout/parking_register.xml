@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParkingActivity">
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".ParkingActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/appbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:background="@color/other"
+            app:titleTextColor="@color/white"
+            app:title="Parking"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -27,21 +36,20 @@
                 <RelativeLayout
                     android:id="@+id/black_background"
                     android:layout_width="match_parent"
-                    android:layout_height="95dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="45dp"
-                        android:fontFamily="@font/inter_medium"
+                        android:fontFamily="@font/lato_italic"
                         android:gravity="center"
-                        android:text="Parking"
+                        android:text="Parking Form"
                         android:textColor="#000000"
                         android:textSize="30sp"
                         android:textStyle="bold"
+                        android:paddingTop="20dp"
                         tools:ignore="HardcodedText" />
 
                 </RelativeLayout>
@@ -50,13 +58,12 @@
                 <RelativeLayout
                     android:id="@+id/white_background"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@id/black_background"
                     android:background="@drawable/rounded_corners_background"
                     android:clipToPadding="false"
                     android:elevation="8dp">
 
-                    <!-- Inner Container for Sign Up Form -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -71,128 +78,151 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/fullname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Vehicle Number"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <EditText
-                            android:id="@+id/phone_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:ems="10"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint=""
-                            android:inputType="phone"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <EditText
-                            android:id="@+id/email"
+                            android:id="@+id/numberPlate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="16dp"
                             android:background="@color/background"
                             android:fontFamily="@font/lato_italic"
-                            android:hint="Email (Optional)"
-                            android:inputType="textEmailAddress"
+                            android:hint="Number Plate"
                             android:padding="12dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
+
+                        <EditText
+                            android:id="@+id/model"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/background"
+                            android:fontFamily="@font/lato_italic"
+                            android:hint="Vehicle Model"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginVertical="20dp"
+                            android:gravity="start">
+
+                            <TextView
+                                android:id="@+id/parkingDurationLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Duration :"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/lato_italic"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"/>
+
+                            <Spinner
+                                android:id="@+id/durationSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="20dp"
+                                android:spinnerMode="dropdown" />
+
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/vehicleTypeRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <RadioButton
+                                android:id="@+id/twoWheelerRadioButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Two Wheeler"
+                                android:textColor="@color/black"
+                                android:focusedSearchResultHighlightColor="@color/primary"/>
+
+                            <RadioButton
+                                android:id="@+id/fourWheelerRadioButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:text="Four Wheeler"
+                                android:textColor="@color/black"/>
+
+                        </RadioGroup>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Employee Details:"
+                            android:text="Visitor Details:"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
                             android:textSize="20sp"/>
 
                         <EditText
-                            android:id="@+id/empname"
+                            android:id="@+id/VisitorName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="16dp"
                             android:background="@color/background"
                             android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Name"
+                            android:hint="Visitor Name"
                             android:padding="12dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
 
                         <EditText
-                            android:id="@+id/empcompany"
+                            android:id="@+id/visitorPhoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="16dp"
                             android:background="@color/background"
                             android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Company"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Other Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="20sp"/>
-
-                        <EditText
-                            android:id="@+id/purpose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Purpose of Visit"
-                            android:inputType="text"
+                            android:hint="Contact No"
                             android:padding="12dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
 
                         <Button
-                            android:id="@+id/register_button"
-                            android:layout_width="match_parent"
+                            android:id="@+id/parkingButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:backgroundTint="#000000"
+                            android:layout_marginTop="10dp"
                             android:fontFamily="@font/exo_2_semibold"
-                            android:padding="12dp"
-                            android:text="Register"
+                            android:paddingVertical="10dp"
+                            android:paddingHorizontal="30dp"
+                            android:layout_gravity="center"
+                            android:text="Book Parking"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:backgroundTint="@color/primary" />
 
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="35dp"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/vis_menu">
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
