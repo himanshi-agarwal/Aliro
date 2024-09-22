@@ -21,25 +21,25 @@
 
             <include
                 layout="@layout/appbar"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                app:cardCornerRadius="150dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                app:cardCornerRadius="150dp">
 
                 <ImageView
                     android:id="@+id/logo_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/logo"
-                    android:scaleType="centerCrop"
                     android:background="@drawable/circular_background"
-                    android:padding="0dp" />
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo" />
 
             </androidx.cardview.widget.CardView>
 
@@ -47,23 +47,23 @@
                 android:id="@+id/app_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/lato_italic"
                 android:text="Version 1.0"
-                android:textColor="@color/black"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/app_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="20dp"
                 android:fontFamily="@font/lato_italic"
-                android:textColor="@color/black"
+                android:padding="20dp"
                 android:text="ALIRO enhances security and streamlines access management. Employees gain entry through secure facial recognition, while visitors register via the app, linking their visit to an employee. The app notifies the employee for approval and tracks movement history for both employees and visitors. It also manages vehicle entry by scanning number plates and allocating parking spaces, improving the overall user experience and ensuring a safer, more efficient tech park environment."
                 android:textAlignment="center"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/vision_label"
@@ -71,71 +71,71 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="Vision"
-                android:textSize="30sp"
                 android:fontFamily="@font/akaya_kanadaka"
+                android:text="Vision"
+                android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@color/black"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/vision_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:textAlignment="center"
                 android:fontFamily="@font/lato_italic"
-                android:textColor="@color/black"
+                android:padding="20dp"
                 android:text="Our vision is to become the leading provider of access control solutions, recognized for our innovation, reliability, and commitment to customer satisfaction."
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/mission_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="Mission"
-                android:textSize="30sp"
                 android:fontFamily="@font/akaya_kanadaka"
-                android:textColor="@color/black"
+                android:text="Mission"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/mission_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
                 android:fontFamily="@font/lato_italic"
-                android:textAlignment="center"
-                android:textColor="@color/black"
+                android:padding="20dp"
                 android:text="Our mission is to provide secure, efficient, and user-friendly access control solutions for tech parks, enhancing safety and convenience for all users."
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/team_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="Meet Our Team"
-                android:textSize="30sp"
                 android:fontFamily="@font/akaya_kanadaka"
-                android:textColor="@color/black"
+                android:text="Meet Our Team"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black"
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:id="@+id/team_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@android:color/darker_gray"
+                    android:orientation="horizontal"
                     android:padding="8dp">
 
                     <ImageView
@@ -154,16 +154,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Himanshi Agarwal"
-                            android:textStyle="bold"
-                            android:textAppearance="?attr/textAppearanceSubtitle1" />
+                            android:textAppearance="?attr/textAppearanceSubtitle1"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/team_member_role_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="italic"
                             android:text="Project Lead"
-                            android:textAppearance="?attr/textAppearanceBody2" />
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textStyle="italic" />
 
                         <TextView
                             android:id="@+id/team_member_description_1"
@@ -177,9 +177,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@android:color/darker_gray"
                     android:layout_marginTop="12dp"
+                    android:background="@android:color/darker_gray"
+                    android:orientation="horizontal"
                     android:padding="8dp">
 
                     <ImageView
@@ -198,16 +198,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Gaurav Jain"
-                            android:textStyle="bold"
-                            android:textAppearance="?attr/textAppearanceSubtitle1" />
+                            android:textAppearance="?attr/textAppearanceSubtitle1"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/team_member_role_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Project Lead"
-                            android:textStyle="italic"
-                            android:textAppearance="?attr/textAppearanceBody2" />
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textStyle="italic" />
 
                         <TextView
                             android:id="@+id/team_member_description_2"
@@ -221,15 +221,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@android:color/darker_gray"
                     android:layout_marginTop="12dp"
+                    android:background="@android:color/darker_gray"
+                    android:orientation="horizontal"
                     android:padding="8dp">
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/sumit"/>
+                        android:src="@drawable/sumit" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -242,16 +242,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Sumit Roberts Emmanuel"
-                            android:textStyle="bold"
-                            android:textAppearance="?attr/textAppearanceSubtitle1" />
+                            android:textAppearance="?attr/textAppearanceSubtitle1"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/team_member_role_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Project Lead"
-                            android:textStyle="italic"
-                            android:textAppearance="?attr/textAppearanceBody2" />
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textStyle="italic" />
 
                         <TextView
                             android:id="@+id/team_member_description_3"
@@ -268,31 +268,35 @@
                 android:id="@+id/contact_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="Contact Us"
-                android:textSize="30sp"
                 android:fontFamily="@font/akaya_kanadaka"
-                android:textColor="@color/black"
+                android:text="Contact Us"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/contact_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:padding="20dp"
                 android:fontFamily="@font/lato_italic"
-                android:textColor="@color/black"
+                android:padding="20dp"
                 android:text="Address: 123 Tech Park, Bengaluru, India\nPhone: +91 9125555228"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/black" />
 
-            <ImageView
-                android:id="@+id/map_image"
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/account" />
+                android:layout_height="300dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below= "@id/contact_details" />
+
+
+
+
 
         </LinearLayout>
     </ScrollView>
