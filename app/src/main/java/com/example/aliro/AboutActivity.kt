@@ -14,33 +14,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 
-class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
+class AboutActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var toolbar: Toolbar
-
-    // MapView setup
-    private lateinit var mapView: MapView
-    private lateinit var googleMap: GoogleMap
-    private val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.about)
 
-        // Initialize toolbar and navigation drawer
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -55,41 +43,53 @@ class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
 
         updateSidebarHeader()
 
-        // Handle navigation item selection
         navView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
-                R.id.home -> navigateToActivity(EmpHomeActivity::class.java)
-                R.id.logs -> navigateToActivity(LogsActivity::class.java)
-                R.id.profile -> navigateToActivity(EmpEditActivity::class.java)
-                R.id.pre_register -> navigateToActivity(EmpHomeActivity::class.java)
-                R.id.notification -> navigateToActivity(NotificationActivity::class.java)
-                R.id.about -> Toast.makeText(this, "Already in About", Toast.LENGTH_SHORT).show()
+                R.id.home -> {
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LogsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+
+                R.id.notification -> {
+                    Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, NotificationActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                R.id.about -> {
+                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AboutActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
                 R.id.logout -> {
-                    Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
-        // Initialize MapView
-        mapView = findViewById(R.id.mapView)
-
-        var mapViewBundle: Bundle? = null
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY)
-        }
-        mapView.onCreate(mapViewBundle)
-        mapView.getMapAsync(this) // Initialize the map
-
-    }
-
-    // Handle navigation for selected menu items
-    private fun navigateToActivity(activityClass: Class<*>) {
-        val intent = Intent(this, activityClass)
-        startActivity(intent)
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -154,54 +154,5 @@ class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    // Implement MapView lifecycle methods
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        var mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY)
-        if (mapViewBundle == null) {
-            mapViewBundle = Bundle()
-            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle)
-        }
-        mapView.onSaveInstanceState(mapViewBundle)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mapView.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView.onStop()
-    }
-
-    override fun onPause() {
-        mapView.onPause()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        mapView.onDestroy()
-        super.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
-    }
-
-    // MapView callback
-    override fun onMapReady(googleMap: GoogleMap) {
-        this.googleMap = googleMap
-        val location = LatLng(12.9716, 77.5946) // Example: Bengaluru location
-        googleMap.addMarker(MarkerOptions().position(location).title("Marker in Bengaluru"))
-        googleMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(location, 12f))
     }
 }

@@ -14,10 +14,13 @@
         android:background="@color/background"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/appbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:background="@color/other"
+            app:titleTextColor="@color/white"
+            app:title="Visit"/>
 
         <ScrollView
             android:layout_width="match_parent"

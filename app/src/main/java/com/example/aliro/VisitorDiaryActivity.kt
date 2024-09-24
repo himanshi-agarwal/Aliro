@@ -23,18 +23,30 @@ class VisitorDiaryActivity : AppCompatActivity(){
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, VisitorHomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.profile -> {
                 Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, VisitorHomeActivity::class.java)
+                startActivity(intent)
                 true
             }
 
             R.id.about -> {
                 Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, AboutActivity::class.java)
+                val intent = Intent(this, VisitorAboutActivity::class.java)
                 startActivity(intent)
                 true
             }
