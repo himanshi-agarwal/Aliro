@@ -4,25 +4,42 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import java.io.ByteArrayOutputStream
+
+data class ParkingRecord (
+    val type: String = "",
+    val vehicleNumber: String = "",
+    val space: String = "",
+    val model: String = ""
+)
 
 class ParkingActivity : AppCompatActivity() {
     private lateinit var spotButton: Button
@@ -43,8 +60,9 @@ class ParkingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         checkVehicle { vehicle ->
-            if(vehicle){
+            if(vehicle != null){
                 setContentView(R.layout.parking)
+                showParkingRecords(vehicle)
             } else {
                 setContentView(R.layout.noparking)
 
@@ -252,7 +270,7 @@ class ParkingActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkVehicle (callback: (Boolean) -> Unit) {
+    private fun checkVehicle (callback: (QuerySnapshot?) -> Unit) {
         if(checkSession()) {
             val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
             val userId = sharedPreference.getString("userId", null)
@@ -267,23 +285,145 @@ class ParkingActivity : AppCompatActivity() {
                     .get()
                     .addOnSuccessListener(){ document ->
                         if(document.isEmpty){
-                            callback(false)
+                            callback(null)
                         }
                         else{
-                            callback(true)
+                            Log.i("Data", document.documents.toString())
+                            callback(document)
                         }
                     }
                     .addOnFailureListener() {
                         Toast.makeText(this, "Error Fetching Records", Toast.LENGTH_SHORT).show()
-                        callback(false)
+                        callback(null)
                     }
             } else {
                 Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
-                callback(false)
+                callback(null)
             }
         } else {
             Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
-            callback(false)
+            callback(null)
+        }
+    }
+
+    private fun showParkingRecords(records: QuerySnapshot) {
+        val parkingLayout = findViewById<LinearLayout>(R.id.parkingLayout)
+        parkingLayout.removeAllViews()
+
+        val recordPadding = resources.getDimensionPixelSize(R.dimen.record_padding)
+        val imageDimension = resources.getDimensionPixelSize(R.dimen.image_dimen)
+        val imageMarginEnd = resources.getDimensionPixelSize(R.dimen.image_margin)
+        val spaceWidth = resources.getDimensionPixelSize(R.dimen.space_width)
+        val spacePadding = resources.getDimensionPixelSize(R.dimen.space_padding)
+
+        for (r in records){
+            val record = r.toObject(ParkingRecord::class.java)
+            val recordLayout = LinearLayout(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                setPadding(recordPadding, recordPadding, recordPadding, recordPadding)
+                backgroundTintList = ContextCompat.getColorStateList(context, R.color.white)
+                orientation = LinearLayout.HORIZONTAL
+            }
+
+            val vehicleImage = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    imageDimension,
+                    imageDimension
+                ).apply {
+                    marginEnd = imageMarginEnd
+                }
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+
+            if(r.getString("Type") == "Four Wheeler"){
+                vehicleImage.setImageResource(R.drawable.car)
+            } else {
+                vehicleImage.setImageResource(R.drawable.bike)
+            }
+
+            val innerLayout = LinearLayout(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+                orientation = LinearLayout.VERTICAL
+            }
+
+            val vehicleNumber = TextView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                text = r.getString("vehicleNumber")
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                textSize = 22f
+                setTypeface(ResourcesCompat.getFont(this@ParkingActivity, R.font.exo_2_semibold), Typeface.BOLD)
+                gravity = Gravity.CENTER
+            }
+
+            val duration = TextView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                text = r.getString("Duration")
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                textSize = 18f
+                setTypeface(ResourcesCompat.getFont(this@ParkingActivity, R.font.lato_italic), Typeface.ITALIC)
+                gravity = Gravity.CENTER
+            }
+
+            innerLayout.addView(vehicleNumber)
+            innerLayout.addView(duration)
+
+            val locationText = TextView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    spaceWidth,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                ).apply {
+                    setPadding(spacePadding, spacePadding, spacePadding, spacePadding)
+                }
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                textSize = 22f
+                setTypeface(null, Typeface.BOLD)
+                gravity = Gravity.CENTER
+            }
+
+            r.getDocumentReference("space_Ref")?.let {spaceRef ->
+                getLocation(spaceRef) { location ->
+                    if (location != null) {
+                        locationText.text = location
+                    } else {
+                        locationText.text = "Location not found"
+                    }
+                }
+            }
+
+            recordLayout.addView(vehicleImage)
+            recordLayout.addView(innerLayout)
+            recordLayout.addView(locationText)
+
+            parkingLayout.addView(recordLayout)
+        }
+    }
+
+    private fun getLocation(space: DocumentReference, callback: (String?) -> Unit) {
+        space.get()
+        .addOnSuccessListener(){document ->
+            if (document.exists()) {
+                val location = document.getString("space")
+                callback(location)
+            } else {
+                callback(null)
+            }
+        }
+        .addOnFailureListener(){
+            Toast.makeText(this, "Error Fetching Location", Toast.LENGTH_SHORT).show()
+            callback(null)
         }
     }
 }

@@ -14,69 +14,43 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
 class VisitorDiaryActivity : AppCompatActivity(){
-    private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var drawerLayout : DrawerLayout
-    private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(drawerToggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return false
-    }
-
-    override fun onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-        else{
-            return super.onBackPressed()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.visitor_diary)
 
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+    }
 
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.navbar)
-
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(drawerToggle)
-        drawerToggle.syncState()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        navView.setNavigationItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.profile -> {
-                    Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
-                R.id.about -> {
-                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-
-                R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
-                    logout()
-                    finish()
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.profile -> {
+                Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                true
             }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
+
+            R.id.about -> {
+                Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            R.id.logout -> {
+                Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.vis_menu, menu)
+        return true
     }
 
     private fun logout() {

@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:paddingEnd="10dp"
         android:textColor="@color/white"
-        android:drawableEnd="@drawable/send">
+        android:drawableEnd="@drawable/send"/>
 
-    </EditText>
 </LinearLayout>

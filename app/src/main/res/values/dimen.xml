@@ -5,4 +5,9 @@
     <dimen name="table_margin">20dp</dimen>
     <dimen name="table_row_padding">4dp</dimen>
     <dimen name="text_padding">8dp</dimen>
+    <dimen name="record_padding">16dp</dimen>
+    <dimen name="image_dimen">50dp</dimen>
+    <dimen name="image_margin">16dp</dimen>
+    <dimen name="space_width">50dp</dimen>
+    <dimen name="space_padding">4dp</dimen>
 </resources>
