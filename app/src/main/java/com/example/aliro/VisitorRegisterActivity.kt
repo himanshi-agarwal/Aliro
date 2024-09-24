@@ -63,12 +63,14 @@ class VisitorRegisterActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.profile -> {
                 Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, VisitorHomeActivity::class.java)
+                startActivity(intent)
                 true
             }
 
             R.id.about -> {
                 Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, AboutActivity::class.java)
+                val intent = Intent(this, VisitorAboutActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -111,6 +113,16 @@ class VisitorRegisterActivity : AppCompatActivity() {
         imageView = findViewById(R.id.uploadedImage)
         imageName = findViewById(R.id.imageName)
         registerButton = findViewById(R.id.register_button)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, VisitorHomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
 
         visitDateButton.setOnClickListener {
             val c = Calendar.getInstance()

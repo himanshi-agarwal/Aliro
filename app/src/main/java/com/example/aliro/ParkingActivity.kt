@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -23,6 +25,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -42,6 +45,7 @@ data class ParkingRecord (
 )
 
 class ParkingActivity : AppCompatActivity() {
+    private lateinit var toolbar: Toolbar
     private lateinit var spotButton: Button
     private lateinit var vehicleNumber: EditText
     private lateinit var vehicleModel: EditText
@@ -62,9 +66,22 @@ class ParkingActivity : AppCompatActivity() {
         checkVehicle { vehicle ->
             if(vehicle != null){
                 setContentView(R.layout.parking)
+
+                toolbar = findViewById(R.id.toolbar)
+                setSupportActionBar(toolbar)
+
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
+
                 showParkingRecords(vehicle)
             } else {
                 setContentView(R.layout.noparking)
+
+                toolbar = findViewById(R.id.toolbar)
+                setSupportActionBar(toolbar)
+
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
 
                 spotButton = findViewById(R.id.spot)
 
@@ -72,7 +89,44 @@ class ParkingActivity : AppCompatActivity() {
                     openCamera()
                 }
             }
+
+            toolbar.setNavigationOnClickListener {
+                val intent = Intent(this, VisitorHomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.profile -> {
+                Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, VisitorHomeActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            R.id.about -> {
+                Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, VisitorAboutActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            R.id.logout -> {
+                Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.vis_menu, menu)
+        return true
     }
 
     private fun checkCameraPermission() {
@@ -425,5 +479,17 @@ class ParkingActivity : AppCompatActivity() {
             Toast.makeText(this, "Error Fetching Location", Toast.LENGTH_SHORT).show()
             callback(null)
         }
+    }
+
+    private fun logout() {
+        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 }

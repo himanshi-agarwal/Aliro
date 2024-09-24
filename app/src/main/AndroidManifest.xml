@@ -80,6 +80,11 @@
             android:label="Update Profile">
         </activity>
         <activity
+            android:name=".VisitorAboutActivity"
+            android:exported="false"
+            android:label="About">
+        </activity>
+        <activity
             android:name=".VisitorDiaryActivity"
             android:exported="false"
             android:label="Diary">

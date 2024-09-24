@@ -6,18 +6,21 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
 
 class VisitorHomeActivity : AppCompatActivity() {
-    private lateinit var navView : NavigationView
     private lateinit var toolbar : Toolbar
+    private lateinit var userProfile: ImageView
     private lateinit var visitorName: TextView
     private lateinit var register : Button
     private lateinit var parking : Button
@@ -27,13 +30,13 @@ class VisitorHomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.profile -> {
-                Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Already in Profile", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.about -> {
                 Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, AboutActivity::class.java)
+                val intent = Intent(this, VisitorAboutActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -58,6 +61,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         setContentView(R.layout.visitor_home)
 
         visitorName = findViewById(R.id.visitor_username)
+        userProfile = findViewById(R.id.user_profile)
         register = findViewById(R.id.pre_register)
         logs = findViewById(R.id.logs)
         parking = findViewById(R.id.parking)
@@ -141,15 +145,28 @@ class VisitorHomeActivity : AppCompatActivity() {
         return sharedPreference.getBoolean("loggedIn", false)
     }
 
-    private fun updateSidebarHeader() {
-        val header = navView.getHeaderView(0)
-        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+    private fun updateUserProfile() {
+        if(checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
 
-        val headerUserName : TextView = header.findViewById(R.id.header_user_name)
-        val headerUserType : TextView = header.findViewById(R.id.header_user_type)
+            if(userId != null){
+                val storageReference = Firebase.storage.reference
+                val imageReference = storageReference.child("images/${userId}.jpg")
 
-        headerUserName.text = sharedPreference.getString("userName", null)
-        headerUserType.text = sharedPreference.getString("userType", null)
+                imageReference.downloadUrl.addOnSuccessListener { uri ->
+                    Glide.with(this)
+                        .load(uri)
+                        .into(userProfile)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun logout() {
