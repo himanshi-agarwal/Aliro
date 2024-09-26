@@ -170,6 +170,12 @@ class ParkingActivity : AppCompatActivity() {
     private fun setUpForm() {
         setContentView(R.layout.parking_register)
 
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         vehicleNumber = findViewById(R.id.numberPlate)
         vehicleModel = findViewById(R.id.model)
         duration = findViewById(R.id.durationSpinner)
@@ -301,7 +307,6 @@ class ParkingActivity : AppCompatActivity() {
 
                                         val intent = Intent(this, VisitorHomeActivity::class.java)
                                         startActivity(intent)
-                                        finish()
                                     }
                                     .addOnFailureListener(){
                                         Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
