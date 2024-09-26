@@ -185,7 +185,6 @@ class EmpEditActivity : AppCompatActivity() {
                 R.id.logout -> {
                     Toast.makeText(applicationContext, "Logged Out Successfully", Toast.LENGTH_SHORT).show()
                     logout()
-                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -438,14 +437,28 @@ class EmpEditActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Do you want to logout?")
 
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-        finish()
+        builder.setTitle("ALERT!")
+        builder.setCancelable(false)
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        builder.setNegativeButton("No") {
+                dialog, which -> dialog.cancel()
+        }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 }
