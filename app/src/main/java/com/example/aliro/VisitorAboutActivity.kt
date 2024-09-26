@@ -9,14 +9,41 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class VisitorAboutActivity : AppCompatActivity() {
+class VisitorAboutActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var toolbar: Toolbar
+    private lateinit var mapView: MapView
+    private lateinit var googleMap: GoogleMap
+    private val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
+        val techPark = LatLng(12.9344, 77.6066)
+        googleMap.addMarker(MarkerOptions().position(techPark).title("Tech Park, Bengaluru"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(techPark, 15f))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.about)
+
+        mapView = findViewById(R.id.map_view)
+
+        var mapViewBundle: Bundle? = null
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+        }
+
+        mapView.onCreate(mapViewBundle)
+
+        mapView.getMapAsync(this)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -30,6 +57,18 @@ class VisitorAboutActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
+        if (mapViewBundle == null) {
+            mapViewBundle = Bundle()
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
+        }
+
+        mapView.onSaveInstanceState(mapViewBundle)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
