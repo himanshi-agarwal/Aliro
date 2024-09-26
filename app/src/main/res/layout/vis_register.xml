@@ -1,392 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
     tools:context=".VisitorRegisterActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/other"
+        app:titleTextColor="@color/white"
+        app:title="Visit"/>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
+        android:background="@color/background">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/other"
-            app:titleTextColor="@color/white"
-            app:title="Visit"/>
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient">
+            android:background="@color/background"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/black_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
 
-                <RelativeLayout
-                    android:id="@+id/black_background"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_italic"
                     android:gravity="center"
-                    android:layout_marginBottom="20dp">
+                    android:text="Register Your Visit"
+                    android:textColor="#000000"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+            <!-- White Background with Rounded Corners -->
+            <RelativeLayout
+                android:id="@+id/white_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/black_background"
+                android:background="@drawable/rounded_corners_background"
+                android:clipToPadding="false"
+                android:elevation="8dp">
+
+                <!-- Inner Container for Sign Up Form -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:orientation="vertical"
+                    android:padding="30dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Personal Details:"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="20dp"
+                        android:textSize="20sp"/>
+
+                    <EditText
+                        android:id="@+id/fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
                         android:fontFamily="@font/lato_italic"
-                        android:gravity="center"
-                        android:text="Register Your Visit"
-                        android:textColor="#000000"
-                        android:textSize="30sp"
+                        android:hint="Full Name"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+
+                    <EditText
+                        android:id="@+id/phone_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:ems="10"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Phone Number"
+                        android:inputType="phone"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Email (Optional)"
+                        android:inputType="textEmailAddress"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Employee Details:"
+                        android:textColor="@color/black"
                         android:textStyle="bold"
-                        tools:ignore="HardcodedText" />
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20sp"/>
 
-                </RelativeLayout>
+                    <EditText
+                        android:id="@+id/empid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Employee ID"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                <!-- White Background with Rounded Corners -->
-                <RelativeLayout
-                    android:id="@+id/white_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/black_background"
-                    android:background="@drawable/rounded_corners_background"
-                    android:clipToPadding="false"
-                    android:elevation="8dp">
+                    <EditText
+                        android:id="@+id/empname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Employee Name"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
 
-                    <!-- Inner Container for Sign Up Form -->
+                    <EditText
+                        android:id="@+id/empcompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Employee Company"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Other Details:"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/lato_italic"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20sp"/>
+
+                    <EditText
+                        android:id="@+id/purpose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/background"
+                        android:fontFamily="@font/lato_italic"
+                        android:hint="Purpose of Visit"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:orientation="vertical"
-                        android:padding="30dp">
+                        android:orientation="horizontal"
+                        android:layout_marginVertical="20dp"
+                        android:gravity="start">
 
                         <TextView
+                            android:id="@+id/VisitDateLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Personal Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
+                            android:text="Visit Date: "
+                            android:layout_gravity="center"
                             android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"
+                            android:textColor="@color/black"/>
 
-                        <EditText
-                            android:id="@+id/fullname"
-                            android:layout_width="match_parent"
+                        <Button
+                            android:id="@+id/visitDateButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Full Name"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <EditText
-                            android:id="@+id/phone_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:ems="10"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Phone Number"
-                            android:inputType="phone"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <EditText
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Email (Optional)"
-                            android:inputType="textEmailAddress"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                            android:layout_marginStart="20dp"
+                            android:backgroundTint="@color/primary"
+                            android:textColor="@color/white"
+                            android:text="Pick time" />
 
                         <TextView
+                            android:id="@+id/visitDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Employee Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
+                            android:layout_gravity="center"
                             android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="10dp"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"
+                            android:layout_marginStart="15dp"
+                            android:visibility="gone"
+                            android:textColor="@color/black"/>
 
-                        <EditText
-                            android:id="@+id/empid"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Employee ID"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/empname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Name"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <EditText
-                            android:id="@+id/empcompany"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Employee Company"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Other Details:"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/lato_italic"
-                            android:layout_marginBottom="10dp"
-                            android:textSize="20sp"/>
-
-                        <EditText
-                            android:id="@+id/purpose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@color/background"
-                            android:fontFamily="@font/lato_italic"
-                            android:hint="Purpose of Visit"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
+                    <LinearLayout
+                        android:id="@+id/selectImageLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="200dp"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_marginVertical="20dp"
-                            android:gravity="start">
-
-                            <TextView
-                                android:id="@+id/VisitDateLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Visit Date: "
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/lato_italic"
-                                android:textSize="18sp"
-                                android:textColor="@color/black"/>
-
-                            <Button
-                                android:id="@+id/visitDateButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:backgroundTint="@color/primary"
-                                android:textColor="@color/white"
-                                android:text="Pick time" />
-
-                            <TextView
-                                android:id="@+id/visitDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/lato_italic"
-                                android:textSize="18sp"
-                                android:layout_marginStart="15dp"
-                                android:visibility="gone"
-                                android:textColor="@color/black"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/selectImageLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:layout_gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="200dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:layout_gravity="center_horizontal"
-                                android:padding="10dp"
-                                android:layout_weight="1">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    app:cardCornerRadius="150dp">
-
-                                    <ImageView
-                                        android:id="@+id/uploadPhoto"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_centerInParent="true"
-                                        android:background="@color/background"
-                                        android:padding="7dp"
-                                        android:clickable="true"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/upload" />
-
-                                </androidx.cardview.widget.CardView>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Upload from Gallery"
-                                    android:fontFamily="@font/lato_italic"
-                                    android:gravity="center"
-                                    android:textSize="18sp"
-                                    android:layout_marginBottom="10dp"
-                                    android:textColor="@color/black"
-                                    android:layout_marginTop="16dp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="180dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:layout_gravity="center_horizontal"
-                                android:padding="20dp"
-                                android:layout_weight="1">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    app:cardCornerRadius="150dp">
-
-                                    <ImageView
-                                        android:id="@+id/clickPhoto"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_centerInParent="true"
-                                        android:background="@color/background"
-                                        android:clickable="true"
-                                        android:padding="4dp"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/camera" />
-
-                                </androidx.cardview.widget.CardView>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Take a Photo"
-                                    android:fontFamily="@font/lato_italic"
-                                    android:textSize="18sp"
-                                    android:gravity="center"
-                                    android:layout_marginBottom="10dp"
-                                    android:textColor="@color/black"
-                                    android:layout_marginTop="16dp" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/uploadedImageLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:visibility="gone"
-                            android:padding="10dp">
+                            android:layout_gravity="center_horizontal"
+                            android:padding="10dp"
+                            android:layout_weight="1">
 
-                            <ImageView
-                                android:id="@+id/uploadedImage"
-                                android:layout_width="200dp"
-                                android:layout_height="200dp"
-                                android:layout_gravity="center"
-                                android:scaleType="centerCrop"
-                                android:background="@color/background" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                app:cardCornerRadius="150dp">
+
+                                <ImageView
+                                    android:id="@+id/uploadPhoto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:background="@color/background"
+                                    android:padding="7dp"
+                                    android:clickable="true"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/upload" />
+
+                            </androidx.cardview.widget.CardView>
 
                             <TextView
-                                android:id="@+id/imageName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Image Name"
+                                android:text="Upload from Gallery"
+                                android:fontFamily="@font/lato_italic"
+                                android:gravity="center"
+                                android:textSize="18sp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/black"
+                                android:layout_marginTop="16dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="20dp"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                app:cardCornerRadius="150dp">
+
+                                <ImageView
+                                    android:id="@+id/clickPhoto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:background="@color/background"
+                                    android:clickable="true"
+                                    android:padding="4dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/camera" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Take a Photo"
                                 android:fontFamily="@font/lato_italic"
                                 android:textSize="18sp"
                                 android:gravity="center"
                                 android:layout_marginBottom="10dp"
                                 android:textColor="@color/black"
                                 android:layout_marginTop="16dp" />
-                        </LinearLayout>
 
-                        <Button
-                            android:id="@+id/register_button"
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/uploadedImageLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/uploadedImage"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:background="@color/background" />
+
+                        <TextView
+                            android:id="@+id/imageName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="25dp"
-                            android:fontFamily="@font/exo_2_semibold"
-                            android:paddingVertical="10dp"
-                            android:paddingHorizontal="30dp"
-                            android:layout_gravity="center"
-                            android:text="Register"
-                            android:textColor="#FFFFFF"
-                            android:textSize="20sp"
-                            android:backgroundTint="@color/primary"/>
-
+                            android:text="Image Name"
+                            android:fontFamily="@font/lato_italic"
+                            android:textSize="18sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="16dp" />
                     </LinearLayout>
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navbar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="35dp"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/vis_menu">
+                    <Button
+                        android:id="@+id/register_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="25dp"
+                        android:fontFamily="@font/exo_2_semibold"
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="30dp"
+                        android:layout_gravity="center"
+                        android:text="Register"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:backgroundTint="@color/primary"/>
 
-    </com.google.android.material.navigation.NavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
