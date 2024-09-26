@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.camera:camera-core:1.3.4")
     implementation("androidx.camera:camera-camera2:1.3.4")
