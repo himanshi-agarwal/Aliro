@@ -290,12 +290,11 @@
                 android:text="Address: 123 Tech Park, Bengaluru, India\nPhone: +91 9125555228"
                 android:textAppearance="?attr/textAppearanceBody1" />
 
-            <ImageView
-                android:id="@+id/map_image"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/account" />
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
         </LinearLayout>
     </ScrollView>

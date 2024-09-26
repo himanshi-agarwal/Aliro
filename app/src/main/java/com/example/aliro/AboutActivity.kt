@@ -14,21 +14,33 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentContainerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 
-class AboutActivity : AppCompatActivity() {
+class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var toolbar: Toolbar
+    private var mgoogleMap:GoogleMap? = null
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mgoogleMap = googleMap
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.about)
+
+        var map = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        map.getMapAsync(this)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
