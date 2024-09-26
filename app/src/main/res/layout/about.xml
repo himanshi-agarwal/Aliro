@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp">
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -290,11 +290,13 @@
                 android:text="Address: 123 Tech Park, Bengaluru, India\nPhone: +91 9125555228"
                 android:textAppearance="?attr/textAppearanceBody1" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.google.android.gms.maps.SupportMapFragment"/>
+                android:layout_height="400dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="2"/>
 
         </LinearLayout>
     </ScrollView>
