@@ -101,6 +101,11 @@
             android:label="Register Your Visit">
         </activity>
         <activity
+            android:name=".VisitorLogsActivity"
+            android:exported="false"
+            android:label="Logs">
+        </activity>
+        <activity
             android:name=".ParkingActivity"
             android:exported="false"
             android:label="Parking">
