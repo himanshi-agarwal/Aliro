@@ -1,21 +1,43 @@
 package com.example.aliro
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
+
+data class diaryRecord(
+    val userRef: String = "",
+    val date: Timestamp? = null,
+    val message: String = "",
+)
 
 class VisitorDiaryActivity : AppCompatActivity(){
     private lateinit var toolbar : Toolbar
+    private lateinit var diaryParentLayout : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +55,16 @@ class VisitorDiaryActivity : AppCompatActivity(){
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
+        }
+
+        diaryParentLayout = findViewById(R.id.diaryParentLayout)
+
+        getDiaryRecord { records ->
+            if (records != null) {
+                displayDiaryRecords(records)
+            } else {
+                Toast.makeText(this, "No Records Available", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -90,5 +122,150 @@ class VisitorDiaryActivity : AppCompatActivity(){
 
         val alertDialog = builder.create()
         alertDialog.show()
+    }
+
+    private fun checkSession() : Boolean{
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        return sharedPreference.getBoolean("loggedIn", false)
+    }
+
+    private fun getDiaryRecord(callback: (QuerySnapshot?) -> Unit){
+        if (checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if (userId != null){
+                val db = Firebase.firestore
+
+                db.collection("diary")
+                    .get()
+                    .addOnSuccessListener {document ->
+                        if (document.isEmpty){
+                            callback(null)
+                        }
+                        else{
+                            callback(document)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(this, "Error in Diary", Toast.LENGTH_SHORT).show()
+                        Log.w("Firestore", "Error getting documents: ", exception)
+                    }
+            }
+            else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getUsername(userRef: DocumentReference, callback: (String?) -> Unit){
+        userRef.get()
+            .addOnSuccessListener(){document ->
+                if (document.exists()) {
+                    val userName = document.getString("username")
+                    callback(userName)
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener(){
+                Toast.makeText(this, "Error Fetching Username", Toast.LENGTH_SHORT).show()
+                callback(null)
+            }
+    }
+
+    private fun displayDiaryRecords(record: QuerySnapshot){
+        diaryParentLayout.removeAllViews()
+
+        val diaryBoxMarginHorizontal = resources.getDimensionPixelSize(R.dimen.diaryBoxMarginHorizontal)
+        val diaryBoxMarginVertical = resources.getDimensionPixelSize(R.dimen.diaryBoxMarginVertical)
+        val diaryBoxPadding = resources.getDimensionPixelSize(R.dimen.diaryBoxPadding)
+        val cardView = resources.getDimensionPixelSize(R.dimen.cardView)
+        val userMarginStart = resources.getDimensionPixelSize(R.dimen.userMarginStart)
+        val userPaddingStart = resources.getDimensionPixelSize(R.dimen.userPaddingStart)
+
+        for (r in record){
+            val rootLayout = LinearLayout(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(diaryBoxMarginVertical, diaryBoxMarginHorizontal, diaryBoxMarginVertical, diaryBoxMarginHorizontal)
+                }
+                orientation = LinearLayout.HORIZONTAL
+                setPadding(diaryBoxPadding, diaryBoxPadding, diaryBoxPadding, diaryBoxPadding)
+                background = ContextCompat.getDrawable(this@VisitorDiaryActivity, R.drawable.rounded_corner)
+            }
+
+            val cardView = CardView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    cardView,
+                    cardView
+                )
+                radius = 150f
+                cardElevation = 0f
+            }
+
+            val imageView = ImageView(this).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                setImageResource(R.drawable.account)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+                background = ContextCompat.getDrawable(this@VisitorDiaryActivity, R.drawable.circular_background)
+            }
+            imageView.setImageResource(R.drawable.account)
+
+            cardView.addView(imageView)
+
+            val textLayout = LinearLayout(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    weight = 1f
+                    setMargins(userMarginStart, 0, 0, 0)
+                }
+                orientation = LinearLayout.VERTICAL
+                setPadding(userPaddingStart, 0, 0, 0)
+            }
+
+            val nameTextView = TextView(this).apply {
+                textSize = 20f
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTypeface(ResourcesCompat.getFont(this@VisitorDiaryActivity, R.font.lato_italic), Typeface.BOLD)
+            }
+
+            r.getDocumentReference("user_ref")?.let {userRef ->
+                getUsername(userRef){username ->
+                    if(username != null){
+                        nameTextView.text = username
+                    }
+                    else{
+                        nameTextView.text = "User"
+                    }
+                }
+            }
+
+            val descriptionTextView = TextView(this).apply {
+                text = r.getString("message")
+                textSize = 10f
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                setTypeface(ResourcesCompat.getFont(this@VisitorDiaryActivity, R.font.inter_medium), Typeface.BOLD)
+            }
+
+            textLayout.addView(nameTextView)
+            textLayout.addView(descriptionTextView)
+
+            rootLayout.addView(cardView)
+            rootLayout.addView(textLayout)
+
+            diaryParentLayout.addView(rootLayout)
+        }
     }
 }

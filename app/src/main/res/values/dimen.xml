@@ -10,4 +10,10 @@
     <dimen name="image_margin">16dp</dimen>
     <dimen name="space_width">50dp</dimen>
     <dimen name="space_padding">4dp</dimen>
+    <dimen name="diaryBoxMarginHorizontal">4dp</dimen>
+    <dimen name="diaryBoxMarginVertical">15dp</dimen>
+    <dimen name="diaryBoxPadding">20dp</dimen>
+    <dimen name="cardView">80dp</dimen>
+    <dimen name="userMarginStart">16dp</dimen>
+    <dimen name="userPaddingStart">10dp</dimen>
 </resources>
