@@ -71,6 +71,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         getUserData { visitor ->
             if(checkSession() && visitor != null){
                 visitorName.text = visitor[1]
+                updateUserProfile()
             } else {
                 Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
             }
@@ -86,7 +87,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         }
 
         logs.setOnClickListener(){
-            val intent = Intent(this, LogsActivity::class.java)
+            val intent = Intent(this, VisitorLogsActivity::class.java)
             startActivity(intent)
             finish()
         }
