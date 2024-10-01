@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/account"
+        android:icon="@drawable/account_white"
         android:title="Profile"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/about"
-        android:icon="@drawable/info"
+        android:icon="@drawable/info_white"
         android:title="About"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/logout"
-        android:icon="@drawable/logout"
+        android:icon="@drawable/logout_white"
         android:title="Logout"
         app:showAsAction="always"/>
 
