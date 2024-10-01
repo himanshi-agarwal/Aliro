@@ -71,11 +71,6 @@
             android:label="About">
         </activity>
         <activity
-            android:name=".AdminEditActivity"
-            android:exported="false"
-            android:label="Edit Employee Details">
-        </activity>
-        <activity
             android:name=".VisitorHomeActivity"
             android:exported="false"
             android:label="@string/app_name">
@@ -109,6 +104,16 @@
             android:name=".ParkingActivity"
             android:exported="false"
             android:label="Parking">
+        </activity>
+        <activity
+            android:name=".NumberPlateActivity"
+            android:exported="false"
+            android:label="Parking">
+        </activity>
+        <activity
+            android:name=".SecurityHomeActivity"
+            android:exported="false"
+            android:label="Aliro">
         </activity>
 
         <meta-data

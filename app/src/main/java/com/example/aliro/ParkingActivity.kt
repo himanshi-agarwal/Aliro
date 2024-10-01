@@ -87,7 +87,8 @@ class ParkingActivity : AppCompatActivity() {
                 spotButton = findViewById(R.id.spot)
 
                 spotButton.setOnClickListener {
-                    openCamera()
+                    val intent = Intent(this, NumberPlateActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

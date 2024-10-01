@@ -19,11 +19,26 @@
         android:textColor="@color/white"
         android:text="Add your comment" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="10dp"
-        android:textColor="@color/white"
-        android:drawableEnd="@drawable/send"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/diaryMessage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
+            android:src="@drawable/send" />
+    </LinearLayout>
 
 </LinearLayout>
