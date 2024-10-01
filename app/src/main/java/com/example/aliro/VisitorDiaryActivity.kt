@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
@@ -28,6 +31,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+import com.google.firebase.storage.storage
 
 data class diaryRecord(
     val userRef: String = "",
@@ -36,6 +40,8 @@ data class diaryRecord(
 )
 
 class VisitorDiaryActivity : AppCompatActivity(){
+    private lateinit var diaryMessage: EditText
+    private lateinit var sendButton: ImageButton
     private lateinit var toolbar : Toolbar
     private lateinit var diaryParentLayout : LinearLayout
 
@@ -65,6 +71,13 @@ class VisitorDiaryActivity : AppCompatActivity(){
             } else {
                 Toast.makeText(this, "No Records Available", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        diaryMessage = findViewById(R.id.diaryMessage)
+        sendButton = findViewById(R.id.sendButton)
+
+        sendButton.setOnClickListener(){
+            saveDiaryContent()
         }
     }
 
@@ -151,12 +164,10 @@ class VisitorDiaryActivity : AppCompatActivity(){
                         Toast.makeText(this, "Error in Diary", Toast.LENGTH_SHORT).show()
                         Log.w("Firestore", "Error getting documents: ", exception)
                     }
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
         }
     }
@@ -218,8 +229,6 @@ class VisitorDiaryActivity : AppCompatActivity(){
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 background = ContextCompat.getDrawable(this@VisitorDiaryActivity, R.drawable.circular_background)
             }
-            imageView.setImageResource(R.drawable.account)
-
             cardView.addView(imageView)
 
             val textLayout = LinearLayout(this).apply {
@@ -245,6 +254,7 @@ class VisitorDiaryActivity : AppCompatActivity(){
                 getUsername(userRef){username ->
                     if(username != null){
                         nameTextView.text = username
+                        getUserProfile(imageView, nameTextView.text.toString())
                     }
                     else{
                         nameTextView.text = "User"
@@ -266,6 +276,78 @@ class VisitorDiaryActivity : AppCompatActivity(){
             rootLayout.addView(textLayout)
 
             diaryParentLayout.addView(rootLayout)
+        }
+    }
+
+    private fun saveDiaryContent() {
+        if(checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if (userId != null){
+                val db = Firebase.firestore
+                val currentDate = Timestamp.now()
+                val message = diaryMessage.text.toString()
+                val userDocRef = db.collection("user").document(userId)
+
+                val diaryHashmap = hashMapOf(
+                    "date" to currentDate,
+                    "message" to message,
+                    "user_ref" to userDocRef
+                )
+
+                val diaryDocRef = db.collection("diary").document()
+
+                diaryDocRef.set(diaryHashmap)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Review Added Successfully", Toast.LENGTH_SHORT).show()
+                        diaryMessage.text.clear()
+                        val intent = Intent(this, VisitorDiaryActivity::class.java)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error in Adding Review", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
+                    }
+
+            } else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getUserProfile(userImage: ImageView, userName: String) {
+        if(checkSession()){
+            val db = Firebase.firestore
+
+            db.collection("user")
+                .whereEqualTo("username", userName)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (!document.isEmpty) {
+                        val userId = document.documents[0].id
+                        val storageReference = Firebase.storage.reference
+                        val imageReference = storageReference.child("images/${userId}.jpg")
+
+                        imageReference.downloadUrl.addOnSuccessListener { uri ->
+                            Glide.with(this@VisitorDiaryActivity)
+                                .load(uri)
+                                .into(userImage)
+                        }.addOnFailureListener {
+                            Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener {e ->
+                    Toast.makeText(this, "Error fetching user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    return@addOnFailureListener
+                }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
         }
     }
 }

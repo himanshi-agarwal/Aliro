@@ -53,6 +53,8 @@ dependencies {
     implementation("androidx.camera:camera-view:1.3.4")
     implementation("androidx.camera:camera-extensions:1.3.4")
     implementation("com.google.guava:guava:31.0.1-android")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+    implementation("org.tensorflow:tensorflow-lite:2.5.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

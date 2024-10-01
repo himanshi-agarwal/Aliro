@@ -74,8 +74,10 @@ class LoginActivity : AppCompatActivity() {
 
                         val intent = if (userType == "Employee") {
                             Intent(this, EmpHomeActivity::class.java)
-                        } else {
+                        } else if (userType == "Visitor") {
                             Intent(this, VisitorHomeActivity::class.java)
+                        } else {
+                            Intent(this, SecurityHomeActivity::class.java)
                         }
                         startActivity(intent)
                         finish()
