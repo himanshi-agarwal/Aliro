@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:title="Scan Faces">
+            <menu>
+                <item android:id="@+id/emp"
+                    android:title="Employee"
+                    android:icon="@drawable/home" />
+
+                <item android:id="@+id/vis"
+                    android:title="Visitor"
+                    android:icon="@drawable/logs" />
+            </menu>
+        </item>
+    </group>
+
+    <group>
+        <item android:title="Others">
+            <menu>
+                <item android:id="@+id/pre_register"
+                    android:title="Register Guest"
+                    android:icon="@drawable/add_guest" />
+
+                <item android:id="@+id/park"
+                    android:title="Vehicle Parking"
+                    android:icon="@drawable/notifications" />
+            </menu>
+        </item>
+    </group>
+
+    <item android:title="Account Management">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
+</menu>
