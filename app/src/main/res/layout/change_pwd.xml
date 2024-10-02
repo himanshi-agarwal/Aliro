@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@color/background"
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
@@ -33,6 +34,10 @@
         android:hint="Enter Registered Mobile No"
         android:inputType="number"
         android:padding="10dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColorHint="@color/black"
+        android:background="@color/background"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration" />
@@ -152,6 +157,10 @@
         android:hint="Enter New Password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColorHint="@color/black"
+        android:background="@color/background"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.583"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,6 +183,10 @@
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColorHint="@color/black"
+        android:background="@color/background"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
