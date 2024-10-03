@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,7 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 
-class EmpRegister : AppCompatActivity() {
+class EmpRegisterActivity : AppCompatActivity() {
     private lateinit var toolbar : Toolbar
     private lateinit var navView : NavigationView
     private lateinit var drawerToggle: ActionBarDrawerToggle

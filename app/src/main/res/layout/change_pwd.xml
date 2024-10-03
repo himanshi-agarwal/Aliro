@@ -1,208 +1,214 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/background"
-    tools:layout_editor_absoluteY="25dp">
+    android:background="@drawable/gradient"
+    android:backgroundTint="@color/other">
 
-    <TextView
-        android:id="@+id/change_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:text="Change Password"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="60dp"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/registration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/change_password"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/change_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:text="Change Password"
+            android:fontFamily="@font/lato_italic"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/white_background"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter Reg No:" />
+        android:layout_marginTop="160dp"
+        android:background="@drawable/rounded_corners_background"
+        android:clipToPadding="false"
+        android:elevation="8dp"
+        android:paddingTop="0dp">
 
-    <EditText
-        android:id="@+id/et_registration"
-        android:layout_width="319dp"
-        android:layout_height="49dp"
-        android:hint="Enter Registered Mobile No"
-        android:inputType="number"
-        android:padding="10dp"
-        android:fontFamily="@font/lato_italic"
-        android:textColorHint="@color/black"
-        android:background="@color/background"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
 
-    <Button
-        android:id="@+id/btn_get_otp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/approve"
-        android:text="Get OTP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_registration"
-        tools:ignore="HardcodedText" />
+            <EditText
+                android:id="@+id/registration_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:fontFamily="@font/lato_italic"
+                android:hint="Enter Registered Mobile No"
+                android:inputType="number"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Enter OTP"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_get_otp" />
+            <Button
+                android:id="@+id/OTP_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/approve"
+                android:fontFamily="@font/lato_italic"
+                android:paddingVertical="10dp"
+                android:text="Get OTP"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/otp_box_1"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/border_otp"/>
 
-    <EditText
-        android:id="@+id/otp_box_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:hint="-"
-        android:inputType="number"
-        android:maxLength="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3"
-        app:layout_constraintWidth_percent="0.2"
-        tools:ignore="TouchTargetSizeCheck" />
+                <EditText
+                    android:id="@+id/otp_box_2"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/border_otp"/>
 
-    <EditText
-        android:id="@+id/otp_box_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="-"
-        android:inputType="number"
-        android:maxLength="1"
-        app:layout_constraintStart_toEndOf="@id/otp_box_1"
-        app:layout_constraintTop_toTopOf="@id/otp_box_1"
-        app:layout_constraintWidth_percent="0.2"
-        tools:ignore="TouchTargetSizeCheck" />
+                <EditText
+                    android:id="@+id/otp_box_3"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/border_otp"/>
 
+                <EditText
+                    android:id="@+id/otp_box_4"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/border_otp"/>
 
-    <EditText
-        android:id="@+id/otp_box_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="-"
-        android:inputType="number"
-        android:maxLength="1"
-        app:layout_constraintStart_toEndOf="@id/otp_box_2"
-        app:layout_constraintTop_toTopOf="@id/otp_box_1"
-        app:layout_constraintWidth_percent="0.2"
-        tools:ignore="TouchTargetSizeCheck" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/otp_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="otp_box_1,otp_box_2,otp_box_3,otp_box_4" />
 
+            </LinearLayout>
 
-    <EditText
-        android:id="@+id/otp_box_4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="-"
-        android:inputType="number"
-        android:maxLength="1"
-        app:layout_constraintStart_toEndOf="@id/otp_box_3"
-        app:layout_constraintTop_toTopOf="@id/otp_box_1"
-        app:layout_constraintWidth_percent="0.2"
-        tools:ignore="TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/validate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="20dp"
+                android:backgroundTint="@color/approve"
+                android:fontFamily="@font/lato_italic"
+                android:text="Validate"
+                android:paddingVertical="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
 
+            <EditText
+                android:id="@+id/new_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/background"
+                android:fontFamily="@font/lato_italic"
+                android:hint="Enter New Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/otp_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="otp_box_1,otp_box_2,otp_box_3,otp_box_4" />
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/background"
+                android:fontFamily="@font/lato_italic"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
-    <Button
-        android:id="@+id/btn_validate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="@color/approve"
-        android:text="Validate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/otp_box_1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/new_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="New Password:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_validate" />
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/cancel"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:padding="16dp"
+                    android:layout_marginEnd="8dp" />
 
-    <EditText
-        android:id="@+id/et_new_password"
-        android:layout_width="343dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:hint="Enter New Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:fontFamily="@font/lato_italic"
-        android:textColorHint="@color/black"
-        android:background="@color/background"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_password" />
-
-    <TextView
-        android:id="@+id/confirm_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Confirm Password:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_new_password" />
-
-    <EditText
-        android:id="@+id/et_confirm_password"
-        android:layout_width="350dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:fontFamily="@font/lato_italic"
-        android:textColorHint="@color/black"
-        android:background="@color/background"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/confirm_password" />
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="@color/approve"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_confirm_password"
-        tools:ignore="HardcodedText" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/approve"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:padding="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

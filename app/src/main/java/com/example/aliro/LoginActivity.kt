@@ -17,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password : EditText
     private lateinit var loginButton : Button
     private lateinit var signUpTextView : TextView
+    private lateinit var forgetPass: TextView
 
     private var db = Firebase.firestore
 
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton = findViewById(R.id.login_button)
         signUpTextView = findViewById(R.id.signupLink)
+        forgetPass = findViewById(R.id.forgotPass)
         username = findViewById(R.id.username)
         password = findViewById(R.id.password)
 
@@ -36,6 +38,10 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener(){
             login()
+        }
+
+        forgetPass.setOnClickListener() {
+            startActivity(Intent(this, ChangePasswordActivity:: class.java))
         }
     }
 
