@@ -56,6 +56,11 @@
             android:label="Edit Profile">
         </activity>
         <activity
+            android:name=".EmpRegister"
+            android:exported="false"
+            android:label="Visit">
+        </activity>
+        <activity
             android:name=".LogsActivity"
             android:exported="false"
             android:label="Logs">
