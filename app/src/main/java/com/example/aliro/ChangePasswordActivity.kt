@@ -1,6 +1,11 @@
 package com.example.aliro
 
 import android.Manifest
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +22,7 @@ import com.google.firebase.firestore.firestore
 import android.telephony.SmsManager
 import android.util.Log
 import android.view.View
+import com.google.firebase.firestore.DocumentReference
 import kotlin.random.Random
 
 class ChangePasswordActivity : AppCompatActivity() {
@@ -33,6 +39,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var cancelButton: Button
     val PERMISSION_REQUEST_CODE = 1
     private var otp: Int = generateOTP()
+    private var userRef: DocumentReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +91,16 @@ class ChangePasswordActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             val newPassword = newPassword.text.toString()
             val confirmPassword = confirmPassword.text.toString()
+
+            updatePassword(newPassword, confirmPassword)
         }
 
         cancelButton.setOnClickListener() {
+            newPassword.text.clear()
+            confirmPassword.text.clear()
+            
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
@@ -112,6 +126,22 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun verifyMobileNumber(registeredNumber: String) {
+        checkEmployeeNumber(registeredNumber) { isFound ->
+            if (isFound) {
+                sendOTP(registeredNumber)
+            }
+        }
+
+        checkVisitorNumber(registeredNumber) { isFound ->
+            if (isFound) {
+                sendOTP(registeredNumber)
+            } else {
+                Toast.makeText(this, "Invalid Registered Number", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun checkVisitorNumber(registeredNumber: String, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
         db.collection("employees")
@@ -119,9 +149,29 @@ class ChangePasswordActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener() {document ->
                 if(document.isEmpty){
-                    Toast.makeText(this, "Not a Registered Mobile Number", Toast.LENGTH_SHORT).show()
+                    callback(false)
                 } else {
-                    sendOTP(registeredNumber)
+                    userRef = document.documents[0].getDocumentReference("user_ref")
+                    callback(true)
+                }
+            }
+            .addOnFailureListener() {
+                Toast.makeText(this, "Error in Fetching Record", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun checkEmployeeNumber(registeredNumber: String, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        db.collection("visitors")
+            .whereEqualTo("PhoneNumber", registeredNumber.toLong())
+            .get()
+            .addOnSuccessListener() {document ->
+                if(document.isEmpty){
+                    callback(false)
+                } else {
+                    userRef = document.documents[0].getDocumentReference("user_ref")
+                    callback(true)
                 }
             }
             .addOnFailureListener() {
@@ -167,6 +217,50 @@ class ChangePasswordActivity : AppCompatActivity() {
             cancelButton.visibility = View.VISIBLE
         } else {
             Toast.makeText(this, "Incorrect OTP", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkPassword(p: String, cp: String) : Boolean{
+        return p == cp
+    }
+
+    private fun updatePassword(password: String, confirmPassword: String) {
+        if(checkPassword(password, confirmPassword)){
+           userRef?.get()
+                ?.addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        userRef?.update("password", password)
+                            ?.addOnSuccessListener() {
+                                Toast.makeText(this, "Password Updated Successfully", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            ?.addOnFailureListener() {
+                                Toast.makeText(this, "Error in Password Updation", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "No User Found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                ?.addOnFailureListener {
+                    Toast.makeText(this, "Error fetching user document", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "Confirm Password does not Match", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
