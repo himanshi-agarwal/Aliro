@@ -11,11 +11,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-
 //import com.jjoe64.graphview.GraphView
 //import com.jjoe64.graphview.series.DataPoint
 //import com.jjoe64.graphview.series.LineGraphSeries
-
 
 class SecurityHomeActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
