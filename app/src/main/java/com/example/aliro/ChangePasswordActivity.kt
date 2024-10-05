@@ -37,9 +37,11 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var confirmPassword: EditText
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
-    val PERMISSION_REQUEST_CODE = 1
     private var otp: Int = generateOTP()
     private var userRef: DocumentReference? = null
+    companion object {
+        const val PERMISSION_REQUEST_SEND_SMS = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +71,6 @@ class ChangePasswordActivity : AppCompatActivity() {
         confirmPassword.visibility = View.GONE
         saveButton.visibility = View.GONE
         cancelButton.visibility = View.GONE
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), PERMISSION_REQUEST_CODE)
-        }
 
         otpButton.setOnClickListener {
             val registeredNumber = mobileNo.text.toString()
@@ -128,15 +126,13 @@ class ChangePasswordActivity : AppCompatActivity() {
     private fun verifyMobileNumber(registeredNumber: String) {
         checkEmployeeNumber(registeredNumber) { isFound ->
             if (isFound) {
-                sendOTP(registeredNumber)
+                sendSms()
             }
         }
 
         checkVisitorNumber(registeredNumber) { isFound ->
             if (isFound) {
-                sendOTP(registeredNumber)
-            } else {
-                Toast.makeText(this, "Invalid Registered Number", Toast.LENGTH_SHORT).show()
+                sendSms()
             }
         }
     }
@@ -180,26 +176,29 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun generateOTP(): Int {
-        val otp = Random.nextInt(1000, 10000)
-        Log.i("OTP", otp.toString())
-        return otp
+        val generatedotp = Random.nextInt(1000, 10000)
+        return generatedotp
     }
 
-    private fun sendOTP(registeredNumber: String) {
-        val message = "Your one-time password (OTP) for Password Change is $otp. This OTP is valid for the next 10 minutes. Please enter it in the app or website to complete your verification process."
-        try {
-            val smsManager = SmsManager.getDefault()
-            smsManager.sendTextMessage(registeredNumber, null, message, null, null)
-            Toast.makeText(this, "OTP Sent Successfully", Toast.LENGTH_SHORT).show()
+    private fun sendSms() {
+        val phoneNumber = mobileNo.text.toString().trim()
+        val message = "Your one-time password (OTP) for Password Change is $otp. This OTP is valid for the next 10 minutes."
 
-            otpBox1.visibility = View.VISIBLE
-            otpBox2.visibility = View.VISIBLE
-            otpBox3.visibility = View.VISIBLE
-            otpBox4.visibility = View.VISIBLE
-            btnValidate.visibility = View.VISIBLE
-        } catch (e: Exception) {
-            Toast.makeText(this, "SMS Failed to Send", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+        if (phoneNumber.isNotEmpty() && message.isNotEmpty()) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                val smsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                Toast.makeText(this, "OTP sent successfully!", Toast.LENGTH_LONG).show()
+                otpBox1.visibility = View.VISIBLE
+                otpBox2.visibility = View.VISIBLE
+                otpBox3.visibility = View.VISIBLE
+                otpBox4.visibility = View.VISIBLE
+                btnValidate.visibility = View.VISIBLE
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), PERMISSION_REQUEST_SEND_SMS)
+            }
+        } else {
+            Toast.makeText(this, "Please enter Registered Mobile Number", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -253,13 +252,11 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
-                }
+        if (requestCode == PERMISSION_REQUEST_SEND_SMS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendSms()
+            } else {
+                Toast.makeText(this, "Permission denied to send SMS", Toast.LENGTH_LONG).show()
             }
         }
     }
