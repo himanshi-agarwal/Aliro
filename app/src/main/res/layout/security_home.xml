@@ -37,6 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="40dp"
                     android:gravity="center">
 
@@ -98,78 +99,6 @@
                             android:fontFamily="@font/lato_italic"
                             android:gravity="center"
                             android:text="10"
-                            android:textColor="#000000"
-                            android:textSize="60sp"
-                            android:textStyle="bold"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginRight="20dp"
-                        android:padding="20dp"
-                        android:background="@drawable/rounded_corner_sec">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato_italic"
-                            android:gravity="center"
-                            android:text="Pending Visits"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato_italic"
-                            android:gravity="center"
-                            android:text="3"
-                            android:textColor="#000000"
-                            android:textSize="60sp"
-                            android:textStyle="bold"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="20dp"
-                        android:padding="20dp"
-                        android:background="@drawable/rounded_corner_sec">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato_italic"
-                            android:gravity="center"
-                            android:text="Visitors Today"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato_italic"
-                            android:gravity="center"
-                            android:text="20"
                             android:textColor="#000000"
                             android:textSize="60sp"
                             android:textStyle="bold"

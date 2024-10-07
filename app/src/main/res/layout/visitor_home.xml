@@ -72,68 +72,180 @@
                 android:textSize="18sp" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_marginTop="250dp"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
+            android:layout_marginTop="250dp"
+            android:fitsSystemWindows="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="18dp">
 
-                    <Button
-                        android:id="@+id/pre_register"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_margin="8dp"
-                        android:backgroundTint="@color/primary"
-                        android:layout_height="150dp"
-                        android:elevation="10dp"
-                        android:textColor="@color/white"
-                        android:text="Register a Visit" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
 
-                    <Button
-                        android:id="@+id/diary"
+                        <ImageButton
+                            android:id="@+id/pre_register"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/add_guest"
+                            android:scaleType="fitXY"
+                            android:background="@color/white"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Register a Guest"
+                            android:padding="10dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/bangers"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="150dp"
-                        android:layout_margin="8dp"
-                        android:elevation="10dp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/primary"
-                        android:text="Visitor Diary" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
+
+                        <ImageButton
+                            android:id="@+id/diary"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/diary"
+                            android:scaleType="fitXY"
+                            android:background="@color/white"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Visitor Diary"
+                            android:padding="10dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/bangers"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
+
+                        <ImageButton
+                            android:id="@+id/parking"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/parking"
+                            android:scaleType="fitXY"
+                            android:background="@color/white"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Parking"
+                            android:padding="10dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/bangers"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
+
+                        <ImageButton
+                            android:id="@+id/logs"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/logs"
+                            android:scaleType="fitXY"
+                            android:background="@color/white"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Logs"
+                            android:padding="10dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/bangers"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="15dp">
+
+                        <ImageButton
+                            android:id="@+id/notification"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/notifications"
+                            android:scaleType="fitXY"
+                            android:background="@color/white"
+                            android:adjustViewBounds="true"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notifications"
+                            android:padding="10dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/bangers"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/parking"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="150dp"
-                        android:layout_margin="8dp"
-                        android:elevation="10dp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/primary"
-                        android:text="Parking" />
-
-                    <Button
-                        android:id="@+id/logs"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="150dp"
-                        android:layout_margin="8dp"
-                        android:elevation="10dp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/primary"
-                        android:text="My Logs"/>
-            </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
 </LinearLayout>
