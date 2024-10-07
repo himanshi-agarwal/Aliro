@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
+        <item android:title="Account">
+            <menu>
+                <item android:id="@+id/home"
+                    android:title="Home"
+                    android:icon="@drawable/home" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
         <item android:title="Scan Faces">
             <menu>
-                <item android:id="@+id/emp"
+                <item android:id="@+id/employee"
                     android:title="Employee"
-                    android:icon="@drawable/home" />
+                    android:icon="@drawable/account" />
 
-                <item android:id="@+id/vis"
+                <item android:id="@+id/visitors"
                     android:title="Visitor"
-                    android:icon="@drawable/logs" />
+                    android:icon="@drawable/account" />
             </menu>
         </item>
     </group>
@@ -21,7 +31,7 @@
                     android:title="Register Guest"
                     android:icon="@drawable/add_guest" />
 
-                <item android:id="@+id/park"
+                <item android:id="@+id/parking"
                     android:title="Vehicle Parking"
                     android:icon="@drawable/notifications" />
             </menu>

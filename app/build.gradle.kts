@@ -55,6 +55,7 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-android")
     implementation("com.google.mlkit:text-recognition:16.0.0")
     implementation("org.tensorflow:tensorflow-lite:2.5.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
