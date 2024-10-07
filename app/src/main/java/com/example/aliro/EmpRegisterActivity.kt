@@ -71,17 +71,18 @@ class EmpRegisterActivity : AppCompatActivity() {
                 }
 
                 R.id.pre_register -> {
-                    Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT)
-                        .show()
-                    val intent = Intent(this, EmpHomeActivity::class.java)
-                    startActivity(intent)
+                    if (this !is EmpRegisterActivity) {
+                        val intent = Intent(this, EmpRegisterActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Registration Page", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, NotificationActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.about -> {
@@ -91,8 +92,7 @@ class EmpRegisterActivity : AppCompatActivity() {
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
                 }
             }
