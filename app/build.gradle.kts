@@ -54,7 +54,9 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.3.4")
     implementation("com.google.guava:guava:31.0.1-android")
     implementation("com.google.mlkit:text-recognition:16.0.0")
-    implementation("org.tensorflow:tensorflow-lite:2.5.0")
+    implementation("org.tensorflow:tensorflow-lite:2.12.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.3")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     testImplementation(libs.junit)
