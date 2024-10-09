@@ -255,20 +255,19 @@ class EmpRegisterActivity : AppCompatActivity() {
                 createVisitor(visitorName, visitorPhoneNo, visitorEmail) { creation, visitorRef ->
                     if(creation){
                         Toast.makeText(this, "Visitor Created Successfully", Toast.LENGTH_SHORT).show()
-                        return@createVisitor
                     }
 
-                    getEmployee(userId) {empDetails ->
+                    getEmployee() {empDetails ->
                         if(empDetails.isEmpty()){
-                            Toast.makeText(this, "Visitor not found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Employee not found", Toast.LENGTH_SHORT).show()
                             return@getEmployee
                         }
 
                         val currentTime = Timestamp.now()
 
                         val visitMap = hashMapOf(
-                            "visitor_ref" to "visitors/${visitorRef}",
-                            "employee_ref" to "employees/${empDetails[0]}",
+                            "visitor_ref" to visitorRef,
+                            "employee_ref" to empDetails[0],
                             "checkInTime" to null,
                             "checkOutTime" to null,
                             "companyName" to empDetails[1],
@@ -277,10 +276,15 @@ class EmpRegisterActivity : AppCompatActivity() {
                             "createdAt" to currentTime
                         )
 
+                        Log.i("Map", visitMap.toString())
+
                         db.collection("visits")
                             .add(visitMap)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Visit Requested Successfully", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, EmpHomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "Error registering visit", Toast.LENGTH_SHORT).show()
@@ -302,11 +306,12 @@ class EmpRegisterActivity : AppCompatActivity() {
 
         val userMap = hashMapOf(
             "username" to visitorName,
-            "password" to visitorName,
+            "password" to visitorName.toLowerCase(),
             "usertype" to "Visitor"
         )
 
         val userDocRef = db.collection("user").document()
+        Log.i("User", userDocRef.toString())
 
         userDocRef.set(userMap)
             .addOnSuccessListener {
@@ -320,7 +325,6 @@ class EmpRegisterActivity : AppCompatActivity() {
                 db.collection("visitors").document()
                     .set(visitorMap)
                     .addOnSuccessListener {
-                        Toast.makeText(applicationContext, "Registration Successfully", Toast.LENGTH_LONG).show()
                         callback(true, userDocRef)
                     }
                     .addOnFailureListener { e ->
@@ -334,14 +338,15 @@ class EmpRegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun getEmployee(userRef: String, callback: (Array<String?>) -> Unit) {
+    private fun getEmployee(callback: (Array<Any?>) -> Unit) {
         if(checkSession()){
             val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
             val userId = sharedPreference.getString("userId", null)
 
             if(userId != null){
                 val db = Firebase.firestore
-                val empDetails: Array<String?> = arrayOf(null, null)
+                val userRef = db.collection("user").document(userId)
+                val empDetails: Array<Any?> = arrayOf(null, null)
 
                 db.collection("employees")
                     .whereEqualTo("user_ref", userRef)
@@ -351,9 +356,9 @@ class EmpRegisterActivity : AppCompatActivity() {
                             Toast.makeText(this, "Incorrect Employee Details", Toast.LENGTH_SHORT).show()
                             callback(empDetails)
                         } else {
-                            for (d in document){
+                            for (d in document.documents){
+                                empDetails[0] = d.reference
                                 empDetails[1] = d.getString("Company")
-                                empDetails[0] = d.id
                             }
                             callback(empDetails)
                         }

@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -28,12 +29,18 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
+import java.util.Calendar
+import java.util.Date
 
 class SecurityHomeActivity : AppCompatActivity() {
+    private lateinit var visitorsCount: TextView
+    private lateinit var parkingSlotCount: TextView
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -102,84 +109,25 @@ class SecurityHomeActivity : AppCompatActivity() {
             true
         }
 
+        visitorsCount = findViewById(R.id.visitors)
+        parkingSlotCount = findViewById(R.id.parkingSlot)
         lineChart = findViewById(R.id.chart)
         pieChart = findViewById(R.id.pieChart)
 
+        getVisitorsCount { count ->
+            visitorsCount.text = count.toString()
+        }
+
+        getParkingSlots { count ->
+            parkingSlotCount.text = count.toString()
+        }
+
+        getVisitorCountsByWeek { visitorCounts ->
+            createLineChart(visitorCounts)
+        }
+
         updateSidebarHeader()
-        createLineChart()
         createPieChart()
-    }
-
-    private fun createLineChart() {
-        lineChart.description.isEnabled = false
-        lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(true)
-
-        val xAxis: XAxis = lineChart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
-
-        val leftAxis: YAxis = lineChart.axisLeft
-        leftAxis.granularity = 1f
-        lineChart.axisRight.isEnabled = false
-
-        val legend: Legend = lineChart.legend
-        legend.isEnabled = true
-
-        val entries = mutableListOf<Entry>()
-        entries.add(Entry(0f, 1f))
-        entries.add(Entry(1f, 2f))
-        entries.add(Entry(2f, 1.5f))
-        entries.add(Entry(3f, 3f))
-        entries.add(Entry(4f, 2.5f))
-
-        val dataSet = LineDataSet(entries, "Default Values")
-        dataSet.color = ContextCompat.getColor(this, R.color.primary)
-        dataSet.valueTextColor = getColor(R.color.black)
-        dataSet.setDrawCircles(true)
-        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.other))
-        dataSet.lineWidth = 2f
-        dataSet.circleRadius = 4f
-
-        val dataSets = ArrayList<ILineDataSet>()
-        dataSets.add(dataSet)
-
-        val lineData = LineData(dataSets)
-
-        lineChart.data = lineData
-        lineChart.invalidate()
-    }
-
-    private fun createPieChart() {
-        pieChart.description.isEnabled = false
-        pieChart.setUsePercentValues(true)
-        pieChart.isDrawHoleEnabled = true
-        pieChart.setHoleColor(R.color.white)
-        pieChart.holeRadius = 58f
-        pieChart.transparentCircleRadius = 61f
-
-        val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(40f, "Category 1"))
-        entries.add(PieEntry(30f, "Category 2"))
-        entries.add(PieEntry(20f, "Category 3"))
-        entries.add(PieEntry(10f, "Category 4"))
-
-        val dataSet = PieDataSet(entries, "Default Values")
-        dataSet.sliceSpace = 3f
-        dataSet.selectionShift = 5f
-        dataSet.colors = listOf(
-            ContextCompat.getColor(this, R.color.primary),
-            ContextCompat.getColor(this, R.color.secondary),
-            ContextCompat.getColor(this, R.color.other),
-            ContextCompat.getColor(this, R.color.cancel)
-        )
-
-        val data = PieData(dataSet)
-        data.setValueTextSize(12f)
-        data.setValueTextColor(R.color.black)
-
-        pieChart.data = data
-        pieChart.invalidate()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,6 +181,238 @@ class SecurityHomeActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun getVisitorsCount(callback: (Int) -> Unit) {
+        if(checkSession()) {
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if (userId != null) {
+                val db = Firebase.firestore
+
+                val calendar = Calendar.getInstance()
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+                val startOfDay = calendar.time
+                val endOfDay = Calendar.getInstance().apply {
+                    add(Calendar.DAY_OF_YEAR, 1)
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }.time
+
+                db.collection("visits")
+                    .whereGreaterThanOrEqualTo("checkInTime", startOfDay)
+                    .whereLessThan("checkInTime", endOfDay)
+                    .get()
+                    .addOnSuccessListener() {document ->
+                        if (document.isEmpty){
+                            callback(0)
+                        } else {
+                            callback(document.documents.size)
+                        }
+                    }
+                    .addOnFailureListener() {
+                        Toast.makeText(this, "Failed to Fetch Count", Toast.LENGTH_SHORT).show()
+                        callback(0)
+                    }
+            } else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+                callback(0)
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+            callback(0)
+        }
+    }
+
+    private fun getParkingSlots(callback: (Int) -> Unit) {
+        if(checkSession()) {
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if (userId != null) {
+                val db = Firebase.firestore
+
+                db.collection("parking")
+                    .whereEqualTo("status", "Available")
+                    .get()
+                    .addOnSuccessListener() {document ->
+                        if (document.isEmpty){
+                            callback(0)
+                        } else {
+                            callback(document.documents.size)
+                        }
+                    }
+                    .addOnFailureListener() {
+                        Toast.makeText(this, "Failed to Fetch Count", Toast.LENGTH_SHORT).show()
+                        callback(0)
+                    }
+            } else {
+                Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
+                callback(0)
+            }
+        } else {
+            Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
+            callback(0)
+        }
+    }
+
+    private fun createLineChart(visitorCountsByWeek: List<Int>) {
+        lineChart.description.isEnabled = true
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+        val xAxis: XAxis = lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.labelCount = 4
+        xAxis.valueFormatter = IndexAxisValueFormatter(arrayOf("Week 1", "Week 2", "Week 3", "Week 4"))
+
+        val leftAxis: YAxis = lineChart.axisLeft
+        leftAxis.granularity = 1f
+        leftAxis.axisMinimum = 0f
+        leftAxis.axisMaximum = visitorCountsByWeek.size.toFloat()
+        lineChart.axisRight.isEnabled = false
+
+        val legend: Legend = lineChart.legend
+        legend.isEnabled = true
+
+        val entries = mutableListOf<Entry>()
+        for (i in visitorCountsByWeek.indices) {
+            entries.add(Entry(i.toFloat(), visitorCountsByWeek[i].toFloat()))
+        }
+
+        val dataSet = LineDataSet(entries, "Visitors per Week")
+        dataSet.color = ContextCompat.getColor(this, R.color.primary)
+        dataSet.valueTextColor = getColor(R.color.black)
+        dataSet.setDrawCircles(true)
+        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.other))
+        dataSet.lineWidth = 2f
+        dataSet.circleRadius = 4f
+
+        val dataSets = ArrayList<ILineDataSet>()
+        dataSets.add(dataSet)
+
+        val lineData = LineData(dataSets)
+        lineChart.data = lineData
+        lineChart.invalidate()
+    }
+
+    private fun getVisitorCountsByWeek(callback: (List<Int>) -> Unit) {
+        val db = Firebase.firestore
+
+        val startOfMonth = getStartOfMonth()
+        val endOfMonth = getEndOfMonth()
+
+        db.collection("visits")
+            .whereGreaterThanOrEqualTo("checkInTime", startOfMonth)
+            .whereLessThanOrEqualTo("checkInTime", endOfMonth)
+            .get()
+            .addOnSuccessListener { documents ->
+                val visitorCounts = IntArray(4) { 0 }
+
+                for (document in documents) {
+                    val checkInTime = document.getTimestamp("checkInTime")?.toDate()
+                    if (checkInTime != null) {
+                        val weekNumber = getWeekOfMonth(checkInTime)
+                        visitorCounts[weekNumber - 1]++
+                    }
+                }
+
+                callback(visitorCounts.toList())
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error fetching data", Toast.LENGTH_SHORT).show()
+                callback(listOf(0, 0, 0, 0))
+            }
+    }
+
+    private fun getStartOfMonth(): Date {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+        return cal.time
+    }
+
+    private fun getEndOfMonth(): Date {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH))
+        return cal.time
+    }
+
+    private fun getWeekOfMonth(date: Date): Int {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return cal.get(Calendar.WEEK_OF_MONTH)
+    }
+
+    private fun createPieChart() {
+        val db = Firebase.firestore
+
+        db.collection("parking")
+            .whereEqualTo("status", "Occupied")
+            .get()
+            .addOnSuccessListener { documents ->
+                var twoWheelerCount = 0
+                var fourWheelerCount = 0
+
+                for (document in documents) {
+                    val vehicleType = document.getString("vehicleType")
+                    if (vehicleType != null) {
+                        if (vehicleType == "Two Wheeler") {
+                            twoWheelerCount++
+                        } else if (vehicleType == "Four Wheeler") {
+                            fourWheelerCount++
+                        }
+                    }
+                }
+
+                Log.i("Two", twoWheelerCount.toString())
+                Log.i("Four", fourWheelerCount.toString())
+
+                val totalCount = twoWheelerCount + fourWheelerCount
+                setupPieChart(twoWheelerCount, fourWheelerCount, totalCount)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Failed to fetch parking data: ${exception.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    private fun setupPieChart(twoWheelerCount: Int, fourWheelerCount: Int, totalCount: Int) {
+        pieChart.description.isEnabled = false
+        pieChart.setUsePercentValues(true)
+        pieChart.isDrawHoleEnabled = true
+        pieChart.setHoleColor(ContextCompat.getColor(this, R.color.white))
+        pieChart.holeRadius = 58f
+        pieChart.transparentCircleRadius = 61f
+
+        val entries = ArrayList<PieEntry>()
+        if (totalCount > 0) {
+            val twoWheelerPercentage = (twoWheelerCount.toFloat() / totalCount) * 100
+            val fourWheelerPercentage = (fourWheelerCount.toFloat() / totalCount) * 100
+
+            entries.add(PieEntry(twoWheelerPercentage, "Two-Wheeler"))
+            entries.add(PieEntry(fourWheelerPercentage, "Four-Wheeler"))
+        }
+
+        val dataSet = PieDataSet(entries, "Parking Area")
+        dataSet.sliceSpace = 3f
+        dataSet.selectionShift = 5f
+        dataSet.colors = listOf(
+            ContextCompat.getColor(this, R.color.primary),
+            ContextCompat.getColor(this, R.color.secondary)
+        )
+
+        val data = PieData(dataSet)
+        data.setValueTextSize(12f)
+        data.setValueTextColor(ContextCompat.getColor(this, R.color.black))
+
+        pieChart.data = data
+        pieChart.invalidate()
     }
 
     private fun logout() {
