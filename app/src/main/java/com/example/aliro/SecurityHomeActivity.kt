@@ -89,7 +89,7 @@ class SecurityHomeActivity : AppCompatActivity() {
 
                 R.id.parking -> {
                     Toast.makeText(applicationContext, "Vehicle Parking", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SecurityHomeActivity::class.java)
+                    val intent = Intent(this, NumberPlateActivity::class.java)
                     startActivity(intent)
                 }
 

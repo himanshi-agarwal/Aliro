@@ -72,7 +72,6 @@ class SignUpActivity : AppCompatActivity() {
 
         userDocRef.set(userMap)
             .addOnSuccessListener {
-                Log.d("Id", userDocRef.id)
                 insertVisitor(email, phoneNo, userDocRef.id)
             }
             .addOnFailureListener { e ->
@@ -86,10 +85,8 @@ class SignUpActivity : AppCompatActivity() {
 
         val visitorMap = hashMapOf(
             "Email" to email,
-            "Phone Number" to phoneNumber,
+            "PhoneNumber" to phoneNumber,
             "Image" to "",
-            "Purpose" to "",
-            "VisitDate" to "",
             "Otp" to "",
             "user_ref" to userDocRef
         )
