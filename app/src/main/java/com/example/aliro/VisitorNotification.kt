@@ -47,7 +47,7 @@ class VisitorNotification : AppCompatActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        
+
     }
 
     private fun checkSession() : Boolean{
