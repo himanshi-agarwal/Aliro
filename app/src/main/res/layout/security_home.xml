@@ -33,12 +33,23 @@
                 android:orientation="vertical"
                 android:padding="18dp">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_italic"
+                    android:gravity="start"
+                    android:text="Tech Park Stats"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center">
 
                     <LinearLayout
@@ -62,6 +73,7 @@
                             tools:ignore="HardcodedText" />
 
                         <TextView
+                            android:id="@+id/visitors"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato_italic"
@@ -94,6 +106,7 @@
                             tools:ignore="HardcodedText" />
 
                         <TextView
+                            android:id="@+id/parkingSlot"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato_italic"
@@ -106,6 +119,18 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_italic"
+                    android:layout_marginVertical="10dp"
+                    android:gravity="start"
+                    android:text="Visitor Counts by Week"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
@@ -114,6 +139,18 @@
                     android:background="@drawable/chart_background"
                     android:elevation="4dp"
                     android:padding="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_italic"
+                    android:gravity="start"
+                    android:layout_marginVertical="10dp"
+                    android:text="Parking Area Vehicle Distribution"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChart"
