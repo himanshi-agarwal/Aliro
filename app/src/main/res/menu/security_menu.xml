@@ -15,11 +15,11 @@
             <menu>
                 <item android:id="@+id/employee"
                     android:title="Employee"
-                    android:icon="@drawable/account" />
+                    android:icon="@drawable/employee" />
 
                 <item android:id="@+id/visitors"
                     android:title="Visitor"
-                    android:icon="@drawable/account" />
+                    android:icon="@drawable/visitor" />
             </menu>
         </item>
     </group>
@@ -33,7 +33,7 @@
 
                 <item android:id="@+id/parking"
                     android:title="Vehicle Parking"
-                    android:icon="@drawable/notifications" />
+                    android:icon="@drawable/parking" />
             </menu>
         </item>
     </group>
