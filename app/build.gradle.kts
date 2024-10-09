@@ -58,6 +58,8 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-support:0.4.3")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.rmtheis:tess-two:9.1.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
