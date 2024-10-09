@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,10 +24,11 @@ class VisitorHomeActivity : AppCompatActivity() {
     private lateinit var toolbar : Toolbar
     private lateinit var userProfile: ImageView
     private lateinit var visitorName: TextView
-    private lateinit var register : Button
-    private lateinit var parking : Button
-    private lateinit var logs : Button
-    private lateinit var diary : Button
+    private lateinit var register : ImageButton
+    private lateinit var parking : ImageButton
+    private lateinit var logs : ImageButton
+    private lateinit var diary : ImageButton
+    private lateinit var notification : ImageButton
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
@@ -67,6 +69,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         logs = findViewById(R.id.logs)
         parking = findViewById(R.id.parking)
         diary = findViewById(R.id.diary)
+        notification = findViewById(R.id.notification)
 
         getUserData { visitor ->
             if(checkSession() && visitor != null){
@@ -83,25 +86,26 @@ class VisitorHomeActivity : AppCompatActivity() {
         register.setOnClickListener(){
             val intent = Intent(this, VisitorRegisterActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         logs.setOnClickListener(){
             val intent = Intent(this, VisitorLogsActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         parking.setOnClickListener(){
             val intent = Intent(this, ParkingActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         diary.setOnClickListener(){
             val intent = Intent(this, VisitorDiaryActivity::class.java)
             startActivity(intent)
-            finish()
+        }
+
+        notification.setOnClickListener(){
+            val intent = Intent(this, VisitorNotification::class.java)
+            startActivity(intent)
         }
     }
 
