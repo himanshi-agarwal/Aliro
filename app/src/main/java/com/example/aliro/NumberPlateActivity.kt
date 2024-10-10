@@ -14,22 +14,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.firebase.storage.FirebaseStorage
+import com.googlecode.tesseract.android.TessBaseAPI
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import okhttp3.Response
+import okio.IOException
+import org.json.JSONArray
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
-import com.googlecode.tesseract.android.TessBaseAPI
+import java.nio.ByteBuffer
 
 class NumberPlateActivity : AppCompatActivity() {
     private lateinit var previewView: PreviewView
@@ -95,7 +100,7 @@ class NumberPlateActivity : AppCompatActivity() {
 
     private fun startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener(Runnable {
+        cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
@@ -111,53 +116,43 @@ class NumberPlateActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    private fun ImageProxy.toBitmap(): Bitmap {
+        val buffer: ByteBuffer = planes[0].buffer
+        val bytes = ByteArray(buffer.capacity())
+        buffer.get(bytes)
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
+    }
+
     private fun takePhoto() {
-        val photoFile = File(externalMediaDirs.firstOrNull(), "${System.currentTimeMillis()}.jpg")
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
         imageCapture.takePicture(
-            outputOptions,
             ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
+            object : ImageCapture.OnImageCapturedCallback() {
+                override fun onCaptureSuccess(imageProxy: ImageProxy) {
+                    val bitmap = imageProxy.toBitmap()
+                    imageProxy.close()
+
+                    sendImageToAPI(bitmap)
+                }
+
                 override fun onError(exc: ImageCaptureException) {
                     Log.e("NumberPlateActivity", "Failed to take photo", exc)
                     Toast.makeText(this@NumberPlateActivity, "Failed to take photo: ${exc.message}", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Log.d("NumberPlateActivity", "onImageSaved: Photo saved successfully: ${photoFile.absolutePath}")
-                    Toast.makeText(this@NumberPlateActivity, "Photo captured: ${photoFile.absolutePath}", Toast.LENGTH_SHORT).show()
-
-//                    val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
-//                    val extractedText = performOCR(bitmap)
-//                    Log.d("OCRActivity", "Extracted Text: $extractedText")
-//
-//                    answer.text = extractedText
-
-                    sendImageToAPI(photoFile)
                 }
             }
         )
     }
 
-    private fun performOCR(bitmap: Bitmap): String {
-        tessBaseAPI.setImage(bitmap)
-        return tessBaseAPI.utF8Text
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        tessBaseAPI.end()
-    }
-
-    private fun sendImageToAPI(imageFile: File) {
+    private fun sendImageToAPI(bitmap: Bitmap) {
         val API_URL = "https://api-inference.huggingface.co/models/nickmuchi/yolos-small-finetuned-license-plate-detection"
-        val API_KEY = "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" // Replace with your actual key
+        val API_KEY = "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"
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imageData = byteArrayOutputStream.toByteArray()
 
         val client = OkHttpClient()
 
-        val requestBody = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageData)
 
         val request = Request.Builder()
             .url(API_URL)
@@ -178,20 +173,81 @@ class NumberPlateActivity : AppCompatActivity() {
                         runOnUiThread {
                             Log.e("NumberPlateActivity", "Request failed with status code: ${response.code}")
                             Toast.makeText(this@NumberPlateActivity, "Request failed with status code: ${response.code}", Toast.LENGTH_SHORT).show()
-                            Log.e("API", "${response.code}")
                         }
                     } else {
                         val jsonResponse = response.body?.string()
                         runOnUiThread {
                             Toast.makeText(this@NumberPlateActivity, "Response: $jsonResponse", Toast.LENGTH_SHORT).show()
+                            val boundingBox = parseBoundingBox(jsonResponse!!)
+
+                            val xmin = boundingBox.left
+                            val ymin = boundingBox.top
+                            val xmax = boundingBox.right
+                            val ymax = boundingBox.bottom
+
+                            croppedBitmap = cropImage(bitmap, xmin, xmax, ymin, ymax)
+
+                            uploadCroppedImageToFirebase(croppedBitmap!!)
+
                             answer.text = jsonResponse
-                            if (jsonResponse != null) {
-                                Log.i("Plate", jsonResponse)
-                            }
+                            Log.i("Plate", jsonResponse)
                         }
                     }
                 }
             }
         })
+    }
+
+    private fun parseBoundingBox(jsonResponse: String): Rect {
+        val jsonArray = JSONArray(jsonResponse)
+        val firstObject = jsonArray.getJSONObject(0)
+        val boxObject = firstObject.getJSONObject("box")
+
+        val xmin = boxObject.getInt("xmin")
+        val ymin = boxObject.getInt("ymin")
+        val xmax = boxObject.getInt("xmax")
+        val ymax = boxObject.getInt("ymax")
+
+        return Rect(xmin, ymin, xmax, ymax)
+    }
+
+    private fun cropImage(originalBitmap: Bitmap, xmin: Int, xmax: Int, ymin: Int, ymax: Int): Bitmap {
+        val width = xmax - xmin
+        val height = ymax - ymin
+        return Bitmap.createBitmap(originalBitmap, xmin, ymin, width, height)
+    }
+
+    private fun uploadCroppedImageToFirebase(croppedBitmap: Bitmap) {
+        if (checkSession()) {
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userID = sharedPreference.getString("userId", null)
+
+            if (userID != null) {
+                val storageRef = FirebaseStorage.getInstance().reference
+                val imageRef = storageRef.child("images/number_plate_images/${userID}.jpg")
+
+                val baos = ByteArrayOutputStream()
+                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val imageData = baos.toByteArray()
+
+                val uploadTask = imageRef.putBytes(imageData)
+                uploadTask.addOnSuccessListener {
+                    Toast.makeText(this, "Cropped image uploaded successfully", Toast.LENGTH_SHORT)
+                        .show()
+                }.addOnFailureListener { exception ->
+                    Log.e("FirebaseUpload", "Failed to upload image: ${exception.message}")
+                    Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Error Loading User Id", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkSession(): Boolean {
+        val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+        return sharedPreference.contains("userId")
     }
 }
