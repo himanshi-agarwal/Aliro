@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -125,6 +127,11 @@
             android:name=".NumberPlateActivity"
             android:exported="false"
             android:label="Parking">
+        </activity>
+        <activity
+            android:name=".FaceRekognitionActivity"
+            android:exported="false"
+            android:label="Face">
         </activity>
         <activity
             android:name=".SecurityHomeActivity"

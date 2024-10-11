@@ -1,5 +1,0 @@
-flask
-firebase-admin
-google-cloud-vision
-gunicorn
-requests  
