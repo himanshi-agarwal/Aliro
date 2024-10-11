@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageFormat
 import android.graphics.Rect
+import android.graphics.YuvImage
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -22,7 +24,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.storage.FirebaseStorage
-import com.googlecode.tesseract.android.TessBaseAPI
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -33,18 +34,22 @@ import okhttp3.Response
 import okio.IOException
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 class NumberPlateActivity : AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var captureButton: Button
     private lateinit var answer: TextView
     private lateinit var imageCapture: ImageCapture
-    private lateinit var tessBaseAPI: TessBaseAPI
     private val CAMERA_PERMISSION_CODE = 1001
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private var croppedBitmap: Bitmap? = null
+    private lateinit var objectDetectionModel: ObjectDetectionModel
+
+    companion object {
+        private const val INPUT_SIZE = 300  // Define the required input size for your model
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +69,29 @@ class NumberPlateActivity : AppCompatActivity() {
             takePhoto()
         }
 
-        tessBaseAPI = TessBaseAPI()
-        val tessDataPath = File(filesDir, "tesseract")
-        if (!tessDataPath.exists()) {
-            tessDataPath.mkdirs()
-        }
+        objectDetectionModel = ObjectDetectionModel(this)
+    }
 
-        val tessDataFile = File(tessDataPath, "eng.traineddata")
-        if (!tessDataFile.exists()) {
-            Toast.makeText(this, "OCR data not found!", Toast.LENGTH_LONG).show()
-            return
-        }
+    private fun preprocessImage(bitmap: Bitmap): ByteBuffer {
+        val byteBuffer = ByteBuffer.allocateDirect(4 * INPUT_SIZE * INPUT_SIZE * 3)  // 3 for RGB
+        byteBuffer.order(ByteOrder.nativeOrder())
 
-        tessBaseAPI.init(tessDataPath.absolutePath, "eng")
+        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, true)
+
+        // Convert each pixel of the bitmap into a ByteBuffer
+        for (y in 0 until INPUT_SIZE) {
+            for (x in 0 until INPUT_SIZE) {
+                val pixel = scaledBitmap.getPixel(x, y)
+                byteBuffer.putFloat(((pixel shr 16) and 0xFF) / 255.0f)  // Red
+                byteBuffer.putFloat(((pixel shr 8) and 0xFF) / 255.0f)   // Green
+                byteBuffer.putFloat((pixel and 0xFF) / 255.0f)          // Blue
+            }
+        }
+        return byteBuffer
+    }
+
+    private fun processOutput(output: FloatArray) {
+        Log.d("ObjectDetection", "Model Output: ${output.joinToString()}")
     }
 
     private fun checkCameraPermission(): Boolean {
@@ -116,22 +131,31 @@ class NumberPlateActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    private fun ImageProxy.toBitmap(): Bitmap {
-        val buffer: ByteBuffer = planes[0].buffer
-        val bytes = ByteArray(buffer.capacity())
-        buffer.get(bytes)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
+    fun ImageProxy.toBitmap(): Bitmap? {
+        val buffer = this.planes[0].buffer
+        val byteArray = ByteArray(buffer.remaining())
+        buffer.get(byteArray)
+        val yuvImage = YuvImage(byteArray, ImageFormat.NV21, this.width, this.height, null)
+        val outputStream = ByteArrayOutputStream()
+        yuvImage.compressToJpeg(Rect(0, 0, this.width, this.height), 100, outputStream)
+        val jpegByteArray = outputStream.toByteArray()
+        return BitmapFactory.decodeByteArray(jpegByteArray, 0, jpegByteArray.size)
     }
 
     private fun takePhoto() {
         imageCapture.takePicture(
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageCapturedCallback() {
-                override fun onCaptureSuccess(imageProxy: ImageProxy) {
-                    val bitmap = imageProxy.toBitmap()
-                    imageProxy.close()
+                override fun onCaptureSuccess(image: ImageProxy) {
+                    val bitmap = image.toBitmap()
 
-                    sendImageToAPI(bitmap)
+                    bitmap.let {
+                        val inputData = preprocessImage(it)
+                        val output = objectDetectionModel.runInference(inputData)
+                        processOutput(output)
+                    }
+
+                    image.close()
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -232,8 +256,7 @@ class NumberPlateActivity : AppCompatActivity() {
 
                 val uploadTask = imageRef.putBytes(imageData)
                 uploadTask.addOnSuccessListener {
-                    Toast.makeText(this, "Cropped image uploaded successfully", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, "Cropped image uploaded successfully", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener { exception ->
                     Log.e("FirebaseUpload", "Failed to upload image: ${exception.message}")
                     Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
@@ -248,6 +271,6 @@ class NumberPlateActivity : AppCompatActivity() {
 
     private fun checkSession(): Boolean {
         val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
-        return sharedPreference.contains("userId")
+        return sharedPreference.getBoolean("loggedIn", false)
     }
 }
