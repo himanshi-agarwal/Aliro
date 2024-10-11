@@ -14,3 +14,6 @@
 .cxx
 local.properties
 .env
+backend/aliro_vision_api_key.json
+backend/aliro-e0742-firebase-adminsdk-jm9vr-a3f9187e19.json
+
