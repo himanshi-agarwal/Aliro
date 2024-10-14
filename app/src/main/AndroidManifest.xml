@@ -138,15 +138,15 @@
             android:exported="false"
             android:label="Aliro">
         </activity>
+        <activity
+            android:name=".SecurityVisitorRegistrationActivity"
+            android:exported="false"
+            android:label="Visit">
+        </activity>
 
         <receiver android:name=".ChangePasswordActivity"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
-
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-            </intent-filter>
-
         </receiver>
 
         <meta-data

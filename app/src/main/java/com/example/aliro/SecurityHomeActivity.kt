@@ -90,7 +90,7 @@ class SecurityHomeActivity : AppCompatActivity() {
 
                 R.id.pre_register -> {
                     Toast.makeText(applicationContext, "Register Guest", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SecurityHomeActivity::class.java)
+                    val intent = Intent(this, SecurityVisitorRegistrationActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -167,7 +167,6 @@ class SecurityHomeActivity : AppCompatActivity() {
         headerUserType.text = sharedPreference.getString("userType", null)
 
         if (checkSession() && userId != null) {
-            Log.i("ID", userId)
             val storageReference = Firebase.storage.reference
             val imageReference = storageReference.child("images/${userId}.jpg")
 
