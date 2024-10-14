@@ -37,7 +37,10 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class EmpRegisterActivity : AppCompatActivity() {
     private lateinit var toolbar : Toolbar
@@ -61,7 +64,9 @@ class EmpRegisterActivity : AppCompatActivity() {
     private val STORAGE_PERMISSION_CODE = 102
     private val CAMERA_REQUEST_CODE = 103
     private val GALLERY_REQUEST_CODE = 104
-    var imageFlag = false
+    private var visitorUserID: String? = null
+    private var selectedImageUri: Uri? = null
+    private var imageFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -264,6 +269,10 @@ class EmpRegisterActivity : AppCompatActivity() {
                         }
 
                         val currentTime = Timestamp.now()
+                        val visitDate = visitDate.text.toString()
+                        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                        val parsedDate: Date? = dateFormat.parse(visitDate)
+                        val visitDateTimestamp: Timestamp? = parsedDate?.let { Timestamp(it) }
 
                         val visitMap = hashMapOf(
                             "visitor_ref" to visitorRef,
@@ -273,6 +282,7 @@ class EmpRegisterActivity : AppCompatActivity() {
                             "companyName" to empDetails[1],
                             "status" to "Pending",
                             "visitPurpose" to purpose,
+                            "visitDate" to visitDateTimestamp,
                             "createdAt" to currentTime
                         )
 
@@ -311,7 +321,7 @@ class EmpRegisterActivity : AppCompatActivity() {
         )
 
         val userDocRef = db.collection("user").document()
-        Log.i("User", userDocRef.toString())
+        visitorUserID = userDocRef.id
 
         userDocRef.set(userMap)
             .addOnSuccessListener {
@@ -322,10 +332,13 @@ class EmpRegisterActivity : AppCompatActivity() {
                     "user_ref" to userDocRef
                 )
 
+                val visitorDocRef = db.collection("visitors").document()
+
                 db.collection("visitors").document()
                     .set(visitorMap)
                     .addOnSuccessListener {
-                        callback(true, userDocRef)
+                        uploadImageToFirebase(selectedImageUri)
+                        callback(true, visitorDocRef)
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Failed to register visitor: ${e.message}", Toast.LENGTH_LONG).show()
@@ -399,17 +412,16 @@ class EmpRegisterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == GALLERY_REQUEST_CODE && data != null){
-                val selectedImageUri = data.data
-                uploadImageToFirebase(selectedImageUri)
+                selectedImageUri = data.data
                 displayUploadedImage(selectedImageUri, "Selected Image from Gallery")
             }
             if(requestCode == CAMERA_REQUEST_CODE && data != null){
                 val imageBitmap = data.extras?.get("data") as Bitmap
-                val selectedImageUri = getImageUriFromBitmap(imageBitmap)
-                uploadImageToFirebase(selectedImageUri)
+                selectedImageUri = getImageUriFromBitmap(imageBitmap)
                 displayUploadedImage(selectedImageUri, "Clicked Image from Camera")
             }
         }
+        imageFlag = true
     }
 
     private fun displayUploadedImage(imageUri: Uri?, name: String) {
@@ -428,13 +440,11 @@ class EmpRegisterActivity : AppCompatActivity() {
                 val userId = sharedPreference.getString("userId", null)
 
                 if(userId != null){
-                    val imageRef = storageRef.child("images/${userId}.jpg")
-
+                    val imageRef = storageRef.child("images/visitor/${visitorUserID}.jpg")
                     val uploadImage = imageRef.putFile(uri)
 
                     uploadImage.addOnSuccessListener {
                         Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                        imageFlag = true
                     }.addOnFailureListener {
                         Toast.makeText(this, "Image Upload Failed", Toast.LENGTH_SHORT).show()
                     }

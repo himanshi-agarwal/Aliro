@@ -398,7 +398,6 @@ class EmpEditActivity : AppCompatActivity() {
     private fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri != null) {
             uploadProgress.visibility = View.VISIBLE
-
             val storageReference = FirebaseStorage.getInstance().reference
 
             if(checkSession()){
@@ -407,7 +406,6 @@ class EmpEditActivity : AppCompatActivity() {
 
                 if(userID != null){
                     val imageReference = storageReference.child("images/${userID}.jpg")
-
                     val uploadTask = imageReference.putFile(imageUri)
 
                     uploadTask.addOnSuccessListener {
@@ -415,6 +413,7 @@ class EmpEditActivity : AppCompatActivity() {
                         updateEmployeeImage(imageReference.toString(), userID) { isSuccess ->
                             if(isSuccess){
                                 Toast.makeText(this, "Image Uploaded Successfully", Toast.LENGTH_SHORT).show()
+                                showUpdatedImage()
                             } else {
                                 Toast.makeText(this, "Error Updating Reference", Toast.LENGTH_SHORT).show()
                             }
@@ -431,6 +430,30 @@ class EmpEditActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun showUpdatedImage(){
+        if(checkSession()){
+            val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
+            val userId = sharedPreference.getString("userId", null)
+
+            if(userId != null) {
+                val storageReference = Firebase.storage.reference
+                val imageReference = storageReference.child("images/${userId}.jpg")
+
+                imageReference.downloadUrl.addOnSuccessListener { uri ->
+                    Glide.with(this)
+                        .load(uri)
+                        .into(userProfile)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                }
+            } else{
+                Toast.makeText(this, "Error Loading User Id", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
         }
     }
 
