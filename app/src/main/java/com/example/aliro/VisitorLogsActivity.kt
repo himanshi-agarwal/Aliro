@@ -37,7 +37,7 @@ class VisitorLogsActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.profile -> {
-                Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, VisitorHomeActivity::class.java)
                 startActivity(intent)
                 true
