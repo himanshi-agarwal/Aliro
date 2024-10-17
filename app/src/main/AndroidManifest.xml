@@ -109,6 +109,11 @@
             android:label="Diary">
         </activity>
         <activity
+            android:name=".VisitorNotification"
+            android:exported="false"
+            android:label="Notification">
+        </activity>
+        <activity
             android:name=".VisitorRegisterActivity"
             android:exported="false"
             android:label="Register Your Visit">

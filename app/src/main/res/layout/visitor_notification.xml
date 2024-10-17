@@ -78,14 +78,13 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/new_notification"
+                <ImageView
+                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="4dp"
-                    android:text="NEW"
-                    android:textColor="@color/cancel" />
+                    android:src="@drawable/approved"/>
             </LinearLayout>
 
             <LinearLayout
@@ -135,13 +134,13 @@
 
                 </LinearLayout>
 
-                <TextView
+                <ImageView
+                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="4dp"
-                    android:text="NEW"
-                    android:textColor="@color/cancel" />
+                    android:src="@drawable/approved"/>
             </LinearLayout>
 
             <LinearLayout
@@ -190,13 +189,13 @@
 
                 </LinearLayout>
 
-                <TextView
+                <ImageView
+                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="4dp"
-                    android:text="NEW"
-                    android:textColor="@color/cancel" />
+                    android:src="@drawable/approved"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

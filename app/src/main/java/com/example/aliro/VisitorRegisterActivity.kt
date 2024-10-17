@@ -63,7 +63,7 @@ class VisitorRegisterActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.profile -> {
-                Toast.makeText(applicationContext, "Profile", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, VisitorHomeActivity::class.java)
                 startActivity(intent)
                 true
@@ -234,12 +234,12 @@ class VisitorRegisterActivity : AppCompatActivity() {
                         val currentTime = Timestamp.now()
 
                         val visitMap = hashMapOf(
-                            "visitor_ref" to "visitors/${visitorRef}",
-                            "employee_ref" to "employees/${employeeRef}",
+                            "visitor_ref" to db.collection("visitors").document(visitorRef),
+                            "employee_ref" to db.collection("employees").document(employeeRef),
                             "checkInTime" to null,
                             "checkOutTime" to null,
                             "companyName" to empCompany,
-                            "status" to "pending",
+                            "status" to "Pending",
                             "visitPurpose" to purpose,
                             "createdAt" to currentTime
                         )
