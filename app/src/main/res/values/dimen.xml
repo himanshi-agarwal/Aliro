@@ -16,4 +16,5 @@
     <dimen name="cardView">80dp</dimen>
     <dimen name="userMarginStart">16dp</dimen>
     <dimen name="userPaddingStart">10dp</dimen>
+    <dimen name="imageHeight">300dp</dimen>
 </resources>

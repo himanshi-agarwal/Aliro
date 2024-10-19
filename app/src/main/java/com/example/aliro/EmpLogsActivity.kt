@@ -4,11 +4,9 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableLayout
@@ -23,8 +21,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -42,7 +38,7 @@ data class LogEntry(
     val duration: String = "",
 )
 
-class LogsActivity: AppCompatActivity() {
+class EmpLogsActivity: AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -75,7 +71,7 @@ class LogsActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.logs)
+        setContentView(R.layout.emp_logs)
 
         empName = findViewById(R.id.emp_name)
         empID = findViewById(R.id.emp_id)
@@ -117,8 +113,8 @@ class LogsActivity: AppCompatActivity() {
                 }
 
                 R.id.logs -> {
-                    if (this !is LogsActivity) {
-                        val intent = Intent(this, LogsActivity::class.java)
+                    if (this !is EmpLogsActivity) {
+                        val intent = Intent(this, EmpLogsActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(applicationContext, "Already in Logs", Toast.LENGTH_SHORT).show()
@@ -139,19 +135,19 @@ class LogsActivity: AppCompatActivity() {
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
+                    val intent = Intent(this, EmpNotificationActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -373,7 +369,7 @@ class LogsActivity: AppCompatActivity() {
     }
 
     private fun logout() {
-        val builder = AlertDialog.Builder(this@LogsActivity)
+        val builder = AlertDialog.Builder(this@EmpLogsActivity)
         builder.setMessage("Do you want to logout?")
 
         builder.setTitle("ALERT!")

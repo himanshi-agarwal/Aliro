@@ -29,7 +29,11 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.common.primitives.Booleans
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.common.InputImage
@@ -40,13 +44,17 @@ import kotlin.math.abs
 class FaceRekognitionActivity: AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var imageView: ImageView
-    private lateinit var storedImage: ImageView
     private lateinit var captureButton: Button
     private lateinit var resultTextView: TextView
     private lateinit var imageCapture: ImageCapture
+    private lateinit var entryButton: Button
+    private lateinit var exitButton: Button
     private val CAMERA_PERMISSION_CODE = 1
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private var capturedImageUri: Uri? = null
+    private var userId: String? = null
+    private var visitId: String? = null
+    private var faceMatched: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +63,10 @@ class FaceRekognitionActivity: AppCompatActivity() {
 
         previewView = findViewById(R.id.cameraPreview)
         imageView = findViewById(R.id.capturedImage)
-        storedImage = findViewById(R.id.storedImage)
         captureButton = findViewById(R.id.capture_button)
         resultTextView = findViewById(R.id.result_text)
+        entryButton = findViewById(R.id.entryButton)
+        exitButton = findViewById(R.id.exitButton)
 
         if (checkCameraPermission()) {
             startCamera()
@@ -65,8 +74,19 @@ class FaceRekognitionActivity: AppCompatActivity() {
             requestCameraPermission()
         }
 
+        userId = intent.getStringExtra("userId")
+        visitId = intent.getStringExtra("visitId")
+
         captureButton.setOnClickListener {
             takePhoto()
+        }
+
+        entryButton.setOnClickListener() {
+            markEntry()
+        }
+
+        exitButton.setOnClickListener() {
+            markExit()
         }
     }
 
@@ -121,7 +141,6 @@ class FaceRekognitionActivity: AppCompatActivity() {
     private fun displayCapturedImage(bitmap: Bitmap) {
         imageView.setImageBitmap(bitmap)
         imageView.visibility = View.VISIBLE
-        storedImage.visibility = View.VISIBLE
         previewView.visibility = View.GONE
     }
 
@@ -190,11 +209,11 @@ class FaceRekognitionActivity: AppCompatActivity() {
     private fun compareWithEmployeeImage(faceBoundingBox: android.graphics.Rect, context: Context) {
         if (checkSession()) {
             val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
-            val userId = sharedPreference.getString("userId", null)
+            val id = sharedPreference.getString("userId", null)
 
-            if (userId != null) {
+            if (id != null) {
                 val storageRef = FirebaseStorage.getInstance().reference
-                val imageRef = storageRef.child("images/jNTjsOmxlu0ry2yXfqXj.jpg")
+                val imageRef = storageRef.child("images/${userId}.jpg")
 
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
                     Log.e("URI", uri.toString())
@@ -228,10 +247,6 @@ class FaceRekognitionActivity: AppCompatActivity() {
                                 Log.d("FaceRekognitionActivity", "Captured face detected. Bounding box: ${capturedFace.boundingBox}")
 
                                 Glide.with(context)
-                                    .load(storedImageUri)
-                                    .into(storedImage)
-
-                                Glide.with(context)
                                     .asBitmap()
                                     .load(storedImageUri)
                                     .into(object : CustomTarget<Bitmap>() {
@@ -245,7 +260,8 @@ class FaceRekognitionActivity: AppCompatActivity() {
                                                         Log.d("FaceRekognitionActivity", "Stored face detected. Bounding box: ${storedFace.boundingBox}")
 
                                                         val similarityScore = compareBoundingBoxes(capturedFace.boundingBox, storedFace.boundingBox)
-                                                        if (similarityScore > 0.4) {
+                                                        if (similarityScore > 0.15) {
+                                                            faceMatched = true
                                                             resultTextView.text = "Face Matched"
                                                             Toast.makeText(context, "Face Matched!", Toast.LENGTH_SHORT).show()
                                                         } else {
@@ -301,5 +317,60 @@ class FaceRekognitionActivity: AppCompatActivity() {
 
     private fun requestCameraPermission() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+    }
+
+    private fun markEntry() {
+        if (checkSession() && faceMatched) {
+            val db = Firebase.firestore
+            if (visitId != null) {
+                val entryTime = FieldValue.serverTimestamp()
+
+                db.collection("visits")
+                    .document(visitId!!)
+                    .update(mapOf(
+                        "checkInTime" to entryTime,
+                        "status" to "Approved"
+                    ))
+                    .addOnSuccessListener {
+                        val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(entryTime)
+                        resultTextView.text = "Entry marked at: $formattedTime"
+                        Toast.makeText(this, "Entry marked successfully", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to mark entry: ${e.message}", Toast.LENGTH_LONG).show()
+                        Log.e("Firestore", "Error updating entryTime", e)
+                    }
+            } else {
+                Toast.makeText(this, "Invalid visit ID", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Face Not Matched", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun markExit() {
+        if (checkSession()) {
+            val db = Firebase.firestore
+            if (visitId != null) {
+                val exitTime = FieldValue.serverTimestamp()
+
+                db.collection("visits")
+                    .document(visitId!!)
+                    .update("checkOutTime", exitTime)
+                    .addOnSuccessListener {
+                        val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(exitTime)
+                        resultTextView.text = "Exit marked at: $formattedTime"
+                        Toast.makeText(this, "Exit marked successfully", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to mark entry: ${e.message}", Toast.LENGTH_LONG).show()
+                        Log.e("Firestore", "Error updating entryTime", e)
+                    }
+            } else {
+                Toast.makeText(this, "Invalid visit ID", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
     }
 }

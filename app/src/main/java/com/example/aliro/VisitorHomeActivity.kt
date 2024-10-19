@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
@@ -104,7 +102,7 @@ class VisitorHomeActivity : AppCompatActivity() {
         }
 
         notification.setOnClickListener(){
-            val intent = Intent(this, VisitorNotification::class.java)
+            val intent = Intent(this, VisitorNotificationActivity::class.java)
             startActivity(intent)
         }
     }

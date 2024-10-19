@@ -17,12 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.setPadding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 
-class VisitorNotification : AppCompatActivity() {
+class VisitorNotificationActivity : AppCompatActivity() {
     private lateinit var toolbar : Toolbar
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,8 +101,9 @@ class VisitorNotification : AppCompatActivity() {
                                 }
                         }
                     }
-                    .addOnFailureListener() {
-
+                    .addOnFailureListener() {e ->
+                        Toast.makeText(this, "Error Fetching Records", Toast.LENGTH_SHORT).show()
+                        Log.e("Error", e.printStackTrace().toString())
                     }
             } else {
                 Toast.makeText(this, "Error in User Login", Toast.LENGTH_SHORT).show()
@@ -125,7 +125,6 @@ class VisitorNotification : AppCompatActivity() {
         val spacePadding = resources.getDimensionPixelSize(R.dimen.space_padding)
 
         for (n in notifications){
-            val notification = n.toObject(NotificationRecord::class.java)
             val recordLayout = LinearLayout(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -164,7 +163,7 @@ class VisitorNotification : AppCompatActivity() {
                 text = n.getString("companyName")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 22f
-                setTypeface(ResourcesCompat.getFont(this@VisitorNotification, R.font.exo_2_semibold), Typeface.BOLD)
+                setTypeface(ResourcesCompat.getFont(this@VisitorNotificationActivity, R.font.exo_2_semibold), Typeface.BOLD)
                 gravity = Gravity.CENTER
             }
 
@@ -176,7 +175,7 @@ class VisitorNotification : AppCompatActivity() {
                 text = n.getString("visitPurpose")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 18f
-                setTypeface(ResourcesCompat.getFont(this@VisitorNotification, R.font.lato_italic), Typeface.ITALIC)
+                setTypeface(ResourcesCompat.getFont(this@VisitorNotificationActivity, R.font.lato_italic), Typeface.ITALIC)
                 gravity = Gravity.CENTER
             }
 

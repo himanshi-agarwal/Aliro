@@ -84,7 +84,7 @@ class SecurityHomeActivity : AppCompatActivity() {
 
                 R.id.visitors -> {
                     Toast.makeText(applicationContext, "Scan Visitor's Face", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SecurityHomeActivity::class.java)
+                    val intent = Intent(this, SecurityVisitorsApprovalActivity::class.java)
                     startActivity(intent)
                 }
 

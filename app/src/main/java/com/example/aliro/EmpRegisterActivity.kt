@@ -104,14 +104,14 @@ class EmpRegisterActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    val intent = Intent(this, EmpLogsActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -132,19 +132,19 @@ class EmpRegisterActivity : AppCompatActivity() {
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
+                    val intent = Intent(this, EmpNotificationActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

@@ -6,45 +6,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FaceRekognitionActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".FaceRekognitionActivity"
+    android:background="@color/background">
 
-    <androidx.camera.view.PreviewView
-        android:id="@+id/cameraPreview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="60dp"/>
-
-    <ImageView
-        android:id="@+id/capturedImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:id="@+id/storedImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/capture_button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="75dp"
-        android:layout_gravity="center"
-        android:text="Capture Image" />
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/result_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Waiting for face capture..."
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_gravity="center"/>
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/capturedImage"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/result_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting for face capture..."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_italic"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/capture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="32dp"
+            android:layout_gravity="center"
+            android:text="Capture Image"
+            android:textSize="20sp"
+            android:fontFamily="@font/lato_italic"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/primary"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/entryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Mark Entry"
+                android:textSize="20sp"
+                android:fontFamily="@font/lato_italic"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/approve"/>
+
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Mark Exit"
+                android:textSize="20sp"
+                android:fontFamily="@font/lato_italic"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/cancel"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

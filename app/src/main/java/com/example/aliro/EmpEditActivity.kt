@@ -146,7 +146,7 @@ class EmpEditActivity : AppCompatActivity() {
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    val intent = Intent(this, EmpLogsActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -163,26 +163,23 @@ class EmpEditActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpRegisterActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
+                    val intent = Intent(this, EmpNotificationActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logged Out Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logged Out Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

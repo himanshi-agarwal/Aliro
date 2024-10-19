@@ -2,7 +2,6 @@ package com.example.aliro
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -108,7 +107,7 @@ class EmpHomeActivity : AppCompatActivity() {
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    val intent = Intent(this, EmpLogsActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -126,19 +125,19 @@ class EmpHomeActivity : AppCompatActivity() {
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
+                    val intent = Intent(this, EmpNotificationActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -192,10 +191,10 @@ class EmpHomeActivity : AppCompatActivity() {
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
                         for (d in document.documents) {
-                            employeeArray[3] = d.getString("EmpID")
+                            employeeArray[3] = d.getLong("EmpID").toString()
                             employeeArray[4] = d.getString("Email")
                             employeeArray[5] = d.getString("Phone_Number")
-                            employeeArray[6] =  d.getString("Company")
+                            employeeArray[6] = d.getString("Company")
                             employeeArray[7] = d.getString("Role")
                         }
                         callback(employeeArray)

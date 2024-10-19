@@ -35,7 +35,7 @@ data class NotificationRecord (
     val model: String = ""
 )
 
-class NotificationActivity : AppCompatActivity() {
+class EmpNotificationActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -64,7 +64,7 @@ class NotificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.notifications)
+        setContentView(R.layout.emp_notifications)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -89,14 +89,14 @@ class NotificationActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    val intent = Intent(this, EmpLogsActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -113,7 +113,7 @@ class NotificationActivity : AppCompatActivity() {
                 }
 
                 R.id.notification -> {
-                    if (this !is NotificationActivity) {
+                    if (this !is EmpNotificationActivity) {
                         val intent = Intent(this, EmpHomeActivity::class.java)
                         startActivity(intent)
                     } else {
@@ -123,13 +123,13 @@ class NotificationActivity : AppCompatActivity() {
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -250,7 +250,7 @@ class NotificationActivity : AppCompatActivity() {
                 text = n.getString("vehicleNumber")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 22f
-                setTypeface(ResourcesCompat.getFont(this@NotificationActivity, R.font.exo_2_semibold), Typeface.BOLD)
+                setTypeface(ResourcesCompat.getFont(this@EmpNotificationActivity, R.font.exo_2_semibold), Typeface.BOLD)
                 gravity = Gravity.CENTER
             }
 
@@ -262,7 +262,7 @@ class NotificationActivity : AppCompatActivity() {
                 text = n.getString("visitPurpose")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 18f
-                setTypeface(ResourcesCompat.getFont(this@NotificationActivity, R.font.lato_italic), Typeface.ITALIC)
+                setTypeface(ResourcesCompat.getFont(this@EmpNotificationActivity, R.font.lato_italic), Typeface.ITALIC)
                 gravity = Gravity.CENTER
             }
 
@@ -338,7 +338,7 @@ class NotificationActivity : AppCompatActivity() {
                         val imageReference = storageReference.child("images/${userId}.jpg")
 
                         imageReference.downloadUrl.addOnSuccessListener { uri ->
-                            Glide.with(this@NotificationActivity)
+                            Glide.with(this@EmpNotificationActivity)
                                 .load(uri)
                                 .into(userImage)
                         }.addOnFailureListener {

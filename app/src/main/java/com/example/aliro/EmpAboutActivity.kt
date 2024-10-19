@@ -14,20 +14,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentContainerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 
-class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
+class EmpAboutActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
@@ -79,42 +77,41 @@ class AboutActivity : AppCompatActivity(), OnMapReadyCallback {
                     Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.logs -> {
                     Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LogsActivity::class.java)
+                    val intent = Intent(this, EmpLogsActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.profile -> {
                     Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpEditActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
-                R.id.pre_register -> Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Pre-Register", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpRegisterActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.notification -> {
                     Toast.makeText(applicationContext, "Notifications", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, NotificationActivity::class.java)
+                    val intent = Intent(this, EmpNotificationActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.about -> {
                     Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AboutActivity::class.java)
+                    val intent = Intent(this, EmpAboutActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
+                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

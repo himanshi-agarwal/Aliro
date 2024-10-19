@@ -74,17 +74,17 @@
             android:label="Visit">
         </activity>
         <activity
-            android:name=".LogsActivity"
+            android:name=".EmpLogsActivity"
             android:exported="false"
             android:label="Logs">
         </activity>
         <activity
-            android:name=".NotificationActivity"
+            android:name=".EmpNotificationActivity"
             android:exported="false"
             android:label="Notifications">
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name=".EmpAboutActivity"
             android:exported="false"
             android:label="About">
         </activity>
@@ -109,7 +109,7 @@
             android:label="Diary">
         </activity>
         <activity
-            android:name=".VisitorNotification"
+            android:name=".VisitorNotificationActivity"
             android:exported="false"
             android:label="Notification">
         </activity>
@@ -142,6 +142,11 @@
             android:name=".SecurityHomeActivity"
             android:exported="false"
             android:label="Aliro">
+        </activity>
+        <activity
+            android:name=".SecurityVisitorsApprovalActivity"
+            android:exported="false"
+            android:label="Visitors">
         </activity>
         <activity
             android:name=".SecurityVisitorRegistrationActivity"
