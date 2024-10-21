@@ -98,8 +98,8 @@
 
                         <ImageButton
                             android:id="@+id/pre_register"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/add_guest"
                             android:scaleType="fitXY"
                             android:background="@color/white"
@@ -109,9 +109,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Register a Guest"
+                            android:text="Register a Visit"
                             android:padding="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
@@ -127,8 +127,8 @@
 
                         <ImageButton
                             android:id="@+id/diary"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/diary"
                             android:scaleType="fitXY"
                             android:background="@color/white"
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:text="Visitor Diary"
                             android:padding="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
@@ -162,8 +162,8 @@
 
                         <ImageButton
                             android:id="@+id/parking"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/parking"
                             android:scaleType="fitXY"
                             android:background="@color/white"
@@ -175,7 +175,7 @@
                             android:layout_height="wrap_content"
                             android:text="Parking"
                             android:padding="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
@@ -191,8 +191,8 @@
 
                         <ImageButton
                             android:id="@+id/logs"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/logs"
                             android:scaleType="fitXY"
                             android:background="@color/white"
@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:text="My Logs"
                             android:padding="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
@@ -225,8 +225,8 @@
 
                         <ImageButton
                             android:id="@+id/notification"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/notifications"
                             android:scaleType="fitXY"
                             android:background="@color/white"
@@ -238,7 +238,7 @@
                             android:layout_height="wrap_content"
                             android:text="Notifications"
                             android:padding="10dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
