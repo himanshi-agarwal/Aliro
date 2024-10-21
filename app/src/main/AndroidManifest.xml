@@ -144,6 +144,11 @@
             android:label="Aliro">
         </activity>
         <activity
+            android:name=".SecurityEmployeeApprovalActivity"
+            android:exported="false"
+            android:label="Employees">
+        </activity>
+        <activity
             android:name=".SecurityVisitorsApprovalActivity"
             android:exported="false"
             android:label="Visitors">

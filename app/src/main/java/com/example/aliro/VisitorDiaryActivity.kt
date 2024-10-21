@@ -64,6 +64,8 @@ class VisitorDiaryActivity : AppCompatActivity(){
         }
 
         diaryParentLayout = findViewById(R.id.diaryParentLayout)
+        diaryMessage = findViewById(R.id.diaryMessage)
+        sendButton = findViewById(R.id.sendButton)
 
         getDiaryRecord { records ->
             if (records != null) {
@@ -72,9 +74,6 @@ class VisitorDiaryActivity : AppCompatActivity(){
                 Toast.makeText(this, "No Records Available", Toast.LENGTH_SHORT).show()
             }
         }
-
-        diaryMessage = findViewById(R.id.diaryMessage)
-        sendButton = findViewById(R.id.sendButton)
 
         sendButton.setOnClickListener(){
             saveDiaryContent()

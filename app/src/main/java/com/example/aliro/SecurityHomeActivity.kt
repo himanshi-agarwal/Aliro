@@ -77,8 +77,8 @@ class SecurityHomeActivity : AppCompatActivity() {
                 }
 
                 R.id.employee -> {
-                    Toast.makeText(applicationContext, "Scan Employees's Face", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, FaceRekognitionActivity::class.java)
+                    Toast.makeText(applicationContext, "Scan Employee's Face", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, SecurityEmployeeApprovalActivity::class.java)
                     startActivity(intent)
                 }
 

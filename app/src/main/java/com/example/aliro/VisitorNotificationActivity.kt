@@ -61,9 +61,34 @@ class VisitorNotificationActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, VisitorHomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+
         getNotifications { notifications ->
             if(notifications != null){
                 showNotifications(notifications)
+            } else {
+                setContentView(R.layout.no_notifications)
+
+                toolbar = findViewById(R.id.toolbar)
+                setSupportActionBar(toolbar)
+
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
+
+                toolbar.setNavigationOnClickListener {
+                    val intent = Intent(this, VisitorHomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }
@@ -91,7 +116,6 @@ class VisitorNotificationActivity : AppCompatActivity() {
                                 .get()
                                 .addOnSuccessListener() {document ->
                                     if(document.isEmpty){
-                                        setContentView(R.layout.no_notifications)
                                         callback(null)
                                     } else {
                                         Log.i("Data", document.documents.toString())

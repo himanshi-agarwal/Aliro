@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,13 +16,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
@@ -31,7 +30,8 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 
-class SecurityVisitorsApprovalActivity: AppCompatActivity() {
+class SecurityEmployeeApprovalActivity: AppCompatActivity() {
+    private lateinit var searchBar: SearchView
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
@@ -40,7 +40,7 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.security_visitors_approval)
+        setContentView(R.layout.security_employee_approval)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -94,12 +94,39 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
             true
         }
 
-        getNotifications { notifications ->
-            if(notifications != null){
-                showNotifications(notifications)
+        searchBar = findViewById(R.id.serachBar)
+        val searchEditText = searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchEditText.setTextColor(ContextCompat.getColor(this, R.color.black))
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.black))
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                getEmployees(query) { employees ->
+                    if (employees != null) {
+                        showEmployeeRecords(employees)
+                    } else {
+                        Toast.makeText(this@SecurityEmployeeApprovalActivity, "No records found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                getEmployees(newText) { employees ->
+                    if (employees != null) {
+                        showEmployeeRecords(employees)
+                    } else {
+                        Toast.makeText(this@SecurityEmployeeApprovalActivity, "No records found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                return true
+            }
+        })
+
+        getEmployees("") { employees ->
+            if(employees != null){
+                showEmployeeRecords(employees)
             } else {
-                createNoNotificationsLayout()
-                Toast.makeText(this, "No Pending Request Found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No Employees Data Found", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -125,25 +152,35 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
         }
     }
 
-    private fun getNotifications (callback: (QuerySnapshot?) -> Unit) {
+    private fun getEmployees (query: String?, callback: (QuerySnapshot?) -> Unit) {
         if(checkSession()){
             val sharedPreference = getSharedPreferences("user_session", MODE_PRIVATE)
             val userId = sharedPreference.getString("userId", null)
 
             if(userId != null){
                 val db = Firebase.firestore
+                val employeeRef = db.collection("employees")
 
-                db.collection("visits")
-                    .whereEqualTo("status", "Pending")
+                val employeeQuery = if (!query.isNullOrEmpty()) {
+                    employeeRef
+                        .orderBy("FirstName")
+                        .startAt(query)
+                        .endAt(query + "\uf8ff")
+                } else {
+                    employeeRef
+                        .orderBy("EmpID")
+                }
+
+                employeeQuery
                     .get()
-                    .addOnSuccessListener() {document ->
-                        if(document.isEmpty){
+                    .addOnSuccessListener { document ->
+                        if (document.isEmpty) {
                             callback(null)
                         } else {
                             callback(document)
                         }
                     }
-                    .addOnFailureListener() {e ->
+                    .addOnFailureListener { e ->
                         Toast.makeText(this, "Error Fetching Records", Toast.LENGTH_SHORT).show()
                         Log.e("Error", e.printStackTrace().toString())
                     }
@@ -157,8 +194,8 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
         }
     }
 
-    private fun showNotifications(visits: QuerySnapshot) {
-        val visitsLayout = findViewById<LinearLayout>(R.id.visitsParent)
+    private fun showEmployeeRecords(employees: QuerySnapshot) {
+        val visitsLayout = findViewById<LinearLayout>(R.id.employeeParent)
         visitsLayout.removeAllViews()
 
         val notificationPadding = resources.getDimensionPixelSize(R.dimen.record_padding)
@@ -166,7 +203,7 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
         val imageMarginEnd = resources.getDimensionPixelSize(R.dimen.image_margin)
         val spacePadding = resources.getDimensionPixelSize(R.dimen.space_padding)
 
-        for (v in visits){
+        for (e in employees){
             val recordLayout = LinearLayout(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -179,7 +216,7 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
                 isFocusable = true
             }
 
-            val visitorImage = ImageView(this).apply {
+            val employeeImage = ImageView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     imageDimension,
                     imageDimension
@@ -199,125 +236,68 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
                 orientation = LinearLayout.VERTICAL
             }
 
-            val visitorName = TextView(this).apply {
+            val employeeName = TextView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                text = "Name"
+                text = e.getString("FirstName") + " " + e.getString("LastName")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 22f
-                setTypeface(ResourcesCompat.getFont(this@SecurityVisitorsApprovalActivity, R.font.exo_2_semibold), Typeface.BOLD)
+                setTypeface(ResourcesCompat.getFont(this@SecurityEmployeeApprovalActivity, R.font.exo_2_semibold), Typeface.BOLD)
                 gravity = Gravity.CENTER
             }
 
-            val purpose = TextView(this).apply {
+            val company = TextView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                text = v.getString("visitPurpose")
+                text = e.getString("Company")
                 setTextColor(ContextCompat.getColor(context, R.color.black))
                 textSize = 18f
-                setTypeface(ResourcesCompat.getFont(this@SecurityVisitorsApprovalActivity, R.font.lato_italic), Typeface.ITALIC)
+                setTypeface(ResourcesCompat.getFont(this@SecurityEmployeeApprovalActivity, R.font.lato_italic), Typeface.ITALIC)
                 gravity = Gravity.CENTER
             }
 
-            innerLayout.addView(visitorName)
-            innerLayout.addView(purpose)
-
-            val statusImage = ImageView(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setPadding(spacePadding, spacePadding, spacePadding, spacePadding)
-                setImageResource(R.drawable.pending_approval)
-                scaleType = ImageView.ScaleType.CENTER_CROP
-            }
-
-            v.getDocumentReference("visitor_ref")?.let { visitorRef ->
-                visitorRef.get().addOnSuccessListener { visitorDoc ->
-                    if (visitorDoc.exists()) {
-                        val userRef = visitorDoc.getDocumentReference("user_ref")
-                        if (userRef != null) {
-                            getVisitorName(userRef) { name ->
-                                if (name != null) {
-                                    visitorName.text = name
-                                    getUserProfile(visitorImage, visitorName.text.toString())
-                                    recordLayout.setOnClickListener {
-                                        val intent = Intent(this, FaceRekognitionActivity::class.java)
-                                        intent.putExtra("userId", userRef.id)
-                                        intent.putExtra("visitId", v.id)
-                                        startActivity(intent)
-                                    }
-                                } else {
-                                    visitorName.text = "User"
-                                }
-                            }
-                        } else {
-                            Toast.makeText(this, "No User Reference Found", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this, "Visitor Document Does Not Exist", Toast.LENGTH_SHORT).show()
+            e.getDocumentReference("user_ref")?.let { userRef ->
+                if (userRef != null) {
+                    getUserProfile(employeeImage, userRef)
+                    recordLayout.setOnClickListener {
+                        val intent = Intent(this, FaceRekognitionActivity::class.java)
+                        intent.putExtra("userId", userRef.id)
+                        intent.putExtra("visitId", e.id)
+                        startActivity(intent)
                     }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Error Fetching Visitor Document", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "No User Reference Found", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            recordLayout.addView(visitorImage)
+            innerLayout.addView(employeeName)
+            innerLayout.addView(company)
+
+            recordLayout.addView(employeeImage)
             recordLayout.addView(innerLayout)
-            recordLayout.addView(statusImage)
 
             visitsLayout.addView(recordLayout)
         }
     }
 
-    private fun getVisitorName(userRef: DocumentReference, callback: (String?) -> Unit){
-        userRef.get()
-            .addOnSuccessListener(){document ->
-                if (document.exists()) {
-                    val userName = document.getString("username")
-                    callback(userName)
-                } else {
-                    callback(null)
-                }
-            }
-            .addOnFailureListener(){
-                Toast.makeText(this, "Error Fetching Username", Toast.LENGTH_SHORT).show()
-                callback(null)
-            }
-    }
-
-    private fun getUserProfile(userImage: ImageView, userName: String) {
+    private fun getUserProfile(userImage: ImageView, userRef: DocumentReference) {
         if(checkSession()){
-            val db = Firebase.firestore
+            val userId = userRef.id
 
-            db.collection("user")
-                .whereEqualTo("username", userName)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (!document.isEmpty) {
-                        val userId = document.documents[0].id
-                        val storageReference = Firebase.storage.reference
-                        val imageReference = storageReference.child("images/${userId}.jpg")
+            val storageReference = Firebase.storage.reference
+            val imageReference = storageReference.child("images/${userId}.jpg")
 
-                        imageReference.downloadUrl.addOnSuccessListener { uri ->
-                            Glide.with(this@SecurityVisitorsApprovalActivity)
-                                .load(uri)
-                                .into(userImage)
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener {e ->
-                    Toast.makeText(this, "Error fetching user data: ${e.message}", Toast.LENGTH_SHORT).show()
-                    return@addOnFailureListener
-                }
+            imageReference.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this@SecurityEmployeeApprovalActivity)
+                    .load(uri)
+                    .into(userImage)
+            }.addOnFailureListener {
+                Log.e("Image", "Failed to load Image")
+            }
         } else {
             Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
         }
@@ -354,73 +334,6 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error Loading Photo", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun createNoNotificationsLayout() {
-        val visitsLayout = findViewById<LinearLayout>(R.id.visitsParent)
-        visitsLayout.removeAllViews()
-
-        val imageHeight = resources.getDimensionPixelSize(R.dimen.imageHeight)
-
-        val constraintLayout = ConstraintLayout(this).apply {
-            id = View.generateViewId()
-            layoutParams = ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.MATCH_PARENT
-            )
-            setBackgroundColor(resources.getColor(R.color.background, null))
-        }
-
-        val imageView = ImageView(this).apply {
-            id = View.generateViewId()
-            layoutParams = ConstraintLayout.LayoutParams(
-                0,
-                imageHeight
-            ).apply {
-                marginStart = 10
-                marginEnd = 10
-                topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-            }
-            setImageResource(R.drawable.bell)
-        }
-
-        val textView = TextView(this).apply {
-            id = View.generateViewId()
-            layoutParams = ConstraintLayout.LayoutParams(
-                0,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                topToBottom = imageView.id
-                endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-                startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-            }
-            text = "Nothing Here !!!"
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
-            textSize = 40f
-            typeface = ResourcesCompat.getFont(this@SecurityVisitorsApprovalActivity, R.font.bangers)
-        }
-
-        val textView2 = TextView(this).apply {
-            id = View.generateViewId()
-            layoutParams = ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                topToBottom = textView.id
-                endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-                startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-            }
-            text = "No Notifications to View or Approve"
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
-            textSize = 20f
-            typeface = ResourcesCompat.getFont(this@SecurityVisitorsApprovalActivity, R.font.lato_italic)
-        }
-
-        constraintLayout.addView(imageView)
-        constraintLayout.addView(textView)
-        constraintLayout.addView(textView2)
-
-        visitsLayout.addView(constraintLayout)
     }
 
     private fun logout() {

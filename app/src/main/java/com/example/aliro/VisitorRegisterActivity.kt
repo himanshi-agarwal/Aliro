@@ -110,6 +110,7 @@ class VisitorRegisterActivity : AppCompatActivity() {
         imageName = findViewById(R.id.imageName)
         registerButton = findViewById(R.id.register_button)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         toolbar.setNavigationOnClickListener {
