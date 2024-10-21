@@ -87,7 +87,6 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
                 }
             }
@@ -369,7 +368,7 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
                 ConstraintLayout.LayoutParams.MATCH_PARENT
             )
-            setBackgroundColor(resources.getColor(R.color.background, null)) // Set your background color
+            setBackgroundColor(resources.getColor(R.color.background, null))
         }
 
         val imageView = ImageView(this).apply {
@@ -440,6 +439,8 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
+
+            Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No") {

@@ -110,9 +110,9 @@ class SecurityVisitorRegistrationActivity: AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                   val intent = Intent(this, SecurityHomeActivity::class.java)
+                    val intent = Intent(this, SecurityHomeActivity::class.java)
                     startActivity(intent)
-                   Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                 }
 
                 R.id.employee -> {
@@ -123,7 +123,7 @@ class SecurityVisitorRegistrationActivity: AppCompatActivity() {
 
                 R.id.visitors -> {
                     Toast.makeText(applicationContext, "Scan Visitor's Face", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SecurityHomeActivity::class.java)
+                    val intent = Intent(this, SecurityVisitorsApprovalActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -140,7 +140,6 @@ class SecurityVisitorRegistrationActivity: AppCompatActivity() {
                 }
 
                 R.id.logout -> {
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                     logout()
                 }
             }
@@ -488,6 +487,7 @@ class SecurityVisitorRegistrationActivity: AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
+            Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No") {

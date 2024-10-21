@@ -83,6 +83,8 @@ class EmpNotificationActivity : AppCompatActivity() {
         getNotifications { notifications ->
             if(notifications != null){
                 showNotifications(notifications)
+            } else {
+                createNoNotification()
             }
         }
 
@@ -117,7 +119,7 @@ class EmpNotificationActivity : AppCompatActivity() {
                         val intent = Intent(this, EmpHomeActivity::class.java)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(applicationContext, "Already in Logs", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Already in Notifications", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -129,12 +131,78 @@ class EmpNotificationActivity : AppCompatActivity() {
 
                 R.id.logout -> {
                     logout()
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun createNoNotification() {
+        setContentView(R.layout.no_notifications)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.navbar)
+
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home -> {
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpHomeActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.logs -> {
+                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpLogsActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.profile -> {
+                    Toast.makeText(applicationContext, "Edit Profile", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpEditActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.pre_register -> {
+                    Toast.makeText(applicationContext, "Register Visitor", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpRegisterActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.notification -> {
+                    if (this !is EmpNotificationActivity) {
+                        val intent = Intent(this, EmpHomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already in Notifications", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                R.id.about -> {
+                    Toast.makeText(applicationContext, "About", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EmpAboutActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.logout -> {
+                    logout()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
+        updateSidebarHeader()
     }
 
     private fun checkSession() : Boolean{
@@ -179,16 +247,27 @@ class EmpNotificationActivity : AppCompatActivity() {
                 val db = Firebase.firestore
                 val userRef = db.collection("user").document(userId)
 
-                db.collection("visits")
-                    .whereEqualTo("employee_ref", userRef)
+                db.collection("employees")
+                    .whereEqualTo("user_ref", userRef)
                     .get()
                     .addOnSuccessListener() {document ->
                         if(document.isEmpty){
-                            setContentView(R.layout.no_notifications)
+                            Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show()
                             callback(null)
                         } else {
-                            Log.i("Data", document.documents.toString())
-                            callback(document)
+                            val employeeRef = document.documents.firstOrNull()?.reference
+
+                            db.collection("visits")
+                                .whereEqualTo("employee_ref", employeeRef)
+                                .get()
+                                .addOnSuccessListener() {document ->
+                                    if(document.isEmpty){
+                                        callback(null)
+                                    } else {
+                                        Log.i("Data", document.documents.toString())
+                                        callback(document)
+                                    }
+                                }
                         }
                     }
             } else {
@@ -288,15 +367,27 @@ class EmpNotificationActivity : AppCompatActivity() {
                 status.setTextColor(ContextCompat.getColor(this, R.color.approve))
             }
 
-            n.getDocumentReference("visitor_ref")?.let {userRef ->
-                getVisitorName(userRef){name ->
-                    if(name != null){
-                        visitorName.text = name
-                        getUserProfile(visitorImage, visitorName.text.toString())
+            n.getDocumentReference("visitor_ref")?.let { visitorRef ->
+                visitorRef.get().addOnSuccessListener { visitorDoc ->
+                    if (visitorDoc.exists()) {
+                        val userRef = visitorDoc.getDocumentReference("user_ref")
+                        if (userRef != null) {
+                            getVisitorName(userRef) { name ->
+                                if (name != null) {
+                                    visitorName.text = name
+                                    getUserProfile(visitorImage, visitorName.text.toString())
+                                } else {
+                                    visitorName.text = "User"
+                                }
+                            }
+                        } else {
+                            Toast.makeText(this, "No User Reference Found", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Visitor Document Does Not Exist", Toast.LENGTH_SHORT).show()
                     }
-                    else{
-                        visitorName.text = "User"
-                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Error Fetching Visitor Document", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -373,6 +464,8 @@ class EmpNotificationActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+
+            Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No") {

@@ -107,7 +107,7 @@ class EmpLogsActivity: AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
                 R.id.home -> {
-                    Toast.makeText(applicationContext, "Logs", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, EmpHomeActivity::class.java)
                     startActivity(intent)
                 }
@@ -147,7 +147,6 @@ class EmpLogsActivity: AppCompatActivity() {
 
                 R.id.logout -> {
                     logout()
-                    Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -202,7 +201,7 @@ class EmpLogsActivity: AppCompatActivity() {
                         Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                     } else {
                         for (d in document.documents) {
-                            employeeArray[2] = d.getString("EmpID")
+                            employeeArray[2] = d.getLong("EmpID").toString()
                             employeeArray[3] =  d.getString("Role")
                             employeeArray[4] = d.getString("Company")
                         }
@@ -362,10 +361,11 @@ class EmpLogsActivity: AppCompatActivity() {
         val durationMillis = outDate.time - inDate.time
 
         val durationSeconds = durationMillis / 1000
+        val hours = durationSeconds / 3600
         val minutes = (durationSeconds % 3600) / 60
         val seconds = durationSeconds % 60
 
-        return String.format("%02d:%02d", minutes, seconds)
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     private fun logout() {
@@ -384,6 +384,7 @@ class EmpLogsActivity: AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            Toast.makeText(applicationContext, "Logout Successfully", Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No") {

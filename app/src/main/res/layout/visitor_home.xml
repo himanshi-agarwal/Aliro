@@ -107,12 +107,13 @@
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Register a Visit"
                             android:padding="10dp"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
                             android:textColor="@color/secondary"/>
@@ -136,12 +137,13 @@
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Visitor Diary"
                             android:padding="10dp"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
                             android:textColor="@color/secondary"/>
@@ -171,12 +173,13 @@
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Parking"
                             android:padding="10dp"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
                             android:textColor="@color/secondary"/>
@@ -200,12 +203,13 @@
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="My Logs"
                             android:padding="10dp"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
                             android:textColor="@color/secondary"/>
@@ -234,12 +238,13 @@
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Notifications"
                             android:padding="10dp"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/bangers"
                             android:textColor="@color/secondary"/>
