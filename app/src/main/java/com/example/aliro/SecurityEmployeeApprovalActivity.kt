@@ -262,11 +262,12 @@ class SecurityEmployeeApprovalActivity: AppCompatActivity() {
 
             e.getDocumentReference("user_ref")?.let { userRef ->
                 if (userRef != null) {
-                    getUserProfile(employeeImage, userRef)
+                    //getUserProfile(employeeImage, userRef)
                     recordLayout.setOnClickListener {
                         val intent = Intent(this, FaceRekognitionActivity::class.java)
                         intent.putExtra("userId", userRef.id)
-                        intent.putExtra("visitId", e.id)
+                        intent.putExtra("refId", userRef.id)
+                        intent.putExtra("userType", "Employee")
                         startActivity(intent)
                     }
                 } else {
@@ -296,7 +297,7 @@ class SecurityEmployeeApprovalActivity: AppCompatActivity() {
                     .load(uri)
                     .into(userImage)
             }.addOnFailureListener {
-                Log.e("Image", "Failed to load Image")
+                // Suppress any error logging, do nothing if the image load fails
             }
         } else {
             Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()

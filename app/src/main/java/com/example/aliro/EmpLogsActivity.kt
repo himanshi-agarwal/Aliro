@@ -347,12 +347,12 @@ class EmpLogsActivity: AppCompatActivity() {
         return timestamp?.let {
             val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
             sdf.format(it.toDate())
-        } ?: "Unknown"
+        } ?: "--:--:--"
     }
 
     private fun calculateDuration(inTime: Timestamp?, outTime: Timestamp?): String {
         if (inTime == null || outTime == null) {
-            return "Invalid times"
+            return "--:--:--"
         }
 
         val inDate = inTime.toDate()

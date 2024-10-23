@@ -2,6 +2,7 @@ package com.example.aliro
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -39,6 +40,7 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import java.io.ByteArrayOutputStream
+import java.util.Calendar
 import kotlin.math.abs
 
 class FaceRekognitionActivity: AppCompatActivity() {
@@ -53,7 +55,8 @@ class FaceRekognitionActivity: AppCompatActivity() {
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private var capturedImageUri: Uri? = null
     private var userId: String? = null
-    private var visitId: String? = null
+    private var refId: String? = null
+    private var type: String? = null
     private var faceMatched: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,18 +78,29 @@ class FaceRekognitionActivity: AppCompatActivity() {
         }
 
         userId = intent.getStringExtra("userId")
-        visitId = intent.getStringExtra("visitId")
+        refId = intent.getStringExtra("refId")
+        type = intent.getStringExtra("userType")
 
         captureButton.setOnClickListener {
             takePhoto()
         }
 
         entryButton.setOnClickListener() {
-            markEntry()
+            if (type == "Visitor"){
+                updateVisitEntry()
+                markEntryLog()
+            } else if (type == "Employee") {
+                markEntryLog()
+            }
         }
 
         exitButton.setOnClickListener() {
-            markExit()
+            if (type == "Visitor"){
+                updateVisitExit()
+                markExitLog()
+            } else if (type == "Employee") {
+                markExitLog()
+            }
         }
     }
 
@@ -319,22 +333,28 @@ class FaceRekognitionActivity: AppCompatActivity() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
     }
 
-    private fun markEntry() {
+    private fun updateVisitEntry() {
         if (checkSession() && faceMatched) {
             val db = Firebase.firestore
-            if (visitId != null) {
+            if (refId != null) {
                 val entryTime = FieldValue.serverTimestamp()
 
                 db.collection("visits")
-                    .document(visitId!!)
+                    .document(refId!!)
                     .update(mapOf(
                         "checkInTime" to entryTime,
                         "status" to "Approved"
                     ))
                     .addOnSuccessListener {
-                        val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(entryTime)
-                        resultTextView.text = "Entry marked at: $formattedTime"
-                        Toast.makeText(this, "Entry marked successfully", Toast.LENGTH_SHORT).show()
+                        db.collection("visits").document(refId!!).get()
+                            .addOnSuccessListener { document ->
+                                val actualTime = document.getTimestamp("checkInTime")
+                                if (actualTime != null) {
+                                    val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(actualTime.toDate())
+                                    resultTextView.text = "Entry marked at: $formattedTime"
+                                    Toast.makeText(this, "Entry marked successfully", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Failed to mark entry: ${e.message}", Toast.LENGTH_LONG).show()
@@ -348,23 +368,95 @@ class FaceRekognitionActivity: AppCompatActivity() {
         }
     }
 
-    private fun markExit() {
+    private fun updateVisitExit() {
         if (checkSession()) {
             val db = Firebase.firestore
-            if (visitId != null) {
+            if (refId != null) {
                 val exitTime = FieldValue.serverTimestamp()
 
                 db.collection("visits")
-                    .document(visitId!!)
+                    .document(refId!!)
                     .update("checkOutTime", exitTime)
                     .addOnSuccessListener {
-                        val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(exitTime)
-                        resultTextView.text = "Exit marked at: $formattedTime"
-                        Toast.makeText(this, "Exit marked successfully", Toast.LENGTH_SHORT).show()
+                        db.collection("visits").document(refId!!).get()
+                            .addOnSuccessListener { document ->
+                                val actualTime = document.getTimestamp("checkOutTime")
+                                if (actualTime != null) {
+                                    val formattedTime = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault()).format(actualTime.toDate())
+                                    resultTextView.text = "Entry marked at: $formattedTime"
+                                    Toast.makeText(this, "Entry marked successfully", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Failed to mark entry: ${e.message}", Toast.LENGTH_LONG).show()
                         Log.e("Firestore", "Error updating entryTime", e)
+                    }
+            } else {
+                Toast.makeText(this, "Invalid visit ID", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun markEntryLog() {
+        if (checkSession()) {
+            val db = Firebase.firestore
+            if (refId != null) {
+
+                val currentTime = Calendar.getInstance().time
+                val userRef = db.collection("user").document(userId!!)
+
+                val logMap = hashMapOf(
+                    "inTime" to currentTime,
+                    "outTime" to null,
+                    "user_ref" to userRef
+                )
+
+                db.collection("logs")
+                    .add(logMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Entry Marked successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, SecurityHomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to mark entry log: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, "Invalid visit ID", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Error in User Session", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun markExitLog() {
+        if (checkSession()) {
+            val db = Firebase.firestore
+            if (refId != null) {
+
+                val currentTime = Calendar.getInstance().time
+                val userRef = db.collection("user").document(userId!!)
+
+                val logMap = hashMapOf(
+                    "inTime" to null,
+                    "outTime" to currentTime,
+                    "user_ref" to userRef
+                )
+
+                db.collection("logs")
+                    .add(logMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Exit Marked successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, SecurityHomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to mark exit log: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
                 Toast.makeText(this, "Invalid visit ID", Toast.LENGTH_SHORT).show()

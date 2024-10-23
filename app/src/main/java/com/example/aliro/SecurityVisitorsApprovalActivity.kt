@@ -248,7 +248,8 @@ class SecurityVisitorsApprovalActivity: AppCompatActivity() {
                                     recordLayout.setOnClickListener {
                                         val intent = Intent(this, FaceRekognitionActivity::class.java)
                                         intent.putExtra("userId", userRef.id)
-                                        intent.putExtra("visitId", v.id)
+                                        intent.putExtra("refId", v.id)
+                                        intent.putExtra("userType", "Visitor")
                                         startActivity(intent)
                                     }
                                 } else {
