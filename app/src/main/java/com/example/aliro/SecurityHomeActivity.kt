@@ -270,6 +270,7 @@ class SecurityHomeActivity : AppCompatActivity() {
         xAxis.granularity = 1f
         xAxis.labelCount = 4
         xAxis.valueFormatter = IndexAxisValueFormatter(arrayOf("Week 1", "Week 2", "Week 3", "Week 4"))
+        xAxis.setDrawGridLines(false)
 
         val leftAxis: YAxis = lineChart.axisLeft
         leftAxis.granularity = 1f
@@ -285,7 +286,7 @@ class SecurityHomeActivity : AppCompatActivity() {
             entries.add(Entry(i.toFloat(), visitorCountsByWeek[i].toFloat()))
         }
 
-        val dataSet = LineDataSet(entries, "Visitors per Week")
+        val dataSet = LineDataSet(entries, "")
         dataSet.color = ContextCompat.getColor(this, R.color.primary)
         dataSet.valueTextColor = getColor(R.color.black)
         dataSet.setDrawCircles(true)
@@ -352,35 +353,48 @@ class SecurityHomeActivity : AppCompatActivity() {
         val db = Firebase.firestore
 
         db.collection("parking")
-            .whereEqualTo("status", "Occupied")
             .get()
             .addOnSuccessListener { documents ->
-                var twoWheelerCount = 0
-                var fourWheelerCount = 0
+                var totalTwoWheelerSpots = 0
+                var totalFourWheelerSpots = 0
+                var occupiedTwoWheelerSpots = 0
+                var occupiedFourWheelerSpots = 0
 
                 for (document in documents) {
                     val vehicleType = document.getString("vehicleType")
+                    val status = document.getString("status")
+
                     if (vehicleType != null) {
                         if (vehicleType == "Two Wheeler") {
-                            twoWheelerCount++
+                            totalTwoWheelerSpots++
+                            if (status == "Occupied") {
+                                occupiedTwoWheelerSpots++
+                            }
                         } else if (vehicleType == "Four Wheeler") {
-                            fourWheelerCount++
+                            totalFourWheelerSpots++
+                            if (status == "Occupied") {
+                                occupiedFourWheelerSpots++
+                            }
                         }
                     }
                 }
 
-                Log.i("Two", twoWheelerCount.toString())
-                Log.i("Four", fourWheelerCount.toString())
+                Log.i("Total Two Wheeler Spots", totalTwoWheelerSpots.toString())
+                Log.i("Occupied Two Wheeler", occupiedTwoWheelerSpots.toString())
+                Log.i("Total Four Wheeler Spots", totalFourWheelerSpots.toString())
+                Log.i("Occupied Four Wheeler", occupiedFourWheelerSpots.toString())
 
-                val totalCount = twoWheelerCount + fourWheelerCount
-                setupPieChart(twoWheelerCount, fourWheelerCount, totalCount)
+                setupPieChart(
+                    totalTwoWheelerSpots, occupiedTwoWheelerSpots,
+                    totalFourWheelerSpots, occupiedFourWheelerSpots
+                )
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Failed to fetch parking data: ${exception.message}", Toast.LENGTH_LONG).show()
             }
     }
 
-    private fun setupPieChart(twoWheelerCount: Int, fourWheelerCount: Int, totalCount: Int) {
+    private fun setupPieChart(totalTwoWheelerSpots: Int, occupiedTwoWheelerSpots: Int, totalFourWheelerSpots: Int, occupiedFourWheelerSpots: Int) {
         pieChart.description.isEnabled = false
         pieChart.setUsePercentValues(true)
         pieChart.isDrawHoleEnabled = true
@@ -388,21 +402,32 @@ class SecurityHomeActivity : AppCompatActivity() {
         pieChart.holeRadius = 58f
         pieChart.transparentCircleRadius = 61f
 
-        val entries = ArrayList<PieEntry>()
-        if (totalCount > 0) {
-            val twoWheelerPercentage = (twoWheelerCount.toFloat() / totalCount) * 100
-            val fourWheelerPercentage = (fourWheelerCount.toFloat() / totalCount) * 100
+        val availableTwoWheelerSpots = totalTwoWheelerSpots - occupiedTwoWheelerSpots
+        val availableFourWheelerSpots = totalFourWheelerSpots - occupiedFourWheelerSpots
 
-            entries.add(PieEntry(twoWheelerPercentage, "Two-Wheeler"))
-            entries.add(PieEntry(fourWheelerPercentage, "Four-Wheeler"))
+        val entries = ArrayList<PieEntry>()
+        val totalSpots = totalTwoWheelerSpots + totalFourWheelerSpots
+
+        if (totalSpots > 0) {
+            val occupiedTwoWheelerPercentage = (occupiedTwoWheelerSpots.toFloat() / totalSpots) * 100
+            val availableTwoWheelerPercentage = (availableTwoWheelerSpots.toFloat() / totalSpots) * 100
+            val occupiedFourWheelerPercentage = (occupiedFourWheelerSpots.toFloat() / totalSpots) * 100
+            val availableFourWheelerPercentage = (availableFourWheelerSpots.toFloat() / totalSpots) * 100
+
+            entries.add(PieEntry(occupiedTwoWheelerPercentage, "Occupied Two-Wheeler"))
+            entries.add(PieEntry(availableTwoWheelerPercentage, "Available Two-Wheeler"))
+            entries.add(PieEntry(occupiedFourWheelerPercentage, "Occupied Four-Wheeler"))
+            entries.add(PieEntry(availableFourWheelerPercentage, "Available Four-Wheeler"))
         }
 
-        val dataSet = PieDataSet(entries, "Parking Area")
+        val dataSet = PieDataSet(entries, "Parking Spots")
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
         dataSet.colors = listOf(
             ContextCompat.getColor(this, R.color.primary),
-            ContextCompat.getColor(this, R.color.secondary)
+            ContextCompat.getColor(this, R.color.secondary),
+            ContextCompat.getColor(this, R.color.black),
+            ContextCompat.getColor(this, R.color.background)
         )
 
         val data = PieData(dataSet)
