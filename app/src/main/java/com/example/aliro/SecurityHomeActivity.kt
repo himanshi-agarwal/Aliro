@@ -287,10 +287,10 @@ class SecurityHomeActivity : AppCompatActivity() {
         }
 
         val dataSet = LineDataSet(entries, "")
-        dataSet.color = ContextCompat.getColor(this, R.color.primary)
+        dataSet.color = ContextCompat.getColor(this, R.color.col2)
         dataSet.valueTextColor = getColor(R.color.black)
         dataSet.setDrawCircles(true)
-        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.other))
+        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.col1))
         dataSet.lineWidth = 2f
         dataSet.circleRadius = 4f
 
@@ -424,10 +424,10 @@ class SecurityHomeActivity : AppCompatActivity() {
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
         dataSet.colors = listOf(
-            ContextCompat.getColor(this, R.color.primary),
-            ContextCompat.getColor(this, R.color.secondary),
-            ContextCompat.getColor(this, R.color.black),
-            ContextCompat.getColor(this, R.color.background)
+            ContextCompat.getColor(this, R.color.col1),
+            ContextCompat.getColor(this, R.color.col2),
+            ContextCompat.getColor(this, R.color.col3),
+            ContextCompat.getColor(this, R.color.col4)
         )
 
         val data = PieData(dataSet)
