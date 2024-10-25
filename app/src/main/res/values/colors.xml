@@ -9,8 +9,8 @@
     <color name="background">#eaedf2</color>
     <color name="cancel">#EC5858</color>
     <color name="approve">#009688</color>
-    <color name="col1">#3E7485</color>
-    <color name="col2">#E1A476</color>
-    <color name="col3">#e9d78e</color>
-    <color name="col4">#8E526F</color>
+    <color name="col1">#1991a4</color>
+    <color name="col2">#80CFCC</color>
+    <color name="col3">#18a1cd</color>
+    <color name="col4">#0AA58C</color>
 </resources>
